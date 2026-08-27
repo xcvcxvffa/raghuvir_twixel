@@ -1,0 +1,12 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Redirect all requests to the public directory
+    RewriteRule ^(.*)$ public/$1 [L]
+</IfModule>
+
+# Block access to sensitive Laravel files
+<FilesMatch "^\.env|composer\.json|package\.json|artisan|composer\.lock">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
