@@ -47,14 +47,13 @@
                         </div>
                         <!-- Footer Links End -->
 
-                        <!-- Footer Links End -->
+                        <!-- Footer Links Start -->
                         <div class="footer-links">
                             <h3>Our Products</h3>
                             <ul>
                                 <li><a href="{{ route('product-details', ['product' => 'atta']) }}">Chakki Atta</a></li>
-                                <li><a href="{{ route('product-details', ['product' => 'maida']) }}">Premium Maida</a></li>
-                                <li><a href="{{ route('product-details', ['product' => 'suji']) }}">Fine Suji</a></li>
-                                <li><a href="{{ route('product-details', ['product' => 'bran']) }}">Wheat Bran</a></li>
+                                <li><a href="{{ route('product-details', ['product' => 'bati']) }}">Bati Atta</a></li>
+                                <li><a href="{{ route('product-details', ['product' => 'wheat']) }}">Wheat Atta</a></li>
                             </ul>
                         </div>
                         <!-- Footer Links End -->
