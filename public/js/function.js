@@ -7,8 +7,10 @@
 
 
 	/* Preloader Effect */
-	$(document).ready(function () {
-		$(".preloader").fadeOut(400);
+	$(window).on('load', function () {
+		setTimeout(function () {
+			$(".preloader").fadeOut(600);
+		}, 2200);
 	});
 
 	/* Sticky Header */
