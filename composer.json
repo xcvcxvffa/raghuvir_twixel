@@ -75,6 +75,5 @@
     "minimum-stability": "stable",
     "prefer-stable": true,
     "require-dev": {
-        "laravel/boost": "^2.7"
     }
 }
