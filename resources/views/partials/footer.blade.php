@@ -20,7 +20,7 @@
 
                             <div class="footer-social-links">
                                 <ul>
-                                    <li><a href="#"><i class="fa-brands fa-dribbble"></i>Dribbble</a></li>
+                                    <li><a href="https://wa.me/919725427727?text={{ rawurlencode('Hello Raghuvir Atta, I would like to inquire about your products.') }}" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-whatsapp"></i>WhatsApp</a></li>
                                     <li><a href="#"><i class="fa-brands fa-facebook-f"></i>Facebook</a></li>
                                     <li><a href="#"><i class="fa-brands fa-instagram"></i>Instagram</a></li>
                                     <li><a href="#"><i class="fa-brands fa-linkedin-in"></i>LinkedIn</a></li>

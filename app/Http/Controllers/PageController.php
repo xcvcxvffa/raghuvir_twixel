@@ -53,42 +53,77 @@ class PageController extends Controller
 
     public function products()
     {
-        return view('products');
+        $products = [
+            [
+                'slug' => 'atta',
+                'title' => 'Raghuvir Chakki Atta',
+                'subtitle' => '100% Pure & Farm Fresh',
+                'sizes' => ['5kg', '30kg'],
+                'description' => 'Raghuvir Hygienic Chakki Atta is made from premium quality wheat, clean and pure, rich in natural dietary fiber and nutrients. We process our wheat hygienically to keep the moisture low, ensuring fresh, soft, and healthy rotis for your family.',
+                'image' => 'images/product_atta_white.jpg',
+            ],
+            [
+                'slug' => 'bati',
+                'title' => 'Raghuvir Bati Atta',
+                'subtitle' => '100% Pure & Farm Fresh',
+                'sizes' => ['30kg'],
+                'description' => 'Raghuvir Bati Atta is specially milled to the perfect texture for making delicious, authentic Batis. Ground from handpicked premium wheat grains, it ensures your Batis are crispy on the outside and soft on the inside.',
+                'image' => 'images/product_atta_white.jpg',
+            ],
+            [
+                'slug' => 'wheat',
+                'title' => 'Raghuvir Wheat Atta',
+                'subtitle' => '100% Pure & Farm Fresh',
+                'sizes' => ['49kg'],
+                'description' => 'Raghuvir Wheat Atta is high-quality commercial grade flour, ideal for bulk baking, catering, and home use. Milled under strict quality controls to maintain its nutritional integrity and excellent baking properties.',
+                'image' => 'images/product_atta_white.jpg',
+            ]
+        ];
+
+        return view('products', compact('products'));
     }
 
     public function productDetails($product = 'atta')
     {
-        
         $product_data = [
             'atta' => [
+                'slug' => 'atta',
                 'title' => 'Raghuvir Chakki Atta',
                 'sizes' => '5kg, 30kg',
+                'category' => 'Wheat Flour',
+                'main_ingredient' => 'Wheat',
+                'processing' => 'Chakki Ground',
+                'suitable_for' => 'Everyday Indian Cooking',
+                'packaging' => 'Hygienic & Secure Packaging',
+                'quote' => 'From Carefully Selected Wheat to Your Everyday Kitchen.',
                 'description' => 'Raghuvir Hygienic Chakki Atta is made from premium quality wheat, clean and pure, rich in natural dietary fiber and nutrients. We process our wheat hygienically to keep the moisture low, ensuring fresh, soft, and healthy rotis for your family.',
+                'detailed_description' => 'Raghuvir Chakki Atta brings the goodness of carefully selected wheat to your kitchen. The wheat goes through a careful cleaning and grinding process to create quality atta suitable for everyday Indian meals. It retains dietary fiber and natural goodness, ensuring your rotis, parathas, and theplas stay wonderfully soft and wholesome throughout the day.',
             ],
             'bati' => [
+                'slug' => 'bati',
                 'title' => 'Raghuvir Bati Atta',
                 'sizes' => '30kg',
+                'category' => 'Coarse Wheat Flour',
+                'main_ingredient' => 'Premium Wheat',
+                'processing' => 'Traditional Coarse Ground',
+                'suitable_for' => 'Dal Bati, Churma & Traditional Dishes',
+                'packaging' => 'Hygienic & Secure Packaging',
+                'quote' => 'Specially Milled for Crispy, Soft & Authentic Batis.',
                 'description' => 'Raghuvir Bati Atta is specially milled to the perfect texture for making delicious, authentic Batis. Ground from handpicked premium wheat grains, it ensures your Batis are crispy on the outside and soft on the inside.',
+                'detailed_description' => 'Raghuvir Bati Atta is specially milled to the perfect coarse texture required for making authentic Rajasthani & Malwi Batis, Baflas, and Churma. Ground from handpicked premium golden wheat grains, it provides excellent crust crispiness while keeping the inside delightfully soft and fragrant.',
             ],
             'wheat' => [
+                'slug' => 'wheat',
                 'title' => 'Raghuvir Wheat Atta',
                 'sizes' => '49kg',
+                'category' => 'Commercial Wheat Flour',
+                'main_ingredient' => 'Pure Wheat',
+                'processing' => 'Chakki Ground & Roller Processed',
+                'suitable_for' => 'Bulk Baking, Catering & Commercial Kitchens',
+                'packaging' => 'Hygienic & Heavy Duty Packaging',
+                'quote' => 'Consistent Quality & Superior Performance in Every Bag.',
                 'description' => 'Raghuvir Wheat Atta is high-quality commercial grade flour, ideal for bulk baking, catering, and home use. Milled under strict quality controls to maintain its nutritional integrity and excellent baking properties.',
-            ],
-            'maida' => [
-                'title' => 'Raghuvir Premium Maida',
-                'sizes' => '30kg, 50kg',
-                'description' => 'Raghuvir Premium Maida is finely milled and refined to produce white, smooth flour. Excellent for baking breads, pastries, naans, and other premium bakery items, offering superior elasticity and texture.',
-            ],
-            'suji' => [
-                'title' => 'Raghuvir Fine Suji',
-                'sizes' => '30kg, 50kg',
-                'description' => 'Raghuvir Fine Suji (Semolina) is granulated from premium durum wheat. Perfect for making delicious halwa, upma, idlis, and crispy snacks, ensuring the perfect crunch and texture every time.',
-            ],
-            'bran' => [
-                'title' => 'Raghuvir Wheat Bran',
-                'sizes' => '30kg, 40kg',
-                'description' => 'Raghuvir Wheat Bran is high-fiber, premium quality coarse bran derived from clean wheat milling. Ideal for nutritional supplements, healthy baking, or animal feed, maintaining clean and organic standards.',
+                'detailed_description' => 'Raghuvir Wheat Atta is commercial-grade high-yield flour formulated specifically for bulk cooking, industrial catering, restaurants, and active kitchens. Processed under stringent moisture and hygiene controls, it delivers consistent dough elasticity, high water absorption, and superior puffing.',
             ]
         ];
         

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Soilux - Agriculture & Organic Farm HTML Template')
+@section('title', 'Our Products - Raghuvir Atta')
 
 @section('content')
 <!-- Header End -->
@@ -12,10 +12,10 @@
                 <div class="col-lg-12">
                     <!-- Page Header Box Start -->
                     <div class="page-header-box">
-                        <h1 class="text-anime-style-3" data-cursor="-opaque">Our products</h1>
+                        <h1 class="text-anime-style-3" data-cursor="-opaque">Our Products</h1>
                         <nav class="wow fadeInUp">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="{{ route('home') }}">home</a></li>
+                                <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
                                 <li class="breadcrumb-item active" aria-current="page">Products</li>
                             </ol>
                         </nav>
@@ -27,97 +27,159 @@
     </div>
     <!-- Page Header Section End -->
 
+    @php
+        $productList = $products ?? [
+            [
+                'slug' => 'atta',
+                'title' => 'Raghuvir Chakki Atta',
+                'subtitle' => '100% Pure & Farm Fresh',
+                'sizes' => ['5kg', '30kg'],
+                'description' => 'Raghuvir Hygienic Chakki Atta is made from premium quality wheat, clean and pure, rich in natural dietary fiber and nutrients. We process our wheat hygienically to keep the moisture low, ensuring fresh, soft, and healthy rotis for your family.',
+                'image' => 'images/product_atta_white.jpg',
+            ],
+            [
+                'slug' => 'bati',
+                'title' => 'Raghuvir Bati Atta',
+                'subtitle' => '100% Pure & Farm Fresh',
+                'sizes' => ['30kg'],
+                'description' => 'Raghuvir Bati Atta is specially milled to the perfect texture for making delicious, authentic Batis. Ground from handpicked premium wheat grains, it ensures your Batis are crispy on the outside and soft on the inside.',
+                'image' => 'images/product_atta_white.jpg',
+            ],
+            [
+                'slug' => 'wheat',
+                'title' => 'Raghuvir Wheat Atta',
+                'subtitle' => '100% Pure & Farm Fresh',
+                'sizes' => ['49kg'],
+                'description' => 'Raghuvir Wheat Atta is high-quality commercial grade flour, ideal for bulk baking, catering, and home use. Milled under strict quality controls to maintain its nutritional integrity and excellent baking properties.',
+                'image' => 'images/product_atta_white.jpg',
+            ]
+        ];
+    @endphp
+
     <!-- Page Products Start -->
-    <div class="page-products">
+    <div class="page-products" style="padding: 90px 0 60px;">
         <div class="container">
-            <div class="row">
-                <div class="col-lg-4 col-md-6">
-                    <!-- Product Item Start -->
-                    <div class="product-item wow fadeInUp">
-                        <!-- Product Item Image Start -->
-                        <div class="product-item-img">
-                            <a href="{{ route('product-details', ['product' => 'atta']) }}" data-cursor-text="View">
-                                <figure>
-                                    <img src="{{ asset('images/product_atta_white.jpg') }}" alt="Atta">
-                                </figure>
-                            </a>
-                        </div>
-                        <!-- Product Item Image End -->
-
-                        <!-- Product Item Body Start -->
-                        <div class="product-item-body">                            
-                            <div class="product-item-content">
-                                <h2><a href="{{ route('product-details', ['product' => 'atta']) }}">Atta</a></h2>
-                            </div>
-
-                            <div class="product-item-btn">
-                                <a href="{{ route('product-details', ['product' => 'atta']) }}" class="btn-default">View Details</a>
-                            </div>
-                        </div>
-                        <!-- Product Item Body End -->
+            @foreach($productList as $index => $product)
+                @php
+                    $sizes = is_array($product['sizes']) ? $product['sizes'] : array_map('trim', explode(',', $product['sizes']));
+                    $defaultSize = $sizes[0] ?? '';
+                @endphp
+                <!-- Product Horizontal Card Start -->
+                <div class="product-card-horizontal wow fadeInUp" data-wow-delay="{{ 0.2 * $index }}s">
+                    <!-- Product Image Box Start -->
+                    <div class="product-card-image-wrap">
+                        <a href="{{ route('product-details', ['product' => $product['slug']]) }}" title="View {{ $product['title'] }}" data-cursor-text="View">
+                            <figure style="margin: 0; display: flex; align-items: center; justify-content: center; width: 100%;">
+                                <img src="{{ asset($product['image']) }}" alt="{{ $product['title'] }}">
+                            </figure>
+                        </a>
                     </div>
-                    <!-- Product Item End -->
-                </div>
+                    <!-- Product Image Box End -->
 
-                <div class="col-lg-4 col-md-6">
-                    <!-- Product Item Start -->
-                    <div class="product-item wow fadeInUp" data-wow-delay="0.2s">
-                        <!-- Product Item Image Start -->
-                        <div class="product-item-img">
-                            <a href="{{ route('product-details', ['product' => 'bati']) }}" data-cursor-text="View">
-                                <figure>
-                                    <img src="{{ asset('images/product_atta_white.jpg') }}" alt="Bati Atta">
-                                </figure>
+                    <!-- Product Info Start -->
+                    <div class="product-card-info">
+                        <h3 style="color: var(--accent-color); font-size: 22px; font-weight: 700; margin-bottom: 8px;">
+                            {{ $product['subtitle'] ?? '100% Pure & Farm Fresh' }}
+                        </h3>
+
+                        <h2 style="font-size: 42px; font-weight: 800; color: var(--primary-color); margin-top: 0; margin-bottom: 18px; line-height: 1.25;">
+                            <a href="{{ route('product-details', ['product' => $product['slug']]) }}" style="color: inherit; text-decoration: none;">
+                                {{ $product['title'] }}
                             </a>
-                        </div>
-                        <!-- Product Item Image End -->
+                        </h2>
 
-                        <!-- Product Item Body Start -->
-                        <div class="product-item-body">                            
-                            <div class="product-item-content">
-                                <h2><a href="{{ route('product-details', ['product' => 'bati']) }}">Bati Atta</a></h2>
+                        <p style="font-size: 16px; line-height: 1.7; color: var(--text-color); margin-bottom: 25px;">
+                            {{ $product['description'] }}
+                        </p>
+
+                        <!-- Pack Sizes Start -->
+                        <div class="product-pack-sizes" style="margin-bottom: 28px;">
+                            <h4 style="font-size: 17px; font-weight: 600; margin-bottom: 12px; color: var(--primary-color);">Select Pack Size:</h4>
+                            <div class="size-badge-container" style="display: flex; gap: 10px; flex-wrap: wrap;">
+                                @foreach($sizes as $sIndex => $size)
+                                    <button type="button" 
+                                            class="size-badge {{ $sIndex === 0 ? 'active' : '' }}" 
+                                            onclick="selectProductSize(this)" 
+                                            style="
+                                                padding: 8px 22px;
+                                                font-size: 16px;
+                                                font-weight: 600;
+                                                border: 2px solid {{ $sIndex === 0 ? 'var(--accent-color)' : '#CCCCCC' }};
+                                                background-color: {{ $sIndex === 0 ? 'var(--accent-color)' : '#FFFFFF' }};
+                                                color: {{ $sIndex === 0 ? '#FFFFFF' : 'var(--primary-color)' }};
+                                                border-radius: 30px;
+                                                cursor: pointer;
+                                                transition: all 0.3s ease;
+                                            " 
+                                            data-size="{{ $size }}" 
+                                            data-product-title="{{ $product['title'] }}" 
+                                            data-contact-url="{{ route('contact') }}">
+                                        {{ $size }}
+                                    </button>
+                                @endforeach
                             </div>
-
-                            <div class="product-item-btn">
-                                <a href="{{ route('product-details', ['product' => 'bati']) }}" class="btn-default">View Details</a>
-                            </div>
                         </div>
-                        <!-- Product Item Body End -->
-                    </div>
-                    <!-- Product Item End -->
-                </div>
+                        <!-- Pack Sizes End -->
 
-                <div class="col-lg-4 col-md-6">
-                    <!-- Product Item Start -->
-                    <div class="product-item wow fadeInUp" data-wow-delay="0.4s">
-                        <!-- Product Item Image Start -->
-                        <div class="product-item-img">
-                            <a href="{{ route('product-details', ['product' => 'wheat']) }}" data-cursor-text="View">
-                                <figure>
-                                    <img src="{{ asset('images/product_atta_white.jpg') }}" alt="Wheat Atta">
-                                </figure>
+                        <!-- Action Buttons Start -->
+                        <div class="inquiry-buttons" style="display: flex; gap: 14px; align-items: center; flex-wrap: wrap;">
+                            <!-- Request Inquiry Button -->
+                            <a href="{{ route('contact', ['product' => $product['title'], 'size' => $defaultSize]) }}" class="btn-default btn-inquiry">
+                                Request Inquiry <i class="fa-solid fa-paper-plane" style="margin-left: 8px;"></i>
                             </a>
-                        </div>
-                        <!-- Product Item Image End -->
+                            
+                            <!-- WhatsApp Button -->
+                            <a href="https://wa.me/919725427727?text={{ rawurlencode("Hello Raghuvir Atta, I am interested in inquiring about {$product['title']} ({$defaultSize}).") }}" target="_blank" class="btn-default btn-whatsapp">
+                                Chat On WhatsApp <i class="fa-brands fa-whatsapp" style="margin-left: 8px; font-size: 20px;"></i>
+                            </a>
 
-                        <!-- Product Item Body Start -->
-                        <div class="product-item-body">                            
-                            <div class="product-item-content">
-                                <h2><a href="{{ route('product-details', ['product' => 'wheat']) }}">Wheat Atta</a></h2>
-                            </div>
-
-                            <div class="product-item-btn">
-                                <a href="{{ route('product-details', ['product' => 'wheat']) }}" class="btn-default">View Details</a>
-                            </div>
+                            <!-- View Details Button -->
+                            <a href="{{ route('product-details', ['product' => $product['slug']]) }}" class="btn-default">View Details</a>
                         </div>
-                        <!-- Product Item Body End -->
+                        <!-- Action Buttons End -->
                     </div>
-                    <!-- Product Item End -->
+                    <!-- Product Info End -->
                 </div>
-            </div>
+                <!-- Product Horizontal Card End -->
+            @endforeach
         </div>
     </div>
     <!-- Page Products End -->
 
-    <!-- Main Footer End -->
+    <script>
+        function selectProductSize(element) {
+            const card = element.closest('.product-card-horizontal');
+            if (!card) return;
+
+            const badges = card.querySelectorAll('.size-badge');
+            badges.forEach(badge => {
+                badge.classList.remove('active');
+                badge.style.borderColor = '#CCCCCC';
+                badge.style.backgroundColor = '#FFFFFF';
+                badge.style.color = 'var(--primary-color)';
+            });
+
+            element.classList.add('active');
+            element.style.borderColor = 'var(--accent-color)';
+            element.style.backgroundColor = 'var(--accent-color)';
+            element.style.color = '#FFFFFF';
+
+            const selectedSize = element.getAttribute('data-size');
+            const productTitle = element.getAttribute('data-product-title');
+            const contactBaseUrl = element.getAttribute('data-contact-url');
+
+            // Update WhatsApp Button Link
+            const whatsappBtn = card.querySelector('.btn-whatsapp');
+            if (whatsappBtn) {
+                const waMessage = `Hello Raghuvir Atta, I am interested in inquiring about ${productTitle} (${selectedSize}).`;
+                whatsappBtn.href = `https://wa.me/919725427727?text=${encodeURIComponent(waMessage)}`;
+            }
+
+            // Update Request Inquiry Button Link
+            const inquiryBtn = card.querySelector('.btn-inquiry');
+            if (inquiryBtn && contactBaseUrl) {
+                inquiryBtn.href = `${contactBaseUrl}/${encodeURIComponent(productTitle)}/${encodeURIComponent(selectedSize)}`;
+            }
+        }
+    </script>
 @endsection
