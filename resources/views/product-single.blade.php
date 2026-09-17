@@ -138,9 +138,23 @@
     transition: all 0.35s ease;
 }
 .feature-card-box:hover .feature-card-circle {
-    background: var(--accent-color, #EF801C);
-    border-color: var(--accent-color, #EF801C);
-    color: #FFFFFF;
+    background: var(--accent-color, #EF801C) !important;
+    border-color: var(--accent-color, #EF801C) !important;
+    color: #FFFFFF !important;
+    transform: scale(1.06);
+}
+.feature-card-box:hover .feature-card-circle svg {
+    color: #FFFFFF !important;
+    stroke: #FFFFFF !important;
+}
+.feature-card-box:hover .feature-card-circle svg[fill="currentColor"],
+.feature-card-box:hover .feature-card-circle svg [fill="currentColor"] {
+    fill: #FFFFFF !important;
+}
+.feature-card-box:hover .feature-card-circle svg[stroke="currentColor"],
+.feature-card-box:hover .feature-card-circle svg [stroke="currentColor"],
+.feature-card-box:hover .feature-card-circle svg path[stroke] {
+    stroke: #FFFFFF !important;
 }
 .feature-card-title {
     font-size: 15px;
