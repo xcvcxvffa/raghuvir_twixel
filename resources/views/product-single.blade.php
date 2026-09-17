@@ -15,61 +15,98 @@
     align-items: center;
     gap: 30px 60px;
 }
-.product-single-image-box {
-    background: #FFFFFF;
-    border-radius: 16px;
-    padding: 30px 24px 22px;
+.product-gallery-wrap {
+    width: calc(50% - 30px);
     display: flex;
     flex-direction: column;
+    gap: 16px;
+}
+.product-main-showcase-box {
+    background: #FFFFFF;
+    border-radius: 18px;
+    padding: 35px 25px;
+    display: flex;
     align-items: center;
     justify-content: center;
     border: 1px solid #ECE7DD;
-    box-shadow: 0 4px 18px rgba(0,0,0,0.03);
-    width: calc(50% - 30px);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+    position: relative;
+    min-height: 380px;
+    overflow: hidden;
 }
-.product-main-image-display {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 330px;
-}
-.product-main-image-display img {
+.product-main-showcase-box img {
     max-height: 350px;
     width: auto;
     max-width: 100%;
     object-fit: contain;
     transition: opacity 0.22s ease, transform 0.25s ease;
 }
-.product-thumb-slider-wrap {
+.main-image-nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: #FFFFFF;
+    border: 1.5px solid #E5DAC8;
+    color: var(--primary-color, #241A15);
     display: flex;
     align-items: center;
-    gap: 8px;
+    justify-content: center;
+    font-size: 14px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.1);
+    cursor: pointer;
+    transition: all 0.25s ease-in-out;
+    z-index: 10;
+    opacity: 0.92;
+}
+.main-image-nav-btn.prev-btn {
+    left: 15px;
+}
+.main-image-nav-btn.next-btn {
+    right: 15px;
+}
+.main-image-nav-btn:hover {
+    background: var(--accent-color, #EF801C);
+    border-color: var(--accent-color, #EF801C);
+    color: #FFFFFF;
+    opacity: 1;
+    transform: translateY(-50%) scale(1.1);
+    box-shadow: 0 6px 18px rgba(239, 128, 28, 0.35);
+}
+.product-thumbs-strip-box {
+    background: #FFFFFF;
+    border-radius: 14px;
+    border: 1px solid #ECE7DD;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.02);
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 100%;
-    margin-top: 18px;
-    padding-top: 16px;
-    border-top: 1px solid #EFEAE1;
 }
 .product-thumb-track {
     display: flex;
-    gap: 10px;
+    gap: 12px;
     overflow-x: auto;
     scroll-behavior: smooth;
-    padding: 4px 2px;
+    padding: 2px 0;
     scrollbar-width: none;
     -ms-overflow-style: none;
-    flex: 1;
+    justify-content: center;
+    width: 100%;
 }
 .product-thumb-track::-webkit-scrollbar {
     display: none;
 }
 .product-thumb-item {
-    flex: 0 0 68px;
-    height: 68px;
+    flex: 0 0 70px;
+    height: 70px;
     border-radius: 12px;
     border: 2px solid #EBE4D8;
     background: #FAF7F2;
-    padding: 4px;
+    padding: 5px;
     cursor: pointer;
     transition: all 0.25s ease;
     display: flex;
@@ -80,7 +117,7 @@
 .product-thumb-item:hover {
     border-color: var(--accent-color, #EF801C);
     transform: translateY(-2px);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
 }
 .product-thumb-item.active {
     border-color: var(--accent-color, #EF801C);
@@ -92,26 +129,6 @@
     height: 100%;
     object-fit: cover;
     border-radius: 7px;
-}
-.thumb-nav-btn {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    background: #FAF7F2;
-    border: 1.5px solid #E0D4C3;
-    color: var(--primary-color, #241A15);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 11px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    flex-shrink: 0;
-}
-.thumb-nav-btn:hover {
-    background: var(--accent-color, #EF801C);
-    border-color: var(--accent-color, #EF801C);
-    color: #FFFFFF;
 }
 .product-single-content {
     width: calc(50% - 30px);
@@ -393,6 +410,7 @@
         padding: 30px 24px;
         margin-bottom: 35px;
     }
+    .product-gallery-wrap,
     .product-single-image-box,
     .product-single-content {
         width: 100%;
@@ -426,6 +444,35 @@
         padding: 20px 15px;
         border-radius: 14px;
         margin-bottom: 25px;
+    }
+    .product-main-showcase-box {
+        padding: 20px 15px;
+        min-height: 280px;
+        border-radius: 14px;
+    }
+    .product-main-showcase-box img {
+        max-height: 240px;
+    }
+    .main-image-nav-btn {
+        width: 38px;
+        height: 38px;
+        font-size: 12px;
+    }
+    .main-image-nav-btn.prev-btn {
+        left: 8px;
+    }
+    .main-image-nav-btn.next-btn {
+        right: 8px;
+    }
+    .product-thumbs-strip-box {
+        padding: 10px 12px;
+        border-radius: 12px;
+    }
+    .product-thumb-item {
+        flex: 0 0 58px;
+        height: 58px;
+        border-radius: 10px;
+        padding: 4px;
     }
     .product-single-image-box {
         padding: 16px 12px;
@@ -559,45 +606,45 @@
                 <div class="col-lg-12">
                     <!-- Main Product Showcase Box Start -->
                     <div class="product-about-box product-single-card wow fadeInUp">
-                        <!-- Product Image Start -->
-                        <div class="product-single-image product-single-image-box">
-                            <!-- Main Active Product Image Display -->
-                            <div class="product-main-image-display">
-                                <figure style="margin: 0; display: flex; align-items: center; justify-content: center; width: 100%;">
-                                    <img id="product-main-img" src="{{ asset($image ?? 'images/product_atta_white.jpg') }}" alt="{{ $title }}">
-                                </figure>
-                            </div>
-                            
-                            <!-- Product Image Thumbnails Slider -->
-                            <div class="product-thumb-slider-wrap">
-                                <button type="button" class="thumb-nav-btn prev-btn" onclick="slideThumbs('prev')" aria-label="Previous image">
+                        <!-- Product Image Gallery Start -->
+                        <div class="product-single-image product-gallery-wrap">
+                            <!-- 1. Upper Box: Main Product Image Showcase with Left/Right Navigation Arrows -->
+                            <div class="product-main-showcase-box">
+                                <button type="button" class="main-image-nav-btn prev-btn" onclick="slideMainImage('prev')" aria-label="Previous Image">
                                     <i class="fa-solid fa-chevron-left"></i>
                                 </button>
                                 
-                                <div class="product-thumb-track" id="productThumbTrack">
-                                    <div class="product-thumb-item active" onclick="switchProductImage(this, '{{ asset('images/product_atta_white.jpg') }}')">
-                                        <img src="{{ asset('images/product_atta_white.jpg') }}" alt="Pack Front View">
-                                    </div>
-                                    <div class="product-thumb-item" onclick="switchProductImage(this, '{{ asset('images/product_atta.jpg') }}')">
-                                        <img src="{{ asset('images/product_atta.jpg') }}" alt="Pack Perspective">
-                                    </div>
-                                    <div class="product-thumb-item" onclick="switchProductImage(this, '{{ asset('images/product-image-1.jpg') }}')">
-                                        <img src="{{ asset('images/product-image-1.jpg') }}" alt="Harvest Wheat Grains">
-                                    </div>
-                                    <div class="product-thumb-item" onclick="switchProductImage(this, '{{ asset('images/ideal_roti.jpg') }}')">
-                                        <img src="{{ asset('images/ideal_roti.jpg') }}" alt="Fresh Soft Roti">
-                                    </div>
-                                    <div class="product-thumb-item" onclick="switchProductImage(this, '{{ asset('images/ideal_paratha.jpg') }}')">
-                                        <img src="{{ asset('images/ideal_paratha.jpg') }}" alt="Crispy Paratha">
-                                    </div>
-                                </div>
+                                <figure style="margin: 0; display: flex; align-items: center; justify-content: center; width: 100%; height: 100%;">
+                                    <img id="product-main-img" src="{{ asset($image ?? 'images/product_atta_white.jpg') }}" alt="{{ $title }}">
+                                </figure>
                                 
-                                <button type="button" class="thumb-nav-btn next-btn" onclick="slideThumbs('next')" aria-label="Next image">
+                                <button type="button" class="main-image-nav-btn next-btn" onclick="slideMainImage('next')" aria-label="Next Image">
                                     <i class="fa-solid fa-chevron-right"></i>
                                 </button>
                             </div>
+                            
+                            <!-- 2. Lower Box: Separate Product Image Thumbnails Strip -->
+                            <div class="product-thumbs-strip-box">
+                                <div class="product-thumb-track" id="productThumbTrack">
+                                    <div class="product-thumb-item active" data-index="0" onclick="switchProductImageByIndex(0)">
+                                        <img src="{{ asset('images/product_atta_white.jpg') }}" alt="Pack Front View">
+                                    </div>
+                                    <div class="product-thumb-item" data-index="1" onclick="switchProductImageByIndex(1)">
+                                        <img src="{{ asset('images/product_atta.jpg') }}" alt="Pack Perspective">
+                                    </div>
+                                    <div class="product-thumb-item" data-index="2" onclick="switchProductImageByIndex(2)">
+                                        <img src="{{ asset('images/product-image-1.jpg') }}" alt="Harvest Wheat Grains">
+                                    </div>
+                                    <div class="product-thumb-item" data-index="3" onclick="switchProductImageByIndex(3)">
+                                        <img src="{{ asset('images/ideal_roti.jpg') }}" alt="Fresh Soft Roti">
+                                    </div>
+                                    <div class="product-thumb-item" data-index="4" onclick="switchProductImageByIndex(4)">
+                                        <img src="{{ asset('images/ideal_paratha.jpg') }}" alt="Crispy Paratha">
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <!-- Product Image End -->
+                        <!-- Product Image Gallery End -->
 
                         <!-- Product Single Content Start -->
                         <div class="product-single-content">
@@ -671,36 +718,71 @@
                                     inquiryBtn.href = `${contactBaseUrl}/${encodeURIComponent(productTitle)}/${encodeURIComponent(selectedSize)}`;
                                 }
 
-                                function switchProductImage(element, newSrc) {
+                                const galleryImages = [
+                                    "{{ asset($image ?? 'images/product_atta_white.jpg') }}",
+                                    "{{ asset('images/product_atta.jpg') }}",
+                                    "{{ asset('images/product-image-1.jpg') }}",
+                                    "{{ asset('images/ideal_roti.jpg') }}",
+                                    "{{ asset('images/ideal_paratha.jpg') }}"
+                                ];
+                                let currentGalleryIndex = 0;
+
+                                function switchProductImageByIndex(index) {
+                                    if (index < 0 || index >= galleryImages.length) return;
+                                    currentGalleryIndex = index;
+                                    
                                     const mainImg = document.getElementById('product-main-img');
-                                    if (!mainImg) return;
-                                    
-                                    mainImg.style.opacity = '0.25';
-                                    mainImg.style.transform = 'scale(0.97)';
-                                    
-                                    setTimeout(() => {
-                                        mainImg.src = newSrc;
-                                        mainImg.style.opacity = '1';
-                                        mainImg.style.transform = 'scale(1)';
-                                    }, 180);
+                                    if (mainImg) {
+                                        mainImg.style.opacity = '0.25';
+                                        mainImg.style.transform = 'scale(0.97)';
+                                        
+                                        setTimeout(() => {
+                                            mainImg.src = galleryImages[currentGalleryIndex];
+                                            mainImg.style.opacity = '1';
+                                            mainImg.style.transform = 'scale(1)';
+                                        }, 160);
+                                    }
                                     
                                     const track = document.getElementById('productThumbTrack');
                                     if (track) {
-                                        track.querySelectorAll('.product-thumb-item').forEach(item => {
-                                            item.classList.remove('active');
+                                        const items = track.querySelectorAll('.product-thumb-item');
+                                        items.forEach((item, idx) => {
+                                            if (idx === currentGalleryIndex) {
+                                                item.classList.add('active');
+                                                // Ensure active thumb is scrolled into view if container overflows on small screen
+                                                item.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+                                            } else {
+                                                item.classList.remove('active');
+                                            }
                                         });
                                     }
-                                    element.classList.add('active');
                                 }
 
-                                function slideThumbs(direction) {
-                                    const track = document.getElementById('productThumbTrack');
-                                    if (!track) return;
-                                    const scrollAmount = 140;
+                                function slideMainImage(direction) {
                                     if (direction === 'next') {
-                                        track.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+                                        let nextIndex = currentGalleryIndex + 1;
+                                        if (nextIndex >= galleryImages.length) nextIndex = 0;
+                                        switchProductImageByIndex(nextIndex);
                                     } else {
-                                        track.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+                                        let prevIndex = currentGalleryIndex - 1;
+                                        if (prevIndex < 0) prevIndex = galleryImages.length - 1;
+                                        switchProductImageByIndex(prevIndex);
+                                    }
+                                }
+
+                                function switchProductImage(element, newSrc) {
+                                    const track = document.getElementById('productThumbTrack');
+                                    if (track) {
+                                        const items = Array.from(track.querySelectorAll('.product-thumb-item'));
+                                        const index = items.indexOf(element);
+                                        if (index !== -1) {
+                                            switchProductImageByIndex(index);
+                                            return;
+                                        }
+                                    }
+                                    const mainImg = document.getElementById('product-main-img');
+                                    if (mainImg) {
+                                        mainImg.src = newSrc;
                                     }
                                 }
                             </script>                               
