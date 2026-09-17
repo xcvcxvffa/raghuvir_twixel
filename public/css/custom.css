@@ -978,6 +978,34 @@ header.main-header .header-sticky.active {
 	min-height: 34px;
 }
 
+/* Product Size/Weight Tags */
+.mega-size-tags {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px;
+	margin: 4px 0 12px 0;
+}
+
+.mega-size-tag {
+	display: inline-flex;
+	align-items: center;
+	padding: 3px 10px;
+	background: #FEF3E8;
+	border: 1px solid #F0C99A;
+	border-radius: 20px !important;
+	font-size: 11px;
+	font-weight: 700;
+	color: #B35A0A;
+	letter-spacing: 0.3px;
+	transition: all 0.2s ease;
+}
+
+.mega-product-item:hover .mega-size-tag {
+	background: #FDE8CE;
+	border-color: #EF801C;
+	color: #874200;
+}
+
 /* Sleek Full-Width Card Action */
 .mega-card-action {
 	width: 100%;

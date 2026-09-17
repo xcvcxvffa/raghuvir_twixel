@@ -113,40 +113,7 @@
                     <!-- About Us Content End -->
                 </div>
 
-                <div class="col-lg-12">
-                    <!-- About Us Footer Start -->
-                    <div class="about-us-footer">
-                        <!-- About Us Footer List Start -->
-                        <div class="about-us-footer-list wow fadeInUp" data-wow-delay="1s">
-                            <ul>
-                                <li>Natural Vegetables</li>
-                                <li>Fresh Organic Food</li>
-                                <li>Chemical-Free Farming</li>
-                                <li>Sustainable Agriculture</li>
-                            </ul>
-                        </div>
-                        <!-- About Us Footer List End -->
 
-                        <!-- Section Footer Text Start -->
-                        <div class="section-footer-text section-satisfy-img wow fadeInUp" data-wow-delay="1.2s">
-                            <!-- Satisfy Client Images Start -->
-                            <div class="satisfy-client-images">
-                                <div class="satisfy-client-image">
-                                    <figure class="image-anime">
-                                        <img src="{{ asset('images/author-1.jpg') }}" alt="">
-                                    </figure>
-                                </div>
-                                <div class="satisfy-client-image add-more">
-                                    <i><img src="{{ asset('images/icon-phone-primary.svg') }}" alt=""></i>
-                                </div>
-                            </div>
-                            <!-- Satisfy Client Images End -->    
-                            <p>Let's make something great work together. <a href="{{ route('contact') }}">Get Free Quote</a></p>                         
-                        </div>
-                        <!-- Section Footer Text End -->
-                    </div>
-                    <!-- About Us Footer End --> 
-                </div>
             </div>
         </div>
     </div>
@@ -438,40 +405,7 @@
                     <!-- Our Advantage Boxes End -->
                 </div>
 
-                <div class="col-lg-12">
-                    <!-- Our Advantage Footer Start -->
-                    <div class="our-advantage-footer wow fadeInUp" data-wow-delay="0.4s">
-                        <!-- Our Advantage Footer List Start -->
-                        <div class="our-advantage-footer-list">
-                            <ul>
-                                <li>Fresh Organic Food</li>
-                                <li>Natural Vegetables</li>
-                                <li>Sustainable Agriculture</li>
-                                <li>Chemical-Free Farming</li>
-                            </ul>
-                        </div>
-                        <!-- Our Advantage Footer List End -->
 
-                        <!-- Section Footer Text Start -->
-                        <div class="section-footer-text section-satisfy-img">
-                            <!-- Satisfy Client Images Start -->
-                            <div class="satisfy-client-images">
-                                <div class="satisfy-client-image">
-                                    <figure class="image-anime">
-                                        <img src="{{ asset('images/author-1.jpg') }}" alt="">
-                                    </figure>
-                                </div>
-                                <div class="satisfy-client-image add-more">
-                                    <i><img src="{{ asset('images/icon-phone-primary.svg') }}" alt=""></i>
-                                </div>
-                            </div>
-                            <!-- Satisfy Client Images End -->
-                            <p>Let's make something great work together. <a href="{{ route('contact') }}">Get Free Quote</a></p>
-                        </div>
-                        <!-- Section Footer Text End -->
-                    </div>
-                    <!-- Our Advantage Footer End --> 
-                </div>
             </div>
         </div>
     </div>

@@ -44,29 +44,14 @@
 
                                             <!-- Right 3-Col Product Cards Grid -->
                                             <div class="mega-products-grid">
-                                                <!-- Card 1: Chakki Atta -->
-                                                <a href="{{ route('product-details', ['product' => 'atta']) }}" class="mega-product-item">
-                                                    <div class="mega-thumb-wrap">
-                                                        <img src="{{ asset('images/product_atta_transparent.png') }}" alt="Raghuvir Chakki Atta">
-                                                    </div>
-                                                    <div class="mega-item-info">
-                                                        <h5>Chakki Atta</h5>
-                                                        <p>100% pure stone-ground whole wheat for super soft, nutritious daily rotis.</p>
-                                                        <div class="mega-card-action">
-                                                            <span>Explore Product</span>
-                                                            <i class="fa-solid fa-arrow-right"></i>
-                                                        </div>
-                                                    </div>
-                                                </a>
-
-                                                <!-- Card 2: Bati Atta -->
+                                                <!-- Card 1: Bati Atta -->
                                                 <a href="{{ route('product-details', ['product' => 'bati']) }}" class="mega-product-item">
                                                     <div class="mega-thumb-wrap">
                                                         <img src="{{ asset('images/product_atta_transparent.png') }}" alt="Raghuvir Bati Atta">
                                                     </div>
                                                     <div class="mega-item-info">
                                                         <h5>Bati Atta</h5>
-                                                        <p>Coarsely stone-ground for rich authentic flavor and crispy Dal Batis &amp; Baflas.</p>
+                                                        <p>Coarsely stone-ground for rich, authentic flavour — perfect for crispy Dal Batis &amp; Baflas.</p>
                                                         <div class="mega-card-action">
                                                             <span>Explore Product</span>
                                                             <i class="fa-solid fa-arrow-right"></i>
@@ -74,14 +59,29 @@
                                                     </div>
                                                 </a>
 
-                                                <!-- Card 3: Commercial Wheat Atta -->
-                                                <a href="{{ route('product-details', ['product' => 'wheat']) }}" class="mega-product-item">
+                                                <!-- Card 2: Whole Wheat Atta -->
+                                                <a href="{{ route('product-details', ['product' => 'atta']) }}" class="mega-product-item">
                                                     <div class="mega-thumb-wrap">
-                                                        <img src="{{ asset('images/product_atta_transparent.png') }}" alt="Commercial Wheat Atta">
+                                                        <img src="{{ asset('images/product_atta_transparent.png') }}" alt="Raghuvir Whole Wheat Atta">
                                                     </div>
                                                     <div class="mega-item-info">
-                                                        <h5>Wheat Atta</h5>
-                                                        <p>Engineered for high water absorption &amp; yield for caterers, bakeries &amp; hotels.</p>
+                                                        <h5>Whole Wheat Atta</h5>
+                                                        <p>100% pure chakki-ground whole wheat for super soft, nutritious daily rotis &amp; parathas.</p>
+                                                        <div class="mega-card-action">
+                                                            <span>Explore Product</span>
+                                                            <i class="fa-solid fa-arrow-right"></i>
+                                                        </div>
+                                                    </div>
+                                                </a>
+
+                                                <!-- Card 3: Wheat Bran -->
+                                                <a href="{{ route('product-details', ['product' => 'wheat']) }}" class="mega-product-item">
+                                                    <div class="mega-thumb-wrap">
+                                                        <img src="{{ asset('images/product_atta_transparent.png') }}" alt="Raghuvir Wheat Bran">
+                                                    </div>
+                                                    <div class="mega-item-info">
+                                                        <h5>Wheat Bran</h5>
+                                                        <p>High-fiber wheat bran, ideal for bulk baking, catering &amp; commercial kitchens. Available in 49 kg.</p>
                                                         <div class="mega-card-action">
                                                             <span>Explore Product</span>
                                                             <i class="fa-solid fa-arrow-right"></i>
@@ -127,25 +127,8 @@
                                 </ul>
                             </li>
                             <!-- Our Products Mega Menu End -->
+                            <li class="nav-item"><a class="nav-link" href="{{ route('blog') }}">Blog</a></li>
                             <li class="nav-item"><a class="nav-link" href="{{ route('contact') }}">Contact Us</a></li>
-                            <li class="nav-item submenu"><a class="nav-link" href="#">Demo Pages</a>
-                                <ul>
-                                    <li class="nav-item"><a class="nav-link" href="{{ route('home-v2') }}">Home - Version 2</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="{{ route('home-v3') }}">Home - Version 3</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="{{ route('home-v4') }}">Home - Version 4</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="{{ route('product-details', ['product' => 'atta']) }}">Product Details</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="{{ route('blog') }}">Blog</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="{{ route('blog-details') }}">Blog Details</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="{{ route('team') }}">Our Team</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="{{ route('team-details') }}">Team Details</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="{{ route('pricing') }}">Pricing Plan</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="{{ route('testimonials') }}">Testimonials</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="{{ route('image-gallery') }}">Image Gallery</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="{{ route('video-gallery') }}">Video Gallery</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="{{ route('faqs') }}">FAQs</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="{{ route('404') }}">404 Page</a></li>
-                                </ul>
-                            </li>
                         </ul>
                     </div>
                     

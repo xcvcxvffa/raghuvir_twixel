@@ -42,6 +42,7 @@
                                 <li><a href="{{ route('home') }}">Homepage</a></li>
                                 <li><a href="{{ route('about') }}">About Us</a></li>
                                 <li><a href="{{ route('products') }}">Our Products</a></li>
+                                <li><a href="{{ route('blog') }}">Blog</a></li>
                                 <li><a href="{{ route('contact') }}">Contact Us</a></li>
                             </ul>
                         </div>
@@ -51,9 +52,9 @@
                         <div class="footer-links">
                             <h3>Our Products</h3>
                             <ul>
-                                <li><a href="{{ route('product-details', ['product' => 'atta']) }}">Chakki Atta</a></li>
                                 <li><a href="{{ route('product-details', ['product' => 'bati']) }}">Bati Atta</a></li>
-                                <li><a href="{{ route('product-details', ['product' => 'wheat']) }}">Wheat Atta</a></li>
+                                <li><a href="{{ route('product-details', ['product' => 'atta']) }}">Whole Wheat Atta</a></li>
+                                <li><a href="{{ route('product-details', ['product' => 'wheat']) }}">Wheat Bran</a></li>
                             </ul>
                         </div>
                         <!-- Footer Links End -->
