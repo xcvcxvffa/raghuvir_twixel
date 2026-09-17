@@ -114,31 +114,32 @@
     @php
         $productList = $products ?? [
             [
-                'slug' => 'atta',
-                'title' => 'Raghuvir Chakki Atta',
+                'slug' => 'bati',
+                'title' => 'Bati Atta',
                 'subtitle' => '100% Pure & Farm Fresh',
                 'sizes' => ['5kg', '30kg'],
-                'description' => 'Raghuvir Hygienic Chakki Atta is made from premium quality wheat, clean and pure, rich in natural dietary fiber and nutrients. We process our wheat hygienically to keep the moisture low, ensuring fresh, soft, and healthy rotis for your family.',
-                'image' => 'images/product_atta_white.jpg',
-            ],
-            [
-                'slug' => 'bati',
-                'title' => 'Raghuvir Bati Atta',
-                'subtitle' => '100% Pure & Farm Fresh',
-                'sizes' => ['30kg'],
                 'description' => 'Raghuvir Bati Atta is specially milled to the perfect texture for making delicious, authentic Batis. Ground from handpicked premium wheat grains, it ensures your Batis are crispy on the outside and soft on the inside.',
                 'image' => 'images/product_atta_white.jpg',
             ],
             [
+                'slug' => 'atta',
+                'title' => 'Whole Wheat Atta',
+                'subtitle' => '100% Pure & Farm Fresh',
+                'sizes' => ['5kg', '30kg'],
+                'description' => 'Raghuvir Hygienic Whole Wheat Atta is made from premium quality wheat, clean and pure, rich in natural dietary fiber and nutrients. Ensuring fresh, soft, and healthy rotis for your family.',
+                'image' => 'images/product_atta_white.jpg',
+            ],
+            [
                 'slug' => 'wheat',
-                'title' => 'Raghuvir Wheat Atta',
+                'title' => 'Wheat Bran',
                 'subtitle' => '100% Pure & Farm Fresh',
                 'sizes' => ['49kg'],
-                'description' => 'Raghuvir Wheat Atta is high-quality commercial grade flour, ideal for bulk baking, catering, and home use. Milled under strict quality controls to maintain its nutritional integrity and excellent baking properties.',
+                'description' => 'Raghuvir Wheat Bran is high-quality, fiber-rich flour ideal for bulk baking, catering, and home use. Milled under strict quality controls to maintain its nutritional integrity.',
                 'image' => 'images/product_atta_white.jpg',
             ]
         ];
     @endphp
+
 
     <!-- Page Products Start -->
     <div class="page-products" style="padding: 90px 0 60px;">
