@@ -51,11 +51,6 @@
                                                     </div>
                                                     <div class="mega-item-info">
                                                         <h5>Bati Atta</h5>
-                                                        <p>Coarsely stone-ground for rich, authentic flavour — perfect for crispy Dal Batis &amp; Baflas.</p>
-                                                        <div class="mega-card-action">
-                                                            <span>Explore Product</span>
-                                                            <i class="fa-solid fa-arrow-right"></i>
-                                                        </div>
                                                     </div>
                                                 </a>
 
@@ -66,11 +61,6 @@
                                                     </div>
                                                     <div class="mega-item-info">
                                                         <h5>Whole Wheat Atta</h5>
-                                                        <p>100% pure chakki-ground whole wheat for super soft, nutritious daily rotis &amp; parathas.</p>
-                                                        <div class="mega-card-action">
-                                                            <span>Explore Product</span>
-                                                            <i class="fa-solid fa-arrow-right"></i>
-                                                        </div>
                                                     </div>
                                                 </a>
 
@@ -81,11 +71,6 @@
                                                     </div>
                                                     <div class="mega-item-info">
                                                         <h5>Wheat Bran</h5>
-                                                        <p>High-fiber wheat bran, ideal for bulk baking, catering &amp; commercial kitchens. Available in 49 kg.</p>
-                                                        <div class="mega-card-action">
-                                                            <span>Explore Product</span>
-                                                            <i class="fa-solid fa-arrow-right"></i>
-                                                        </div>
                                                     </div>
                                                 </a>
                                             </div>
