@@ -31,7 +31,8 @@
 	<!-- Mouse Cursor Css File -->
 	<link rel="stylesheet" href="{{ asset('css/mousecursor.css') }}">
 	<!-- Main Custom Css -->
-	<link href="{{ asset('css/custom.css') }}" rel="stylesheet" media="screen">
+	<link href="{{ asset('css/custom.css') }}?v={{ file_exists(public_path('css/custom.css')) ? filemtime(public_path('css/custom.css')) : time() }}" rel="stylesheet" media="screen">
+	@stack('styles')
 </head>
 
 <body>

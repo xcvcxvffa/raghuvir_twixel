@@ -2,6 +2,90 @@
 
 @section('title', 'Our Products - Raghuvir Atta')
 
+@push('styles')
+<style>
+.product-card-horizontal {
+    display: flex;
+    align-items: center;
+    gap: 40px 60px;
+    background: var(--secondary-color, #F5F1E9);
+    border-radius: 16px;
+    padding: 35px 30px;
+    margin-bottom: 45px;
+    transition: all 0.3s ease-in-out;
+}
+.product-card-horizontal:hover {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+}
+.product-card-image-wrap {
+    width: calc(45% - 30px);
+    background: #FFFFFF;
+    border-radius: 16px;
+    padding: 30px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #ECE7DD;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.03);
+    overflow: hidden;
+}
+.product-card-image-wrap a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+.product-card-image-wrap img {
+    max-height: 350px;
+    width: auto;
+    max-width: 100%;
+    object-fit: contain;
+    transition: transform 0.4s ease;
+}
+.product-card-image-wrap:hover img {
+    transform: scale(1.04);
+}
+.product-card-info {
+    width: calc(55% - 30px);
+}
+.size-badge.active {
+    background-color: var(--accent-color, #EF801C) !important;
+    border-color: var(--accent-color, #EF801C) !important;
+    color: #FFFFFF !important;
+}
+.btn-whatsapp {
+    background-color: #25D366 !important;
+    border-color: #25D366 !important;
+    color: #FFFFFF !important;
+}
+.btn-whatsapp:hover {
+    background-color: #1EBE5D !important;
+    border-color: #1EBE5D !important;
+    color: #FFFFFF !important;
+}
+@media (max-width: 991px) {
+    .product-card-horizontal {
+        flex-direction: column;
+        gap: 25px;
+        padding: 25px 20px;
+    }
+    .product-card-image-wrap,
+    .product-card-info {
+        width: 100%;
+    }
+    .inquiry-buttons {
+        flex-direction: column;
+        align-items: stretch !important;
+    }
+    .inquiry-buttons a {
+        width: 100%;
+        text-align: center;
+        justify-content: center;
+    }
+}
+</style>
+@endpush
+
 @section('content')
 <!-- Header End -->
 
