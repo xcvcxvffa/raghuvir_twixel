@@ -1009,80 +1009,13 @@ header.main-header .header-sticky.active {
 }
 
 /* ========================================================
-   Hero Continuous Marquee Ticker Styles
+   Hero Continuous Marquee Slider Styles (Text Ticker)
    ======================================================== */
-.hero-marquee-ticker-section {
-	position: relative;
-	background: rgba(26, 18, 14, 0.82) !important;
-	backdrop-filter: blur(20px) !important;
-	-webkit-backdrop-filter: blur(20px) !important;
-	border-top: 1px solid rgba(255, 255, 255, 0.12) !important;
-	border-bottom: 1px solid rgba(255, 255, 255, 0.12) !important;
-	padding: 18px 0 !important;
-	z-index: 2;
+.hero-marquee-slider {
 	overflow: hidden;
-}
-
-.hero-marquee-bar {
+	position: relative;
 	display: flex;
 	align-items: center;
-	width: 100%;
-	position: relative;
-}
-
-.hero-marquee-badge {
-	flex-shrink: 0;
-	display: inline-flex;
-	align-items: center;
-	gap: 10px;
-	background: linear-gradient(135deg, rgba(239, 128, 28, 0.24), rgba(239, 128, 28, 0.08));
-	border: 1px solid rgba(239, 128, 28, 0.45);
-	padding: 8px 20px;
-	border-radius: 30px;
-	margin-right: 28px;
-	z-index: 3;
-	white-space: nowrap;
-	box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-}
-
-.hero-marquee-badge i {
-	color: #EF801C;
-	font-size: 15px;
-}
-
-.pulse-live-indicator {
-	width: 8px;
-	height: 8px;
-	border-radius: 50%;
-	background: #EF801C;
-	box-shadow: 0 0 0 0 rgba(239, 128, 28, 0.7);
-	animation: pulseLiveDot 1.8s infinite;
-}
-
-@keyframes pulseLiveDot {
-	0% {
-		box-shadow: 0 0 0 0 rgba(239, 128, 28, 0.7);
-	}
-	70% {
-		box-shadow: 0 0 0 8px rgba(239, 128, 28, 0);
-	}
-	100% {
-		box-shadow: 0 0 0 0 rgba(239, 128, 28, 0);
-	}
-}
-
-.hero-marquee-badge .badge-title {
-	color: #FFFFFF;
-	font-weight: 700;
-	font-size: 13.5px;
-	letter-spacing: 0.8px;
-	text-transform: uppercase;
-}
-
-.hero-marquee-viewport {
-	flex: 1;
-	overflow: hidden;
-	position: relative;
 	mask-image: linear-gradient(to right, transparent 0%, black 4%, black 96%, transparent 100%);
 	-webkit-mask-image: linear-gradient(to right, transparent 0%, black 4%, black 96%, transparent 100%);
 }
@@ -1090,7 +1023,7 @@ header.main-header .header-sticky.active {
 .hero-marquee-track {
 	display: flex;
 	width: max-content;
-	animation: continuousMarqueeScroll 40s linear infinite;
+	animation: continuousMarqueeScroll 32s linear infinite;
 	will-change: transform;
 }
 
@@ -1101,17 +1034,17 @@ header.main-header .header-sticky.active {
 .hero-marquee-group {
 	display: flex;
 	align-items: center;
-	gap: 32px;
+	gap: 28px;
 	flex-shrink: 0;
-	padding-right: 32px;
+	padding-right: 28px;
 }
 
-.marquee-item {
+.hero-marquee-group .marquee-item {
 	display: inline-flex;
 	align-items: center;
 	gap: 9px;
-	color: rgba(255, 255, 255, 0.95);
-	font-size: 15px;
+	color: var(--white-color);
+	font-size: 16px;
 	font-weight: 500;
 	white-space: nowrap;
 	letter-spacing: 0.25px;
@@ -1119,18 +1052,18 @@ header.main-header .header-sticky.active {
 	cursor: default;
 }
 
-.marquee-item:hover {
-	color: #EF801C;
+.hero-marquee-group .marquee-item:hover {
+	color: var(--accent-color);
 	transform: translateY(-1px);
 }
 
-.marquee-item i {
-	color: #EF801C;
+.hero-marquee-group .marquee-item i {
+	color: var(--accent-color);
 	font-size: 14px;
 }
 
-.marquee-sep {
-	color: #EF801C;
+.hero-marquee-group .marquee-sep {
+	color: var(--accent-color);
 	font-size: 13px;
 	opacity: 0.75;
 }
@@ -1145,47 +1078,26 @@ header.main-header .header-sticky.active {
 }
 
 @media (max-width: 991px) {
-	.hero-marquee-ticker-section {
-		padding: 15px 0 !important;
-	}
-	.hero-marquee-badge {
-		padding: 6px 15px;
-		margin-right: 18px;
-	}
-	.hero-marquee-badge .badge-title {
-		font-size: 12px;
-	}
-	.marquee-item {
-		font-size: 14px;
-	}
 	.hero-marquee-group {
-		gap: 24px;
-		padding-right: 24px;
+		gap: 20px;
+		padding-right: 20px;
+	}
+	.hero-marquee-group .marquee-item {
+		font-size: 14.5px;
 	}
 }
 
 @media (max-width: 767px) {
-	.hero-marquee-ticker-section {
-		padding: 13px 0 !important;
-	}
-	.hero-marquee-bar {
-		flex-direction: column;
-		align-items: center;
-		gap: 12px;
-	}
-	.hero-marquee-badge {
-		margin-right: 0;
-		padding: 5px 14px;
-	}
-	.hero-marquee-viewport {
+	.hero-marquee-slider {
 		width: 100%;
-	}
-	.marquee-item {
-		font-size: 13.5px;
+		margin-top: 5px;
 	}
 	.hero-marquee-group {
-		gap: 20px;
-		padding-right: 20px;
+		gap: 16px;
+		padding-right: 16px;
+	}
+	.hero-marquee-group .marquee-item {
+		font-size: 13.5px;
 	}
 }
 

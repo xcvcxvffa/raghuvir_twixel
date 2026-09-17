@@ -58,64 +58,70 @@
         </div>
         <!-- Hero Box End -->
 
-        <!-- Hero Company Marquee Section Start -->
-        <div class="hero-company-slider-box hero-marquee-ticker-section">
-            <div class="container-fluid px-lg-4 px-3">
-                <div class="hero-marquee-bar">
-                    <!-- Brand Promise Live Badge -->
-                    <div class="hero-marquee-badge">
-                        <span class="pulse-live-indicator"></span>
-                        <i class="fa-solid fa-wheat-awn"></i>
-                        <span class="badge-title">Raghuvir Atta</span>
-                    </div>
+        <!-- Hero Company Slider Box Start -->
+        <div class="hero-company-slider-box">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <!-- Hero Company Slider Body Start -->
+                        <div class="hero-company-slider-body">
+                            <!-- Hero Company Slider Content Start -->
+                            <div class="hero-company-slider-content">
+                                <h3>Trusted By More Than <span class="counter">100</span>+ Companies</h3>
+                            </div>
+                            <!-- Hero Company Slider Content End -->
 
-                    <!-- Continuous Infinite Scrolling Marquee Ticker -->
-                    <div class="hero-marquee-viewport">
-                        <div class="hero-marquee-track">
-                            <!-- Group 1 -->
-                            <div class="hero-marquee-group">
-                                <span class="marquee-item"><i class="fa-solid fa-circle-check"></i> 100% Pure Chakki Atta</span>
-                                <span class="marquee-sep">✦</span>
-                                <span class="marquee-item"><i class="fa-solid fa-seedling"></i> Farm-Fresh Selected Golden Wheat</span>
-                                <span class="marquee-sep">✦</span>
-                                <span class="marquee-item"><i class="fa-solid fa-shield-halved"></i> Untouched By Hands & 100% Hygienic</span>
-                                <span class="marquee-sep">✦</span>
-                                <span class="marquee-item"><i class="fa-solid fa-heart-pulse"></i> Rich In Natural Dietary Fiber</span>
-                                <span class="marquee-sep">✦</span>
-                                <span class="marquee-item"><i class="fa-solid fa-bowl-rice"></i> Extra Soft & Fluffy Rotis Guaranteed</span>
-                                <span class="marquee-sep">✦</span>
-                                <span class="marquee-item"><i class="fa-solid fa-droplet-slash"></i> Low Moisture For Long-Lasting Freshness</span>
-                                <span class="marquee-sep">✦</span>
-                                <span class="marquee-item"><i class="fa-solid fa-leaf"></i> Zero Preservatives & 100% Natural</span>
-                                <span class="marquee-sep">✦</span>
-                                <span class="marquee-item"><i class="fa-solid fa-mortar-pestle"></i> Traditional Stone Ground Quality</span>
-                                <span class="marquee-sep">✦</span>
+                            <!-- Hero Company Marquee Start -->
+                            <div class="hero-company-slider hero-marquee-slider">
+                                <div class="hero-marquee-track">
+                                    <!-- Group 1 -->
+                                    <div class="hero-marquee-group">
+                                        <span class="marquee-item"><i class="fa-solid fa-circle-check"></i> 100% Pure Chakki Atta</span>
+                                        <span class="marquee-sep">✦</span>
+                                        <span class="marquee-item"><i class="fa-solid fa-seedling"></i> Farm-Fresh Golden Wheat</span>
+                                        <span class="marquee-sep">✦</span>
+                                        <span class="marquee-item"><i class="fa-solid fa-shield-halved"></i> 100% Hygienic Packaging</span>
+                                        <span class="marquee-sep">✦</span>
+                                        <span class="marquee-item"><i class="fa-solid fa-heart-pulse"></i> Rich In Dietary Fiber</span>
+                                        <span class="marquee-sep">✦</span>
+                                        <span class="marquee-item"><i class="fa-solid fa-bowl-rice"></i> Soft & Fluffy Rotis Guaranteed</span>
+                                        <span class="marquee-sep">✦</span>
+                                        <span class="marquee-item"><i class="fa-solid fa-droplet-slash"></i> Low Moisture Freshness</span>
+                                        <span class="marquee-sep">✦</span>
+                                        <span class="marquee-item"><i class="fa-solid fa-leaf"></i> Zero Preservatives & 100% Natural</span>
+                                        <span class="marquee-sep">✦</span>
+                                        <span class="marquee-item"><i class="fa-solid fa-mortar-pestle"></i> Traditional Stone Ground</span>
+                                        <span class="marquee-sep">✦</span>
+                                    </div>
+                                    <!-- Group 2 (Duplicate for seamless continuous loop) -->
+                                    <div class="hero-marquee-group" aria-hidden="true">
+                                        <span class="marquee-item"><i class="fa-solid fa-circle-check"></i> 100% Pure Chakki Atta</span>
+                                        <span class="marquee-sep">✦</span>
+                                        <span class="marquee-item"><i class="fa-solid fa-seedling"></i> Farm-Fresh Golden Wheat</span>
+                                        <span class="marquee-sep">✦</span>
+                                        <span class="marquee-item"><i class="fa-solid fa-shield-halved"></i> 100% Hygienic Packaging</span>
+                                        <span class="marquee-sep">✦</span>
+                                        <span class="marquee-item"><i class="fa-solid fa-heart-pulse"></i> Rich In Dietary Fiber</span>
+                                        <span class="marquee-sep">✦</span>
+                                        <span class="marquee-item"><i class="fa-solid fa-bowl-rice"></i> Soft & Fluffy Rotis Guaranteed</span>
+                                        <span class="marquee-sep">✦</span>
+                                        <span class="marquee-item"><i class="fa-solid fa-droplet-slash"></i> Low Moisture Freshness</span>
+                                        <span class="marquee-sep">✦</span>
+                                        <span class="marquee-item"><i class="fa-solid fa-leaf"></i> Zero Preservatives & 100% Natural</span>
+                                        <span class="marquee-sep">✦</span>
+                                        <span class="marquee-item"><i class="fa-solid fa-mortar-pestle"></i> Traditional Stone Ground</span>
+                                        <span class="marquee-sep">✦</span>
+                                    </div>
+                                </div>
                             </div>
-                            <!-- Group 2 (Duplicate for seamless continuous loop) -->
-                            <div class="hero-marquee-group" aria-hidden="true">
-                                <span class="marquee-item"><i class="fa-solid fa-circle-check"></i> 100% Pure Chakki Atta</span>
-                                <span class="marquee-sep">✦</span>
-                                <span class="marquee-item"><i class="fa-solid fa-seedling"></i> Farm-Fresh Selected Golden Wheat</span>
-                                <span class="marquee-sep">✦</span>
-                                <span class="marquee-item"><i class="fa-solid fa-shield-halved"></i> Untouched By Hands & 100% Hygienic</span>
-                                <span class="marquee-sep">✦</span>
-                                <span class="marquee-item"><i class="fa-solid fa-heart-pulse"></i> Rich In Natural Dietary Fiber</span>
-                                <span class="marquee-sep">✦</span>
-                                <span class="marquee-item"><i class="fa-solid fa-bowl-rice"></i> Extra Soft & Fluffy Rotis Guaranteed</span>
-                                <span class="marquee-sep">✦</span>
-                                <span class="marquee-item"><i class="fa-solid fa-droplet-slash"></i> Low Moisture For Long-Lasting Freshness</span>
-                                <span class="marquee-sep">✦</span>
-                                <span class="marquee-item"><i class="fa-solid fa-leaf"></i> Zero Preservatives & 100% Natural</span>
-                                <span class="marquee-sep">✦</span>
-                                <span class="marquee-item"><i class="fa-solid fa-mortar-pestle"></i> Traditional Stone Ground Quality</span>
-                                <span class="marquee-sep">✦</span>
-                            </div>
+                            <!-- Hero Company Marquee End -->
                         </div>
+                        <!-- Hero Company Slider Body End -->
                     </div>
                 </div>
             </div>        
         </div>
-        <!-- Hero Company Marquee Section End -->
+        <!-- Hero Company Slider Box End -->
     </div>
     <!-- Hero Section End -->
 
