@@ -1,224 +1,290 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 560" fill="none">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 450 580" fill="none">
   <defs>
-    <linearGradient id="goldStem" x1="0%" y1="100%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#D97706" stop-opacity="0.30"/>
-      <stop offset="50%" stop-color="#EF801C" stop-opacity="0.25"/>
-      <stop offset="100%" stop-color="#F59E0B" stop-opacity="0.18"/>
+    <!-- Card matching base color for solid backing so lines never slice through each other -->
+    <linearGradient id="earBase" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FCF8F2"/>
+      <stop offset="100%" stop-color="#F7EBDA"/>
     </linearGradient>
-    <linearGradient id="goldKernel" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#EF801C" stop-opacity="0.18"/>
-      <stop offset="60%" stop-color="#F59E0B" stop-opacity="0.12"/>
-      <stop offset="100%" stop-color="#FEF3C7" stop-opacity="0.05"/>
+    <!-- Rich golden gradient for grain bodies -->
+    <linearGradient id="grainGold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F59E0B" stop-opacity="0.32"/>
+      <stop offset="60%" stop-color="#EF801C" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#D97706" stop-opacity="0.18"/>
     </linearGradient>
-    <linearGradient id="goldKernelStroke" x1="0%" y1="100%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#B45309" stop-opacity="0.45"/>
-      <stop offset="50%" stop-color="#D97706" stop-opacity="0.38"/>
-      <stop offset="100%" stop-color="#EF801C" stop-opacity="0.28"/>
+    <!-- Crisp elegant line strokes -->
+    <linearGradient id="wheatStroke" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#C26A14" stop-opacity="0.65"/>
+      <stop offset="60%" stop-color="#D97706" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#F59E0B" stop-opacity="0.45"/>
     </linearGradient>
-    <linearGradient id="leafFill" x1="0%" y1="100%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#D97706" stop-opacity="0.14"/>
-      <stop offset="100%" stop-color="#F59E0B" stop-opacity="0.04"/>
+    <!-- Soft leaf fill -->
+    <linearGradient id="leafGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FCF7F0"/>
+      <stop offset="100%" stop-color="#F5E6D0"/>
     </linearGradient>
   </defs>
+
   <g stroke-linecap="round" stroke-linejoin="round">
-    <!-- Stalk Stem -->
-    <path d="M280.0 560.0 Q270.0 310.0 295.0 80.0" stroke="url(#goldStem)" stroke-width="2.2" fill="none"/>
-    <line x1="295.0" y1="80.0" x2="280.9" y2="12.7" stroke="url(#goldKernelStroke)" stroke-width="1.1"/>
-    <line x1="295.0" y1="80.0" x2="302.4" y2="11.7" stroke="url(#goldKernelStroke)" stroke-width="1.1"/>
-    <line x1="295.0" y1="80.0" x2="323.2" y2="17.3" stroke="url(#goldKernelStroke)" stroke-width="1.1"/>
-    <path d="M277.5 372.9 Q264.2 368.9 266.8 355.4 Q274.9 362.5 277.5 372.9 Z" fill="url(#goldKernel)" stroke="url(#goldKernelStroke)" stroke-width="1.3"/>
-    <line x1="277.5" y1="372.9" x2="272.1" y2="364.1" stroke="url(#goldKernelStroke)" stroke-width="0.8" stroke-opacity="0.6"/>
-    <path d="M266.8 355.4 Q256.5 338.4 253.3 311.8" stroke="url(#goldKernelStroke)" stroke-width="0.95" fill="none"/>
-    <path d="M277.6 364.2 Q290.9 360.6 288.7 347.0 Q280.4 353.8 277.6 364.2 Z" fill="url(#goldKernel)" stroke="url(#goldKernelStroke)" stroke-width="1.3"/>
-    <line x1="277.6" y1="364.2" x2="283.2" y2="355.6" stroke="url(#goldKernelStroke)" stroke-width="0.8" stroke-opacity="0.6"/>
-    <path d="M288.7 347.0 Q299.6 330.3 303.5 303.8" stroke="url(#goldKernelStroke)" stroke-width="0.95" fill="none"/>
-    <path d="M277.8 353.5 Q263.2 349.0 266.1 334.0 Q275.0 341.9 277.8 353.5 Z" fill="url(#goldKernel)" stroke="url(#goldKernelStroke)" stroke-width="1.3"/>
-    <line x1="277.8" y1="353.5" x2="271.9" y2="343.7" stroke="url(#goldKernelStroke)" stroke-width="0.8" stroke-opacity="0.6"/>
-    <path d="M266.1 334.0 Q254.9 314.0 250.9 284.0" stroke="url(#goldKernelStroke)" stroke-width="0.95" fill="none"/>
-    <path d="M278.2 336.2 Q292.9 332.2 290.7 317.1 Q281.5 324.7 278.2 336.2 Z" fill="url(#goldKernel)" stroke="url(#goldKernelStroke)" stroke-width="1.3"/>
-    <line x1="278.2" y1="336.2" x2="284.4" y2="326.6" stroke="url(#goldKernelStroke)" stroke-width="0.8" stroke-opacity="0.6"/>
-    <path d="M290.7 317.1 Q302.7 297.7 308.1 267.8" stroke="url(#goldKernelStroke)" stroke-width="0.95" fill="none"/>
-    <path d="M278.4 325.6 Q262.7 320.4 265.9 304.2 Q275.5 312.9 278.4 325.6 Z" fill="url(#goldKernel)" stroke="url(#goldKernelStroke)" stroke-width="1.3"/>
-    <line x1="278.4" y1="325.6" x2="272.2" y2="314.9" stroke="url(#goldKernelStroke)" stroke-width="0.8" stroke-opacity="0.6"/>
-    <path d="M265.9 304.2 Q254.2 281.7 249.5 248.6" stroke="url(#goldKernelStroke)" stroke-width="0.95" fill="none"/>
-    <path d="M279.0 308.3 Q295.0 304.1 292.8 287.7 Q282.7 295.9 279.0 308.3 Z" fill="url(#goldKernel)" stroke="url(#goldKernelStroke)" stroke-width="1.3"/>
-    <line x1="279.0" y1="308.3" x2="285.9" y2="298.0" stroke="url(#goldKernelStroke)" stroke-width="0.8" stroke-opacity="0.6"/>
-    <path d="M292.8 287.7 Q305.8 266.0 312.5 233.2" stroke="url(#goldKernelStroke)" stroke-width="0.95" fill="none"/>
-    <path d="M279.3 297.7 Q262.7 292.1 266.2 274.9 Q276.3 284.3 279.3 297.7 Z" fill="url(#goldKernel)" stroke="url(#goldKernelStroke)" stroke-width="1.3"/>
-    <line x1="279.3" y1="297.7" x2="272.8" y2="286.3" stroke="url(#goldKernelStroke)" stroke-width="0.8" stroke-opacity="0.6"/>
-    <path d="M266.2 274.9 Q254.2 250.5 249.1 215.0" stroke="url(#goldKernelStroke)" stroke-width="0.95" fill="none"/>
-    <path d="M280.0 280.5 Q297.0 276.2 294.9 258.8 Q284.1 267.4 280.0 280.5 Z" fill="url(#goldKernel)" stroke="url(#goldKernelStroke)" stroke-width="1.3"/>
-    <line x1="280.0" y1="280.5" x2="287.4" y2="269.7" stroke="url(#goldKernelStroke)" stroke-width="0.8" stroke-opacity="0.6"/>
-    <path d="M294.9 258.8 Q308.8 235.4 316.6 200.4" stroke="url(#goldKernelStroke)" stroke-width="0.95" fill="none"/>
-    <path d="M280.5 270.1 Q263.3 264.1 267.1 246.3 Q277.4 256.1 280.5 270.1 Z" fill="url(#goldKernel)" stroke="url(#goldKernelStroke)" stroke-width="1.3"/>
-    <line x1="280.5" y1="270.1" x2="273.8" y2="258.2" stroke="url(#goldKernelStroke)" stroke-width="0.8" stroke-opacity="0.6"/>
-    <path d="M267.1 246.3 Q254.9 220.5 249.8 183.6" stroke="url(#goldKernelStroke)" stroke-width="0.95" fill="none"/>
-    <path d="M281.3 252.9 Q298.9 248.6 296.9 230.6 Q285.7 239.4 281.3 252.9 Z" fill="url(#goldKernel)" stroke="url(#goldKernelStroke)" stroke-width="1.3"/>
-    <line x1="281.3" y1="252.9" x2="289.1" y2="241.8" stroke="url(#goldKernelStroke)" stroke-width="0.8" stroke-opacity="0.6"/>
-    <path d="M296.9 230.6 Q311.4 206.1 320.1 169.8" stroke="url(#goldKernelStroke)" stroke-width="0.95" fill="none"/>
-    <path d="M281.8 242.5 Q264.6 236.3 268.5 218.3 Q278.9 228.4 281.8 242.5 Z" fill="url(#goldKernel)" stroke="url(#goldKernelStroke)" stroke-width="1.3"/>
-    <line x1="281.8" y1="242.5" x2="275.2" y2="230.4" stroke="url(#goldKernelStroke)" stroke-width="0.8" stroke-opacity="0.6"/>
-    <path d="M268.5 218.3 Q256.5 192.1 251.5 154.6" stroke="url(#goldKernelStroke)" stroke-width="0.95" fill="none"/>
-    <path d="M282.8 225.5 Q300.7 221.2 298.8 203.0 Q287.4 211.8 282.8 225.5 Z" fill="url(#goldKernel)" stroke="url(#goldKernelStroke)" stroke-width="1.3"/>
-    <line x1="282.8" y1="225.5" x2="290.8" y2="214.2" stroke="url(#goldKernelStroke)" stroke-width="0.8" stroke-opacity="0.6"/>
-    <path d="M298.8 203.0 Q313.7 178.2 322.9 141.5" stroke="url(#goldKernelStroke)" stroke-width="0.95" fill="none"/>
-    <path d="M283.4 215.1 Q266.4 208.8 270.5 191.1 Q280.6 201.1 283.4 215.1 Z" fill="url(#goldKernel)" stroke="url(#goldKernelStroke)" stroke-width="1.3"/>
-    <line x1="283.4" y1="215.1" x2="277.0" y2="203.1" stroke="url(#goldKernelStroke)" stroke-width="0.8" stroke-opacity="0.6"/>
-    <path d="M270.5 191.1 Q258.8 165.1 254.3 128.1" stroke="url(#goldKernelStroke)" stroke-width="0.95" fill="none"/>
-    <path d="M284.6 198.1 Q302.3 194.1 300.6 176.0 Q289.2 184.6 284.6 198.1 Z" fill="url(#goldKernel)" stroke="url(#goldKernelStroke)" stroke-width="1.3"/>
-    <line x1="284.6" y1="198.1" x2="292.6" y2="187.1" stroke="url(#goldKernelStroke)" stroke-width="0.8" stroke-opacity="0.6"/>
-    <path d="M300.6 176.0 Q315.5 151.8 324.8 115.7" stroke="url(#goldKernelStroke)" stroke-width="0.95" fill="none"/>
-    <path d="M285.3 187.8 Q268.9 181.6 273.0 164.5 Q282.7 174.3 285.3 187.8 Z" fill="url(#goldKernel)" stroke="url(#goldKernelStroke)" stroke-width="1.3"/>
-    <line x1="285.3" y1="187.8" x2="279.1" y2="176.2" stroke="url(#goldKernelStroke)" stroke-width="0.8" stroke-opacity="0.6"/>
-    <path d="M273.0 164.5 Q261.8 139.7 258.0 104.0" stroke="url(#goldKernelStroke)" stroke-width="0.95" fill="none"/>
-    <path d="M286.5 170.9 Q303.7 167.2 302.2 149.8 Q291.1 157.9 286.5 170.9 Z" fill="url(#goldKernel)" stroke="url(#goldKernelStroke)" stroke-width="1.3"/>
-    <line x1="286.5" y1="170.9" x2="294.4" y2="160.3" stroke="url(#goldKernelStroke)" stroke-width="0.8" stroke-opacity="0.6"/>
-    <path d="M302.2 149.8 Q316.9 126.8 326.0 92.2" stroke="url(#goldKernelStroke)" stroke-width="0.95" fill="none"/>
-    <path d="M287.4 160.6 Q271.9 154.7 276.0 138.6 Q285.1 147.9 287.4 160.6 Z" fill="url(#goldKernel)" stroke="url(#goldKernelStroke)" stroke-width="1.3"/>
-    <line x1="287.4" y1="160.6" x2="281.7" y2="149.6" stroke="url(#goldKernelStroke)" stroke-width="0.8" stroke-opacity="0.6"/>
-    <path d="M276.0 138.6 Q265.5 115.6 262.6 82.3" stroke="url(#goldKernelStroke)" stroke-width="0.95" fill="none"/>
-    <path d="M288.8 143.9 Q305.0 140.6 303.7 124.1 Q293.1 131.6 288.8 143.9 Z" fill="url(#goldKernel)" stroke="url(#goldKernelStroke)" stroke-width="1.3"/>
-    <line x1="288.8" y1="143.9" x2="296.2" y2="134.0" stroke="url(#goldKernelStroke)" stroke-width="0.8" stroke-opacity="0.6"/>
-    <path d="M303.7 124.1 Q317.8 103.0 326.3 70.7" stroke="url(#goldKernelStroke)" stroke-width="0.95" fill="none"/>
-    <path d="M289.7 133.6 Q275.4 128.1 279.4 113.3 Q287.7 121.8 289.7 133.6 Z" fill="url(#goldKernel)" stroke="url(#goldKernelStroke)" stroke-width="1.3"/>
-    <line x1="289.7" y1="133.6" x2="284.5" y2="123.5" stroke="url(#goldKernelStroke)" stroke-width="0.8" stroke-opacity="0.6"/>
-    <path d="M279.4 113.3 Q269.7 92.6 267.8 62.3" stroke="url(#goldKernelStroke)" stroke-width="0.95" fill="none"/>
-    <path d="M291.2 116.9 Q306.2 114.1 305.1 98.8 Q295.3 105.7 291.2 116.9 Z" fill="url(#goldKernel)" stroke="url(#goldKernelStroke)" stroke-width="1.3"/>
-    <line x1="291.2" y1="116.9" x2="298.2" y2="107.9" stroke="url(#goldKernelStroke)" stroke-width="0.8" stroke-opacity="0.6"/>
-    <path d="M305.1 98.8 Q318.4 80.3 325.9 50.9" stroke="url(#goldKernelStroke)" stroke-width="0.95" fill="none"/>
-    <path d="M292.2 106.7 Q279.4 101.7 283.1 88.4 Q290.6 96.1 292.2 106.7 Z" fill="url(#goldKernel)" stroke="url(#goldKernelStroke)" stroke-width="1.3"/>
-    <line x1="292.2" y1="106.7" x2="287.7" y2="97.6" stroke="url(#goldKernelStroke)" stroke-width="0.8" stroke-opacity="0.6"/>
-    <path d="M283.1 88.4 Q274.3 70.5 273.4 43.8" stroke="url(#goldKernelStroke)" stroke-width="0.95" fill="none"/>
-    <path d="M293.9 90.1 Q307.5 87.8 306.5 74.0 Q297.7 80.1 293.9 90.1 Z" fill="url(#goldKernel)" stroke="url(#goldKernelStroke)" stroke-width="1.3"/>
-    <line x1="293.9" y1="90.1" x2="300.2" y2="82.1" stroke="url(#goldKernelStroke)" stroke-width="0.8" stroke-opacity="0.6"/>
-    <path d="M306.5 74.0 Q318.8 58.3 325.1 32.3" stroke="url(#goldKernelStroke)" stroke-width="0.95" fill="none"/>
-    <!-- Stalk Stem -->
-    <path d="M260.0 560.0 Q215.0 340.0 145.0 170.0" stroke="url(#goldStem)" stroke-width="2.2" fill="none"/>
-    <line x1="145.0" y1="170.0" x2="106.1" y2="124.3" stroke="url(#goldKernelStroke)" stroke-width="1.1"/>
-    <line x1="145.0" y1="170.0" x2="122.2" y2="114.5" stroke="url(#goldKernelStroke)" stroke-width="1.1"/>
-    <line x1="145.0" y1="170.0" x2="140.4" y2="110.2" stroke="url(#goldKernelStroke)" stroke-width="1.1"/>
-    <path d="M217.8 384.0 Q205.5 383.9 204.2 371.6 Q212.9 375.7 217.8 384.0 Z" fill="url(#goldKernel)" stroke="url(#goldKernelStroke)" stroke-width="1.3"/>
-    <line x1="217.8" y1="384.0" x2="211.0" y2="377.8" stroke="url(#goldKernelStroke)" stroke-width="0.8" stroke-opacity="0.6"/>
-    <path d="M204.2 371.6 Q190.7 360.0 181.6 337.5" stroke="url(#goldKernelStroke)" stroke-width="0.95" fill="none"/>
-    <path d="M215.8 376.9 Q226.2 370.3 220.9 359.3 Q215.6 367.3 215.8 376.9 Z" fill="url(#goldKernel)" stroke="url(#goldKernelStroke)" stroke-width="1.3"/>
-    <line x1="215.8" y1="376.9" x2="218.3" y2="368.1" stroke="url(#goldKernelStroke)" stroke-width="0.8" stroke-opacity="0.6"/>
-    <path d="M220.9 359.3 Q226.4 342.2 222.5 318.3" stroke="url(#goldKernelStroke)" stroke-width="0.95" fill="none"/>
-    <path d="M212.2 364.4 Q198.5 364.3 196.8 350.6 Q206.7 355.2 212.2 364.4 Z" fill="url(#goldKernel)" stroke="url(#goldKernelStroke)" stroke-width="1.3"/>
-    <line x1="212.2" y1="364.4" x2="204.5" y2="357.5" stroke="url(#goldKernelStroke)" stroke-width="0.8" stroke-opacity="0.6"/>
-    <path d="M196.8 350.6 Q181.5 336.6 170.1 311.1" stroke="url(#goldKernelStroke)" stroke-width="0.95" fill="none"/>
-    <path d="M208.1 350.4 Q219.6 342.8 213.6 330.4 Q207.8 339.5 208.1 350.4 Z" fill="url(#goldKernel)" stroke="url(#goldKernelStroke)" stroke-width="1.3"/>
-    <line x1="208.1" y1="350.4" x2="210.9" y2="340.4" stroke="url(#goldKernelStroke)" stroke-width="0.8" stroke-opacity="0.6"/>
-    <path d="M213.6 330.4 Q219.0 310.3 214.9 282.7" stroke="url(#goldKernelStroke)" stroke-width="0.95" fill="none"/>
-    <path d="M204.5 338.1 Q189.5 338.1 187.5 323.3 Q198.2 328.1 204.5 338.1 Z" fill="url(#goldKernel)" stroke="url(#goldKernelStroke)" stroke-width="1.3"/>
-    <line x1="204.5" y1="338.1" x2="196.0" y2="330.7" stroke="url(#goldKernelStroke)" stroke-width="0.8" stroke-opacity="0.6"/>
-    <path d="M187.5 323.3 Q170.6 307.5 157.2 279.8" stroke="url(#goldKernelStroke)" stroke-width="0.95" fill="none"/>
-    <path d="M200.2 324.3 Q212.6 315.9 206.0 302.5 Q199.8 312.5 200.2 324.3 Z" fill="url(#goldKernel)" stroke="url(#goldKernelStroke)" stroke-width="1.3"/>
-    <line x1="200.2" y1="324.3" x2="203.1" y2="313.4" stroke="url(#goldKernelStroke)" stroke-width="0.8" stroke-opacity="0.6"/>
-    <path d="M206.0 302.5 Q211.1 279.9 206.7 249.5" stroke="url(#goldKernelStroke)" stroke-width="0.95" fill="none"/>
-    <path d="M196.5 312.3 Q180.8 312.4 178.4 296.9 Q189.8 301.9 196.5 312.3 Z" fill="url(#goldKernel)" stroke="url(#goldKernelStroke)" stroke-width="1.3"/>
-    <line x1="196.5" y1="312.3" x2="187.4" y2="304.6" stroke="url(#goldKernelStroke)" stroke-width="0.8" stroke-opacity="0.6"/>
-    <path d="M178.4 296.9 Q160.4 280.1 145.6 251.0" stroke="url(#goldKernelStroke)" stroke-width="0.95" fill="none"/>
-    <path d="M192.1 298.7 Q205.0 289.7 197.8 275.7 Q191.5 286.3 192.1 298.7 Z" fill="url(#goldKernel)" stroke="url(#goldKernelStroke)" stroke-width="1.3"/>
-    <line x1="192.1" y1="298.7" x2="195.0" y2="287.2" stroke="url(#goldKernelStroke)" stroke-width="0.8" stroke-opacity="0.6"/>
-    <path d="M197.8 275.7 Q202.7 251.5 197.9 219.2" stroke="url(#goldKernelStroke)" stroke-width="0.95" fill="none"/>
-    <path d="M188.2 286.9 Q172.3 287.2 169.6 271.5 Q181.3 276.4 188.2 286.9 Z" fill="url(#goldKernel)" stroke="url(#goldKernelStroke)" stroke-width="1.3"/>
-    <line x1="188.2" y1="286.9" x2="178.9" y2="279.2" stroke="url(#goldKernelStroke)" stroke-width="0.8" stroke-opacity="0.6"/>
-    <path d="M169.6 271.5 Q151.1 254.5 135.5 225.1" stroke="url(#goldKernelStroke)" stroke-width="0.95" fill="none"/>
-    <path d="M183.7 273.5 Q196.7 264.2 189.3 250.0 Q183.0 261.0 183.7 273.5 Z" fill="url(#goldKernel)" stroke="url(#goldKernelStroke)" stroke-width="1.3"/>
-    <line x1="183.7" y1="273.5" x2="186.5" y2="261.8" stroke="url(#goldKernelStroke)" stroke-width="0.8" stroke-opacity="0.6"/>
-    <path d="M189.3 250.0 Q193.8 225.3 188.5 192.4" stroke="url(#goldKernelStroke)" stroke-width="0.95" fill="none"/>
-    <path d="M179.8 262.0 Q164.1 262.5 161.3 247.1 Q172.8 251.7 179.8 262.0 Z" fill="url(#goldKernel)" stroke="url(#goldKernelStroke)" stroke-width="1.3"/>
-    <line x1="179.8" y1="262.0" x2="170.5" y2="254.5" stroke="url(#goldKernelStroke)" stroke-width="0.8" stroke-opacity="0.6"/>
-    <path d="M161.3 247.1 Q142.8 230.7 127.2 202.1" stroke="url(#goldKernelStroke)" stroke-width="0.95" fill="none"/>
-    <path d="M175.2 248.9 Q187.8 239.5 180.3 225.7 Q174.2 236.5 175.2 248.9 Z" fill="url(#goldKernel)" stroke="url(#goldKernelStroke)" stroke-width="1.3"/>
-    <line x1="175.2" y1="248.9" x2="177.7" y2="237.3" stroke="url(#goldKernelStroke)" stroke-width="0.8" stroke-opacity="0.6"/>
-    <path d="M180.3 225.7 Q184.5 201.4 178.7 169.3" stroke="url(#goldKernelStroke)" stroke-width="0.95" fill="none"/>
-    <path d="M171.1 237.5 Q156.2 238.3 153.3 223.6 Q164.3 227.8 171.1 237.5 Z" fill="url(#goldKernel)" stroke="url(#goldKernelStroke)" stroke-width="1.3"/>
-    <line x1="171.1" y1="237.5" x2="162.2" y2="230.5" stroke="url(#goldKernelStroke)" stroke-width="0.8" stroke-opacity="0.6"/>
-    <path d="M153.3 223.6 Q135.6 208.7 120.7 181.8" stroke="url(#goldKernelStroke)" stroke-width="0.95" fill="none"/>
-    <path d="M166.4 224.6 Q178.2 215.5 170.9 202.5 Q165.3 212.9 166.4 224.6 Z" fill="url(#goldKernel)" stroke="url(#goldKernelStroke)" stroke-width="1.3"/>
-    <line x1="166.4" y1="224.6" x2="168.6" y2="213.6" stroke="url(#goldKernelStroke)" stroke-width="0.8" stroke-opacity="0.6"/>
-    <path d="M170.9 202.5 Q174.8 179.7 168.7 149.6" stroke="url(#goldKernelStroke)" stroke-width="0.95" fill="none"/>
-    <path d="M162.2 213.5 Q148.4 214.4 145.7 200.9 Q155.9 204.7 162.2 213.5 Z" fill="url(#goldKernel)" stroke="url(#goldKernelStroke)" stroke-width="1.3"/>
-    <line x1="162.2" y1="213.5" x2="153.9" y2="207.2" stroke="url(#goldKernelStroke)" stroke-width="0.8" stroke-opacity="0.6"/>
-    <path d="M145.7 200.9 Q129.2 188.2 115.8 163.7" stroke="url(#goldKernelStroke)" stroke-width="0.95" fill="none"/>
-    <path d="M157.3 200.8 Q168.2 192.4 161.2 180.5 Q156.1 190.1 157.3 200.8 Z" fill="url(#goldKernel)" stroke="url(#goldKernelStroke)" stroke-width="1.3"/>
-    <line x1="157.3" y1="200.8" x2="159.3" y2="190.7" stroke="url(#goldKernelStroke)" stroke-width="0.8" stroke-opacity="0.6"/>
-    <path d="M161.2 180.5 Q164.9 160.0 158.5 132.9" stroke="url(#goldKernelStroke)" stroke-width="0.95" fill="none"/>
-    <path d="M153.0 189.9 Q140.8 191.0 138.3 179.0 Q147.3 182.2 153.0 189.9 Z" fill="url(#goldKernel)" stroke="url(#goldKernelStroke)" stroke-width="1.3"/>
-    <line x1="153.0" y1="189.9" x2="145.7" y2="184.4" stroke="url(#goldKernelStroke)" stroke-width="0.8" stroke-opacity="0.6"/>
-    <path d="M138.3 179.0 Q123.5 168.8 112.1 147.4" stroke="url(#goldKernelStroke)" stroke-width="0.95" fill="none"/>
-    <path d="M148.1 177.5 Q157.7 169.9 151.2 159.4 Q146.8 168.0 148.1 177.5 Z" fill="url(#goldKernel)" stroke="url(#goldKernelStroke)" stroke-width="1.3"/>
-    <line x1="148.1" y1="177.5" x2="149.6" y2="168.5" stroke="url(#goldKernelStroke)" stroke-width="0.8" stroke-opacity="0.6"/>
-    <path d="M151.2 159.4 Q154.8 141.9 148.3 118.5" stroke="url(#goldKernelStroke)" stroke-width="0.95" fill="none"/>
-    <!-- Stalk Stem -->
-    <path d="M295.0 560.0 Q330.0 360.0 365.0 195.0" stroke="url(#goldStem)" stroke-width="2.2" fill="none"/>
-    <line x1="365.0" y1="195.0" x2="359.2" y2="140.3" stroke="url(#goldKernelStroke)" stroke-width="1.1"/>
-    <line x1="365.0" y1="195.0" x2="376.4" y2="141.2" stroke="url(#goldKernelStroke)" stroke-width="1.1"/>
-    <line x1="365.0" y1="195.0" x2="392.5" y2="147.4" stroke="url(#goldKernelStroke)" stroke-width="1.1"/>
-    <path d="M326.5 387.1 Q316.0 381.7 320.1 370.6 Q325.8 377.8 326.5 387.1 Z" fill="url(#goldKernel)" stroke="url(#goldKernelStroke)" stroke-width="1.3"/>
-    <line x1="326.5" y1="387.1" x2="323.3" y2="378.8" stroke="url(#goldKernelStroke)" stroke-width="0.8" stroke-opacity="0.6"/>
-    <path d="M320.1 370.6 Q313.2 355.3 315.2 332.5" stroke="url(#goldKernelStroke)" stroke-width="0.95" fill="none"/>
-    <path d="M327.8 380.5 Q339.5 379.3 339.8 367.5 Q331.8 372.1 327.8 380.5 Z" fill="url(#goldKernel)" stroke="url(#goldKernelStroke)" stroke-width="1.3"/>
-    <line x1="327.8" y1="380.5" x2="333.8" y2="374.0" stroke="url(#goldKernelStroke)" stroke-width="0.8" stroke-opacity="0.6"/>
-    <path d="M339.8 367.5 Q351.8 355.7 358.3 333.9" stroke="url(#goldKernelStroke)" stroke-width="0.95" fill="none"/>
-    <path d="M330.3 367.0 Q318.5 360.7 323.1 348.2 Q329.6 356.5 330.3 367.0 Z" fill="url(#goldKernel)" stroke="url(#goldKernelStroke)" stroke-width="1.3"/>
-    <line x1="330.3" y1="367.0" x2="326.7" y2="357.6" stroke="url(#goldKernelStroke)" stroke-width="0.8" stroke-opacity="0.6"/>
-    <path d="M323.1 348.2 Q315.9 329.9 317.5 303.6" stroke="url(#goldKernelStroke)" stroke-width="0.95" fill="none"/>
-    <path d="M332.9 353.9 Q346.1 352.5 346.6 339.2 Q337.5 344.4 332.9 353.9 Z" fill="url(#goldKernel)" stroke="url(#goldKernelStroke)" stroke-width="1.3"/>
-    <line x1="332.9" y1="353.9" x2="339.7" y2="346.5" stroke="url(#goldKernelStroke)" stroke-width="0.8" stroke-opacity="0.6"/>
-    <path d="M346.6 339.2 Q360.0 324.9 368.3 299.8" stroke="url(#goldKernelStroke)" stroke-width="0.95" fill="none"/>
-    <path d="M335.4 340.6 Q322.7 333.8 327.6 320.1 Q334.6 329.2 335.4 340.6 Z" fill="url(#goldKernel)" stroke="url(#goldKernelStroke)" stroke-width="1.3"/>
-    <line x1="335.4" y1="340.6" x2="331.5" y2="330.4" stroke="url(#goldKernelStroke)" stroke-width="0.8" stroke-opacity="0.6"/>
-    <path d="M327.6 320.1 Q320.2 299.6 321.5 270.6" stroke="url(#goldKernelStroke)" stroke-width="0.95" fill="none"/>
-    <path d="M338.0 327.7 Q352.4 326.2 352.9 311.7 Q343.0 317.4 338.0 327.7 Z" fill="url(#goldKernel)" stroke="url(#goldKernelStroke)" stroke-width="1.3"/>
-    <line x1="338.0" y1="327.7" x2="345.5" y2="319.7" stroke="url(#goldKernelStroke)" stroke-width="0.8" stroke-opacity="0.6"/>
-    <path d="M352.9 311.7 Q367.5 295.5 377.2 268.1" stroke="url(#goldKernelStroke)" stroke-width="0.95" fill="none"/>
-    <path d="M340.5 314.6 Q327.3 307.4 332.4 293.2 Q339.7 302.7 340.5 314.6 Z" fill="url(#goldKernel)" stroke="url(#goldKernelStroke)" stroke-width="1.3"/>
-    <line x1="340.5" y1="314.6" x2="336.5" y2="303.9" stroke="url(#goldKernelStroke)" stroke-width="0.8" stroke-opacity="0.6"/>
-    <path d="M332.4 293.2 Q324.9 271.5 326.2 241.1" stroke="url(#goldKernelStroke)" stroke-width="0.95" fill="none"/>
-    <path d="M343.1 301.9 Q358.1 300.3 358.7 285.2 Q348.4 291.2 343.1 301.9 Z" fill="url(#goldKernel)" stroke="url(#goldKernelStroke)" stroke-width="1.3"/>
-    <line x1="343.1" y1="301.9" x2="350.9" y2="293.5" stroke="url(#goldKernelStroke)" stroke-width="0.8" stroke-opacity="0.6"/>
-    <path d="M358.7 285.2 Q373.9 268.0 384.4 239.4" stroke="url(#goldKernelStroke)" stroke-width="0.95" fill="none"/>
-    <path d="M345.6 288.9 Q332.4 281.7 337.6 267.5 Q344.8 277.0 345.6 288.9 Z" fill="url(#goldKernel)" stroke="url(#goldKernelStroke)" stroke-width="1.3"/>
-    <line x1="345.6" y1="288.9" x2="341.6" y2="278.2" stroke="url(#goldKernelStroke)" stroke-width="0.8" stroke-opacity="0.6"/>
-    <path d="M337.6 267.5 Q330.1 245.9 331.5 215.4" stroke="url(#goldKernelStroke)" stroke-width="0.95" fill="none"/>
-    <path d="M348.2 276.4 Q363.2 274.9 363.9 259.8 Q353.5 265.7 348.2 276.4 Z" fill="url(#goldKernel)" stroke="url(#goldKernelStroke)" stroke-width="1.3"/>
-    <line x1="348.2" y1="276.4" x2="356.0" y2="268.1" stroke="url(#goldKernelStroke)" stroke-width="0.8" stroke-opacity="0.6"/>
-    <path d="M363.9 259.8 Q379.1 242.7 389.6 214.1" stroke="url(#goldKernelStroke)" stroke-width="0.95" fill="none"/>
-    <path d="M350.7 263.7 Q338.0 256.7 343.1 243.1 Q350.0 252.2 350.7 263.7 Z" fill="url(#goldKernel)" stroke="url(#goldKernelStroke)" stroke-width="1.3"/>
-    <line x1="350.7" y1="263.7" x2="346.9" y2="253.4" stroke="url(#goldKernelStroke)" stroke-width="0.8" stroke-opacity="0.6"/>
-    <path d="M343.1 243.1 Q335.8 222.6 337.4 193.6" stroke="url(#goldKernelStroke)" stroke-width="0.95" fill="none"/>
-    <path d="M353.3 251.3 Q367.7 249.9 368.4 235.4 Q358.4 241.1 353.3 251.3 Z" fill="url(#goldKernel)" stroke="url(#goldKernelStroke)" stroke-width="1.3"/>
-    <line x1="353.3" y1="251.3" x2="360.8" y2="243.4" stroke="url(#goldKernelStroke)" stroke-width="0.8" stroke-opacity="0.6"/>
-    <path d="M368.4 235.4 Q383.1 219.4 393.0 192.1" stroke="url(#goldKernelStroke)" stroke-width="0.95" fill="none"/>
-    <path d="M355.8 238.8 Q344.1 232.4 348.8 219.9 Q355.2 228.3 355.8 238.8 Z" fill="url(#goldKernel)" stroke="url(#goldKernelStroke)" stroke-width="1.3"/>
-    <line x1="355.8" y1="238.8" x2="352.3" y2="229.3" stroke="url(#goldKernelStroke)" stroke-width="0.8" stroke-opacity="0.6"/>
-    <path d="M348.8 219.9 Q341.9 201.5 343.9 175.2" stroke="url(#goldKernelStroke)" stroke-width="0.95" fill="none"/>
-    <path d="M358.4 226.6 Q371.7 225.4 372.3 212.1 Q363.1 217.2 358.4 226.6 Z" fill="url(#goldKernel)" stroke="url(#goldKernelStroke)" stroke-width="1.3"/>
-    <line x1="358.4" y1="226.6" x2="365.3" y2="219.3" stroke="url(#goldKernelStroke)" stroke-width="0.8" stroke-opacity="0.6"/>
-    <path d="M372.3 212.1 Q385.9 198.0 394.6 173.0" stroke="url(#goldKernelStroke)" stroke-width="0.95" fill="none"/>
-    <path d="M360.9 214.3 Q350.5 208.6 354.8 197.6 Q360.5 205.0 360.9 214.3 Z" fill="url(#goldKernel)" stroke="url(#goldKernelStroke)" stroke-width="1.3"/>
-    <line x1="360.9" y1="214.3" x2="357.9" y2="205.9" stroke="url(#goldKernelStroke)" stroke-width="0.8" stroke-opacity="0.6"/>
-    <path d="M354.8 197.6 Q348.3 182.2 350.7 159.5" stroke="url(#goldKernelStroke)" stroke-width="0.95" fill="none"/>
-    <path d="M363.5 202.3 Q375.2 201.3 375.8 189.5 Q367.6 194.0 363.5 202.3 Z" fill="url(#goldKernel)" stroke="url(#goldKernelStroke)" stroke-width="1.3"/>
-    <line x1="363.5" y1="202.3" x2="369.6" y2="195.9" stroke="url(#goldKernelStroke)" stroke-width="0.8" stroke-opacity="0.6"/>
-    <path d="M375.8 189.5 Q388.0 178.0 394.9 156.3" stroke="url(#goldKernelStroke)" stroke-width="0.95" fill="none"/>
-    <!-- Graceful Botanical Wheat Leaves -->
-    <path d="M265 500 C190 440, 110 420, 45 445 C110 400, 195 410, 260 480 Z" fill="url(#leafFill)" stroke="url(#goldKernelStroke)" stroke-width="1.3"/>
-    <path d="M260 485 C190 430, 120 420, 50 444" stroke="url(#goldKernelStroke)" stroke-width="0.8"/>
-    <path d="M285 520 C340 480, 390 485, 420 515 C385 465, 330 455, 280 495 Z" fill="url(#leafFill)" stroke="url(#goldKernelStroke)" stroke-width="1.3"/>
-    <path d="M245 420 C180 360, 120 355, 70 380 C120 335, 185 340, 240 395 Z" fill="url(#leafFill)" stroke="url(#goldKernelStroke)" stroke-width="1.2"/>
-    <!-- Delicate Floating Grain Accents -->
-    <ellipse cx="100" cy="240" rx="4" ry="9" transform="rotate(35 100 240)" fill="url(#goldKernel)" stroke="url(#goldKernelStroke)" stroke-width="1.0"/>
-    <line x1="100" y1="232" x2="108" y2="218" stroke="url(#goldKernelStroke)" stroke-width="0.8"/>
-    <ellipse cx="210" cy="95" rx="4" ry="9" transform="rotate(-25 210 95)" fill="url(#goldKernel)" stroke="url(#goldKernelStroke)" stroke-width="1.0"/>
-    <line x1="210" y1="87" x2="202" y2="73" stroke="url(#goldKernelStroke)" stroke-width="0.8"/>
-    <ellipse cx="350" cy="110" rx="4" ry="9" transform="rotate(30 350 110)" fill="url(#goldKernel)" stroke="url(#goldKernelStroke)" stroke-width="1.0"/>
-    <line x1="350" y1="102" x2="358" y2="88" stroke="url(#goldKernelStroke)" stroke-width="0.8"/>
-    <ellipse cx="85" cy="320" rx="4" ry="9" transform="rotate(-15 85 320)" fill="url(#goldKernel)" stroke="url(#goldKernelStroke)" stroke-width="1.0"/>
-    <line x1="85" y1="312" x2="77" y2="298" stroke="url(#goldKernelStroke)" stroke-width="0.8"/>
-    <ellipse cx="380" cy="290" rx="4" ry="9" transform="rotate(25 380 290)" fill="url(#goldKernel)" stroke="url(#goldKernelStroke)" stroke-width="1.0"/>
-    <line x1="380" y1="282" x2="388" y2="268" stroke="url(#goldKernelStroke)" stroke-width="0.8"/>
+    <!-- ==================== BASE LEAVES ==================== -->
+    <path d="M285 550 C220 480, 140 460, 50 480 C130 435, 210 445, 280 525 Z" fill="url(#leafGrad)" stroke="url(#wheatStroke)" stroke-width="1.3"/>
+    <path d="M280 535 C200 470, 130 458, 55 480" stroke="url(#wheatStroke)" stroke-width="0.8" fill="none"/>
+    <path d="M305 550 C360 490, 400 485, 435 510 C395 465, 345 465, 295 530 Z" fill="url(#leafGrad)" stroke="url(#wheatStroke)" stroke-width="1.3"/>
+    <path d="M300 540 C350 490, 390 482, 430 508" stroke="url(#wheatStroke)" stroke-width="0.8" fill="none"/>
+    <!-- ==================== STEMS ==================== -->
+    <path d="M300 580 C298 480, 302 420, 305 380" stroke="url(#wheatStroke)" stroke-width="2.4" fill="none"/>
+    <path d="M295 580 C280 490, 250 430, 210 380" stroke="url(#wheatStroke)" stroke-width="2.0" fill="none"/>
+    <path d="M305 580 C320 500, 345 445, 360 390" stroke="url(#wheatStroke)" stroke-width="2.0" fill="none"/>
+    <!-- ==================== LEFT WHEAT EAR ==================== -->
+    <path d="M130.0 140.0 L97.0 96.5" stroke="url(#wheatStroke)" stroke-width="1.0" fill="none"/>
+    <path d="M130.0 140.0 L109.3 89.5" stroke="url(#wheatStroke)" stroke-width="1.0" fill="none"/>
+    <path d="M130.0 140.0 L123.1 85.8" stroke="url(#wheatStroke)" stroke-width="1.0" fill="none"/>
+    <path d="M210.0 380.0 Q197.7 379.3 196.5 366.5 Q205.3 371.8 210.0 380.0 Z" fill="url(#earBase)" stroke="none"/>
+    <path d="M210.0 380.0 Q197.7 379.3 196.5 366.5 Q205.3 371.8 210.0 380.0 Z" fill="url(#grainGold)" stroke="url(#wheatStroke)" stroke-width="1.3"/>
+    <line x1="210.0" y1="380.0" x2="203.2" y2="373.3" stroke="url(#wheatStroke)" stroke-width="0.8" stroke-opacity="0.5"/>
+    <path d="M196.5 366.5 Q185.1 354.0 179.4 335.7" stroke="url(#wheatStroke)" stroke-width="0.9" fill="none"/>
+    <path d="M208.2 373.5 Q218.5 366.7 213.1 355.1 Q208.2 364.0 208.2 373.5 Z" fill="url(#earBase)" stroke="none"/>
+    <path d="M208.2 373.5 Q218.5 366.7 213.1 355.1 Q208.2 364.0 208.2 373.5 Z" fill="url(#grainGold)" stroke="url(#wheatStroke)" stroke-width="1.3"/>
+    <line x1="208.2" y1="373.5" x2="210.7" y2="364.3" stroke="url(#wheatStroke)" stroke-width="0.8" stroke-opacity="0.5"/>
+    <path d="M213.1 355.1 Q216.6 338.5 212.4 319.8" stroke="url(#wheatStroke)" stroke-width="0.9" fill="none"/>
+    <path d="M202.9 354.2 Q189.3 353.6 187.8 339.5 Q197.5 345.2 202.9 354.2 Z" fill="url(#earBase)" stroke="none"/>
+    <path d="M202.9 354.2 Q189.3 353.6 187.8 339.5 Q197.5 345.2 202.9 354.2 Z" fill="url(#grainGold)" stroke="url(#wheatStroke)" stroke-width="1.3"/>
+    <line x1="202.9" y1="354.2" x2="195.3" y2="346.8" stroke="url(#wheatStroke)" stroke-width="0.8" stroke-opacity="0.5"/>
+    <path d="M187.8 339.5 Q175.0 324.7 167.7 304.3" stroke="url(#wheatStroke)" stroke-width="0.9" fill="none"/>
+    <path d="M199.3 341.4 Q210.5 333.8 204.4 321.0 Q199.1 331.0 199.3 341.4 Z" fill="url(#earBase)" stroke="none"/>
+    <path d="M199.3 341.4 Q210.5 333.8 204.4 321.0 Q199.1 331.0 199.3 341.4 Z" fill="url(#grainGold)" stroke="url(#wheatStroke)" stroke-width="1.3"/>
+    <line x1="199.3" y1="341.4" x2="201.8" y2="331.2" stroke="url(#wheatStroke)" stroke-width="0.8" stroke-opacity="0.5"/>
+    <path d="M204.4 321.0 Q207.5 301.7 202.9 280.5" stroke="url(#wheatStroke)" stroke-width="0.9" fill="none"/>
+    <path d="M193.7 322.5 Q179.1 322.1 177.2 306.9 Q187.8 312.9 193.7 322.5 Z" fill="url(#earBase)" stroke="none"/>
+    <path d="M193.7 322.5 Q179.1 322.1 177.2 306.9 Q187.8 312.9 193.7 322.5 Z" fill="url(#grainGold)" stroke="url(#wheatStroke)" stroke-width="1.3"/>
+    <line x1="193.7" y1="322.5" x2="185.5" y2="314.7" stroke="url(#wheatStroke)" stroke-width="0.8" stroke-opacity="0.5"/>
+    <path d="M177.2 306.9 Q163.1 290.5 154.5 268.4" stroke="url(#wheatStroke)" stroke-width="0.9" fill="none"/>
+    <path d="M190.0 310.0 Q202.0 301.6 195.2 287.9 Q189.6 298.7 190.0 310.0 Z" fill="url(#earBase)" stroke="none"/>
+    <path d="M190.0 310.0 Q202.0 301.6 195.2 287.9 Q189.6 298.7 190.0 310.0 Z" fill="url(#grainGold)" stroke="url(#wheatStroke)" stroke-width="1.3"/>
+    <line x1="190.0" y1="310.0" x2="192.6" y2="298.9" stroke="url(#wheatStroke)" stroke-width="0.8" stroke-opacity="0.5"/>
+    <path d="M195.2 287.9 Q197.9 266.5 192.9 243.2" stroke="url(#wheatStroke)" stroke-width="0.9" fill="none"/>
+    <path d="M184.3 291.4 Q169.0 291.2 166.8 275.3 Q177.9 281.5 184.3 291.4 Z" fill="url(#earBase)" stroke="none"/>
+    <path d="M184.3 291.4 Q169.0 291.2 166.8 275.3 Q177.9 281.5 184.3 291.4 Z" fill="url(#grainGold)" stroke="url(#wheatStroke)" stroke-width="1.3"/>
+    <line x1="184.3" y1="291.4" x2="175.5" y2="283.4" stroke="url(#wheatStroke)" stroke-width="0.8" stroke-opacity="0.5"/>
+    <path d="M166.8 275.3 Q151.7 258.1 142.1 234.9" stroke="url(#wheatStroke)" stroke-width="0.9" fill="none"/>
+    <path d="M180.4 279.2 Q192.8 270.2 185.5 256.0 Q179.8 267.4 180.4 279.2 Z" fill="url(#earBase)" stroke="none"/>
+    <path d="M180.4 279.2 Q192.8 270.2 185.5 256.0 Q179.8 267.4 180.4 279.2 Z" fill="url(#grainGold)" stroke="url(#wheatStroke)" stroke-width="1.3"/>
+    <line x1="180.4" y1="279.2" x2="182.9" y2="267.6" stroke="url(#wheatStroke)" stroke-width="0.8" stroke-opacity="0.5"/>
+    <path d="M185.5 256.0 Q187.8 233.2 182.4 208.7" stroke="url(#wheatStroke)" stroke-width="0.9" fill="none"/>
+    <path d="M174.5 261.0 Q159.0 261.0 156.5 244.9 Q167.9 251.0 174.5 261.0 Z" fill="url(#earBase)" stroke="none"/>
+    <path d="M174.5 261.0 Q159.0 261.0 156.5 244.9 Q167.9 251.0 174.5 261.0 Z" fill="url(#grainGold)" stroke="url(#wheatStroke)" stroke-width="1.3"/>
+    <line x1="174.5" y1="261.0" x2="165.5" y2="253.0" stroke="url(#wheatStroke)" stroke-width="0.8" stroke-opacity="0.5"/>
+    <path d="M156.5 244.9 Q140.9 227.5 130.7 204.1" stroke="url(#wheatStroke)" stroke-width="0.9" fill="none"/>
+    <path d="M170.5 249.0 Q182.9 239.7 175.3 225.3 Q169.7 237.0 170.5 249.0 Z" fill="url(#earBase)" stroke="none"/>
+    <path d="M170.5 249.0 Q182.9 239.7 175.3 225.3 Q169.7 237.0 170.5 249.0 Z" fill="url(#grainGold)" stroke="url(#wheatStroke)" stroke-width="1.3"/>
+    <line x1="170.5" y1="249.0" x2="172.9" y2="237.2" stroke="url(#wheatStroke)" stroke-width="0.8" stroke-opacity="0.5"/>
+    <path d="M175.3 225.3 Q177.2 202.1 171.4 177.2" stroke="url(#wheatStroke)" stroke-width="0.9" fill="none"/>
+    <path d="M164.4 231.2 Q149.1 231.4 146.4 215.6 Q157.8 221.4 164.4 231.2 Z" fill="url(#earBase)" stroke="none"/>
+    <path d="M164.4 231.2 Q149.1 231.4 146.4 215.6 Q157.8 221.4 164.4 231.2 Z" fill="url(#grainGold)" stroke="url(#wheatStroke)" stroke-width="1.3"/>
+    <line x1="164.4" y1="231.2" x2="155.4" y2="223.4" stroke="url(#wheatStroke)" stroke-width="0.8" stroke-opacity="0.5"/>
+    <path d="M146.4 215.6 Q130.8 198.8 120.5 176.0" stroke="url(#wheatStroke)" stroke-width="0.9" fill="none"/>
+    <path d="M160.3 219.4 Q172.4 210.1 164.6 196.1 Q159.3 207.7 160.3 219.4 Z" fill="url(#earBase)" stroke="none"/>
+    <path d="M160.3 219.4 Q172.4 210.1 164.6 196.1 Q159.3 207.7 160.3 219.4 Z" fill="url(#grainGold)" stroke="url(#wheatStroke)" stroke-width="1.3"/>
+    <line x1="160.3" y1="219.4" x2="162.4" y2="207.8" stroke="url(#wheatStroke)" stroke-width="0.8" stroke-opacity="0.5"/>
+    <path d="M164.6 196.1 Q166.2 173.2 160.0 148.9" stroke="url(#wheatStroke)" stroke-width="0.9" fill="none"/>
+    <path d="M154.0 202.0 Q139.4 202.5 136.5 187.4 Q147.5 192.8 154.0 202.0 Z" fill="url(#earBase)" stroke="none"/>
+    <path d="M154.0 202.0 Q139.4 202.5 136.5 187.4 Q147.5 192.8 154.0 202.0 Z" fill="url(#grainGold)" stroke="url(#wheatStroke)" stroke-width="1.3"/>
+    <line x1="154.0" y1="202.0" x2="145.3" y2="194.7" stroke="url(#wheatStroke)" stroke-width="0.8" stroke-opacity="0.5"/>
+    <path d="M136.5 187.4 Q121.5 172.0 111.5 150.4" stroke="url(#wheatStroke)" stroke-width="0.9" fill="none"/>
+    <path d="M149.7 190.5 Q161.2 181.4 153.5 168.1 Q148.7 179.3 149.7 190.5 Z" fill="url(#earBase)" stroke="none"/>
+    <path d="M149.7 190.5 Q161.2 181.4 153.5 168.1 Q148.7 179.3 149.7 190.5 Z" fill="url(#grainGold)" stroke="url(#wheatStroke)" stroke-width="1.3"/>
+    <line x1="149.7" y1="190.5" x2="151.6" y2="179.3" stroke="url(#wheatStroke)" stroke-width="0.8" stroke-opacity="0.5"/>
+    <path d="M153.5 168.1 Q154.9 146.5 148.5 123.7" stroke="url(#wheatStroke)" stroke-width="0.9" fill="none"/>
+    <path d="M143.3 173.4 Q129.7 174.1 126.8 160.2 Q137.1 165.0 143.3 173.4 Z" fill="url(#earBase)" stroke="none"/>
+    <path d="M143.3 173.4 Q129.7 174.1 126.8 160.2 Q137.1 165.0 143.3 173.4 Z" fill="url(#grainGold)" stroke="url(#wheatStroke)" stroke-width="1.3"/>
+    <line x1="143.3" y1="173.4" x2="135.1" y2="166.8" stroke="url(#wheatStroke)" stroke-width="0.8" stroke-opacity="0.5"/>
+    <path d="M126.8 160.2 Q112.7 146.7 103.6 127.0" stroke="url(#wheatStroke)" stroke-width="0.9" fill="none"/>
+    <path d="M138.9 162.2 Q149.4 153.5 142.0 141.3 Q137.7 151.8 138.9 162.2 Z" fill="url(#earBase)" stroke="none"/>
+    <path d="M138.9 162.2 Q149.4 153.5 142.0 141.3 Q137.7 151.8 138.9 162.2 Z" fill="url(#grainGold)" stroke="url(#wheatStroke)" stroke-width="1.3"/>
+    <line x1="138.9" y1="162.2" x2="140.5" y2="151.8" stroke="url(#wheatStroke)" stroke-width="0.8" stroke-opacity="0.5"/>
+    <path d="M142.0 141.3 Q143.4 121.8 136.8 101.1" stroke="url(#wheatStroke)" stroke-width="0.9" fill="none"/>
+    <path d="M132.2 145.5 Q120.0 146.3 117.2 133.8 Q126.5 137.9 132.2 145.5 Z" fill="url(#earBase)" stroke="none"/>
+    <path d="M132.2 145.5 Q120.0 146.3 117.2 133.8 Q126.5 137.9 132.2 145.5 Z" fill="url(#grainGold)" stroke="url(#wheatStroke)" stroke-width="1.3"/>
+    <line x1="132.2" y1="145.5" x2="124.7" y2="139.6" stroke="url(#wheatStroke)" stroke-width="0.8" stroke-opacity="0.5"/>
+    <path d="M117.2 133.8 Q104.4 122.7 96.5 105.3" stroke="url(#wheatStroke)" stroke-width="0.9" fill="none"/>
+    <path d="M130.0 140.0 Q139.3 132.0 132.6 121.1 Q128.8 130.6 130.0 140.0 Z" fill="url(#earBase)" stroke="none"/>
+    <path d="M130.0 140.0 Q139.3 132.0 132.6 121.1 Q128.8 130.6 130.0 140.0 Z" fill="url(#grainGold)" stroke="url(#wheatStroke)" stroke-width="1.3"/>
+    <line x1="130.0" y1="140.0" x2="131.3" y2="130.6" stroke="url(#wheatStroke)" stroke-width="0.8" stroke-opacity="0.5"/>
+    <path d="M132.6 121.1 Q134.0 104.2 127.5 86.2" stroke="url(#wheatStroke)" stroke-width="0.9" fill="none"/>
+    <!-- ==================== RIGHT WHEAT EAR ==================== -->
+    <path d="M395.0 160.0 L388.8 111.0" stroke="url(#wheatStroke)" stroke-width="1.0" fill="none"/>
+    <path d="M395.0 160.0 L401.7 111.1" stroke="url(#wheatStroke)" stroke-width="1.0" fill="none"/>
+    <path d="M395.0 160.0 L414.1 114.4" stroke="url(#wheatStroke)" stroke-width="1.0" fill="none"/>
+    <path d="M360.0 390.0 Q349.6 384.5 353.5 372.8 Q359.1 380.9 360.0 390.0 Z" fill="url(#earBase)" stroke="none"/>
+    <path d="M360.0 390.0 Q349.6 384.5 353.5 372.8 Q359.1 380.9 360.0 390.0 Z" fill="url(#grainGold)" stroke="url(#wheatStroke)" stroke-width="1.3"/>
+    <line x1="360.0" y1="390.0" x2="356.8" y2="381.4" stroke="url(#wheatStroke)" stroke-width="0.8" stroke-opacity="0.5"/>
+    <path d="M353.5 372.8 Q348.5 358.0 351.0 340.4" stroke="url(#wheatStroke)" stroke-width="0.9" fill="none"/>
+    <path d="M361.0 384.0 Q372.6 382.2 372.7 369.8 Q364.8 375.7 361.0 384.0 Z" fill="url(#earBase)" stroke="none"/>
+    <path d="M361.0 384.0 Q372.6 382.2 372.7 369.8 Q364.8 375.7 361.0 384.0 Z" fill="url(#grainGold)" stroke="url(#wheatStroke)" stroke-width="1.3"/>
+    <line x1="361.0" y1="384.0" x2="366.8" y2="376.9" stroke="url(#wheatStroke)" stroke-width="0.8" stroke-opacity="0.5"/>
+    <path d="M372.7 369.8 Q382.2 357.5 385.6 340.0" stroke="url(#wheatStroke)" stroke-width="0.9" fill="none"/>
+    <path d="M364.6 361.9 Q353.0 355.7 357.4 342.7 Q363.6 351.7 364.6 361.9 Z" fill="url(#earBase)" stroke="none"/>
+    <path d="M364.6 361.9 Q353.0 355.7 357.4 342.7 Q363.6 351.7 364.6 361.9 Z" fill="url(#grainGold)" stroke="url(#wheatStroke)" stroke-width="1.3"/>
+    <line x1="364.6" y1="361.9" x2="361.0" y2="352.3" stroke="url(#wheatStroke)" stroke-width="0.8" stroke-opacity="0.5"/>
+    <path d="M357.4 342.7 Q352.1 325.4 354.3 305.2" stroke="url(#wheatStroke)" stroke-width="0.9" fill="none"/>
+    <path d="M366.6 350.0 Q379.5 347.9 379.5 334.1 Q370.8 340.7 366.6 350.0 Z" fill="url(#earBase)" stroke="none"/>
+    <path d="M366.6 350.0 Q379.5 347.9 379.5 334.1 Q370.8 340.7 366.6 350.0 Z" fill="url(#grainGold)" stroke="url(#wheatStroke)" stroke-width="1.3"/>
+    <line x1="366.6" y1="350.0" x2="373.1" y2="342.1" stroke="url(#wheatStroke)" stroke-width="0.8" stroke-opacity="0.5"/>
+    <path d="M379.5 334.1 Q390.0 319.4 394.3 299.6" stroke="url(#wheatStroke)" stroke-width="0.9" fill="none"/>
+    <path d="M370.1 328.1 Q357.5 321.6 362.2 307.5 Q368.9 317.2 370.1 328.1 Z" fill="url(#earBase)" stroke="none"/>
+    <path d="M370.1 328.1 Q357.5 321.6 362.2 307.5 Q368.9 317.2 370.1 328.1 Z" fill="url(#grainGold)" stroke="url(#wheatStroke)" stroke-width="1.3"/>
+    <line x1="370.1" y1="328.1" x2="366.1" y2="317.8" stroke="url(#wheatStroke)" stroke-width="0.8" stroke-opacity="0.5"/>
+    <path d="M362.2 307.5 Q356.7 288.3 358.6 266.3" stroke="url(#wheatStroke)" stroke-width="0.9" fill="none"/>
+    <path d="M371.9 316.4 Q385.9 314.1 385.8 299.2 Q376.4 306.4 371.9 316.4 Z" fill="url(#earBase)" stroke="none"/>
+    <path d="M371.9 316.4 Q385.9 314.1 385.8 299.2 Q376.4 306.4 371.9 316.4 Z" fill="url(#grainGold)" stroke="url(#wheatStroke)" stroke-width="1.3"/>
+    <line x1="371.9" y1="316.4" x2="378.9" y2="307.8" stroke="url(#wheatStroke)" stroke-width="0.8" stroke-opacity="0.5"/>
+    <path d="M385.8 299.2 Q397.0 282.7 402.0 261.1" stroke="url(#wheatStroke)" stroke-width="0.9" fill="none"/>
+    <path d="M375.3 294.8 Q362.3 288.0 367.1 273.4 Q374.1 283.5 375.3 294.8 Z" fill="url(#earBase)" stroke="none"/>
+    <path d="M375.3 294.8 Q362.3 288.0 367.1 273.4 Q374.1 283.5 375.3 294.8 Z" fill="url(#grainGold)" stroke="url(#wheatStroke)" stroke-width="1.3"/>
+    <line x1="375.3" y1="294.8" x2="371.2" y2="284.1" stroke="url(#wheatStroke)" stroke-width="0.8" stroke-opacity="0.5"/>
+    <path d="M367.1 273.4 Q361.4 253.2 363.1 230.2" stroke="url(#wheatStroke)" stroke-width="0.9" fill="none"/>
+    <path d="M377.1 283.2 Q391.6 280.7 391.4 265.3 Q381.7 272.8 377.1 283.2 Z" fill="url(#earBase)" stroke="none"/>
+    <path d="M377.1 283.2 Q391.6 280.7 391.4 265.3 Q381.7 272.8 377.1 283.2 Z" fill="url(#grainGold)" stroke="url(#wheatStroke)" stroke-width="1.3"/>
+    <line x1="377.1" y1="283.2" x2="384.3" y2="274.3" stroke="url(#wheatStroke)" stroke-width="0.8" stroke-opacity="0.5"/>
+    <path d="M391.4 265.3 Q403.0 247.8 408.2 225.3" stroke="url(#wheatStroke)" stroke-width="0.9" fill="none"/>
+    <path d="M380.4 261.8 Q367.3 255.2 372.0 240.5 Q379.1 250.5 380.4 261.8 Z" fill="url(#earBase)" stroke="none"/>
+    <path d="M380.4 261.8 Q367.3 255.2 372.0 240.5 Q379.1 250.5 380.4 261.8 Z" fill="url(#grainGold)" stroke="url(#wheatStroke)" stroke-width="1.3"/>
+    <line x1="380.4" y1="261.8" x2="376.2" y2="251.2" stroke="url(#wheatStroke)" stroke-width="0.8" stroke-opacity="0.5"/>
+    <path d="M372.0 240.5 Q366.2 220.4 367.9 197.3" stroke="url(#wheatStroke)" stroke-width="0.9" fill="none"/>
+    <path d="M382.1 250.4 Q396.5 247.9 396.3 232.5 Q386.6 240.0 382.1 250.4 Z" fill="url(#earBase)" stroke="none"/>
+    <path d="M382.1 250.4 Q396.5 247.9 396.3 232.5 Q386.6 240.0 382.1 250.4 Z" fill="url(#grainGold)" stroke="url(#wheatStroke)" stroke-width="1.3"/>
+    <line x1="382.1" y1="250.4" x2="389.2" y2="241.5" stroke="url(#wheatStroke)" stroke-width="0.8" stroke-opacity="0.5"/>
+    <path d="M396.3 232.5 Q407.8 214.9 412.9 192.4" stroke="url(#wheatStroke)" stroke-width="0.9" fill="none"/>
+    <path d="M385.2 229.3 Q372.6 222.9 377.0 208.8 Q383.9 218.4 385.2 229.3 Z" fill="url(#earBase)" stroke="none"/>
+    <path d="M385.2 229.3 Q372.6 222.9 377.0 208.8 Q383.9 218.4 385.2 229.3 Z" fill="url(#grainGold)" stroke="url(#wheatStroke)" stroke-width="1.3"/>
+    <line x1="385.2" y1="229.3" x2="381.1" y2="219.1" stroke="url(#wheatStroke)" stroke-width="0.8" stroke-opacity="0.5"/>
+    <path d="M377.0 208.8 Q371.3 189.7 373.0 167.6" stroke="url(#wheatStroke)" stroke-width="0.9" fill="none"/>
+    <path d="M386.8 218.0 Q400.8 215.5 400.5 200.7 Q391.2 208.0 386.8 218.0 Z" fill="url(#earBase)" stroke="none"/>
+    <path d="M386.8 218.0 Q400.8 215.5 400.5 200.7 Q391.2 208.0 386.8 218.0 Z" fill="url(#grainGold)" stroke="url(#wheatStroke)" stroke-width="1.3"/>
+    <line x1="386.8" y1="218.0" x2="393.7" y2="209.4" stroke="url(#wheatStroke)" stroke-width="0.8" stroke-opacity="0.5"/>
+    <path d="M400.5 200.7 Q411.5 184.0 416.2 162.4" stroke="url(#wheatStroke)" stroke-width="0.9" fill="none"/>
+    <path d="M389.8 197.2 Q378.1 191.3 382.2 178.2 Q388.6 187.1 389.8 197.2 Z" fill="url(#earBase)" stroke="none"/>
+    <path d="M389.8 197.2 Q378.1 191.3 382.2 178.2 Q388.6 187.1 389.8 197.2 Z" fill="url(#grainGold)" stroke="url(#wheatStroke)" stroke-width="1.3"/>
+    <line x1="389.8" y1="197.2" x2="386.0" y2="187.7" stroke="url(#wheatStroke)" stroke-width="0.8" stroke-opacity="0.5"/>
+    <path d="M382.2 178.2 Q376.5 161.0 378.3 140.8" stroke="url(#wheatStroke)" stroke-width="0.9" fill="none"/>
+    <path d="M391.4 186.1 Q404.3 183.7 404.0 169.9 Q395.4 176.7 391.4 186.1 Z" fill="url(#earBase)" stroke="none"/>
+    <path d="M391.4 186.1 Q404.3 183.7 404.0 169.9 Q395.4 176.7 391.4 186.1 Z" fill="url(#grainGold)" stroke="url(#wheatStroke)" stroke-width="1.3"/>
+    <line x1="391.4" y1="186.1" x2="397.7" y2="178.0" stroke="url(#wheatStroke)" stroke-width="0.8" stroke-opacity="0.5"/>
+    <path d="M404.0 169.9 Q414.2 154.9 418.1 135.1" stroke="url(#wheatStroke)" stroke-width="0.9" fill="none"/>
+    <path d="M394.2 165.5 Q383.7 160.3 387.3 148.5 Q393.1 156.4 394.2 165.5 Z" fill="url(#earBase)" stroke="none"/>
+    <path d="M394.2 165.5 Q383.7 160.3 387.3 148.5 Q393.1 156.4 394.2 165.5 Z" fill="url(#grainGold)" stroke="url(#wheatStroke)" stroke-width="1.3"/>
+    <line x1="394.2" y1="165.5" x2="390.8" y2="157.0" stroke="url(#wheatStroke)" stroke-width="0.8" stroke-opacity="0.5"/>
+    <path d="M387.3 148.5 Q381.8 133.9 383.8 116.2" stroke="url(#wheatStroke)" stroke-width="0.9" fill="none"/>
+    <path d="M395.0 160.0 Q406.6 157.8 406.3 145.5 Q398.6 151.6 395.0 160.0 Z" fill="url(#earBase)" stroke="none"/>
+    <path d="M395.0 160.0 Q406.6 157.8 406.3 145.5 Q398.6 151.6 395.0 160.0 Z" fill="url(#grainGold)" stroke="url(#wheatStroke)" stroke-width="1.3"/>
+    <line x1="395.0" y1="160.0" x2="400.6" y2="152.7" stroke="url(#wheatStroke)" stroke-width="0.8" stroke-opacity="0.5"/>
+    <path d="M406.3 145.5 Q415.4 132.8 418.3 115.3" stroke="url(#wheatStroke)" stroke-width="0.9" fill="none"/>
+    <!-- ==================== CENTRAL WHEAT EAR ==================== -->
+    <path d="M308.0 70.0 L293.7 6.6" stroke="url(#wheatStroke)" stroke-width="1.0" fill="none"/>
+    <path d="M308.0 70.0 L310.6 5.1" stroke="url(#wheatStroke)" stroke-width="1.0" fill="none"/>
+    <path d="M308.0 70.0 L327.3 7.9" stroke="url(#wheatStroke)" stroke-width="1.0" fill="none"/>
+    <path d="M305.0 380.0 Q292.3 376.2 294.4 362.5 Q302.2 370.2 305.0 380.0 Z" fill="url(#earBase)" stroke="none"/>
+    <path d="M305.0 380.0 Q292.3 376.2 294.4 362.5 Q302.2 370.2 305.0 380.0 Z" fill="url(#grainGold)" stroke="url(#wheatStroke)" stroke-width="1.3"/>
+    <line x1="305.0" y1="380.0" x2="299.7" y2="371.2" stroke="url(#wheatStroke)" stroke-width="0.8" stroke-opacity="0.5"/>
+    <path d="M294.4 362.5 Q285.7 344.8 283.8 323.0" stroke="url(#wheatStroke)" stroke-width="0.9" fill="none"/>
+    <path d="M304.9 372.0 Q317.4 367.7 314.8 354.1 Q307.3 362.1 304.9 372.0 Z" fill="url(#earBase)" stroke="none"/>
+    <path d="M304.9 372.0 Q317.4 367.7 314.8 354.1 Q307.3 362.1 304.9 372.0 Z" fill="url(#grainGold)" stroke="url(#wheatStroke)" stroke-width="1.3"/>
+    <line x1="304.9" y1="372.0" x2="309.8" y2="363.0" stroke="url(#wheatStroke)" stroke-width="0.8" stroke-opacity="0.5"/>
+    <path d="M314.8 354.1 Q322.9 336.1 324.0 314.3" stroke="url(#wheatStroke)" stroke-width="0.9" fill="none"/>
+    <path d="M304.6 356.1 Q290.7 351.8 293.1 336.8 Q301.6 345.3 304.6 356.1 Z" fill="url(#earBase)" stroke="none"/>
+    <path d="M304.6 356.1 Q290.7 351.8 293.1 336.8 Q301.6 345.3 304.6 356.1 Z" fill="url(#grainGold)" stroke="url(#wheatStroke)" stroke-width="1.3"/>
+    <line x1="304.6" y1="356.1" x2="298.9" y2="346.4" stroke="url(#wheatStroke)" stroke-width="0.8" stroke-opacity="0.5"/>
+    <path d="M293.1 336.8 Q283.7 316.5 281.3 292.1" stroke="url(#wheatStroke)" stroke-width="0.9" fill="none"/>
+    <path d="M304.4 340.2 Q318.2 335.5 315.4 320.6 Q307.1 329.3 304.4 340.2 Z" fill="url(#earBase)" stroke="none"/>
+    <path d="M304.4 340.2 Q318.2 335.5 315.4 320.6 Q307.1 329.3 304.4 340.2 Z" fill="url(#grainGold)" stroke="url(#wheatStroke)" stroke-width="1.3"/>
+    <line x1="304.4" y1="340.2" x2="309.9" y2="330.4" stroke="url(#wheatStroke)" stroke-width="0.8" stroke-opacity="0.5"/>
+    <path d="M315.4 320.6 Q324.2 300.1 326.0 275.6" stroke="url(#wheatStroke)" stroke-width="0.9" fill="none"/>
+    <path d="M304.2 324.3 Q289.3 319.7 292.0 303.6 Q301.1 312.7 304.2 324.3 Z" fill="url(#earBase)" stroke="none"/>
+    <path d="M304.2 324.3 Q289.3 319.7 292.0 303.6 Q301.1 312.7 304.2 324.3 Z" fill="url(#grainGold)" stroke="url(#wheatStroke)" stroke-width="1.3"/>
+    <line x1="304.2" y1="324.3" x2="298.1" y2="313.9" stroke="url(#wheatStroke)" stroke-width="0.8" stroke-opacity="0.5"/>
+    <path d="M292.0 303.6 Q282.2 280.9 279.2 254.3" stroke="url(#wheatStroke)" stroke-width="0.9" fill="none"/>
+    <path d="M304.1 308.5 Q318.9 303.6 316.0 287.6 Q307.1 296.9 304.1 308.5 Z" fill="url(#earBase)" stroke="none"/>
+    <path d="M304.1 308.5 Q318.9 303.6 316.0 287.6 Q307.1 296.9 304.1 308.5 Z" fill="url(#grainGold)" stroke="url(#wheatStroke)" stroke-width="1.3"/>
+    <line x1="304.1" y1="308.5" x2="310.1" y2="298.0" stroke="url(#wheatStroke)" stroke-width="0.8" stroke-opacity="0.5"/>
+    <path d="M316.0 287.6 Q325.5 264.8 328.0 238.1" stroke="url(#wheatStroke)" stroke-width="0.9" fill="none"/>
+    <path d="M304.0 292.8 Q288.4 287.8 291.3 270.8 Q300.8 280.6 304.0 292.8 Z" fill="url(#earBase)" stroke="none"/>
+    <path d="M304.0 292.8 Q288.4 287.8 291.3 270.8 Q300.8 280.6 304.0 292.8 Z" fill="url(#grainGold)" stroke="url(#wheatStroke)" stroke-width="1.3"/>
+    <line x1="304.0" y1="292.8" x2="297.7" y2="281.8" stroke="url(#wheatStroke)" stroke-width="0.8" stroke-opacity="0.5"/>
+    <path d="M291.3 270.8 Q281.1 246.4 277.9 218.0" stroke="url(#wheatStroke)" stroke-width="0.9" fill="none"/>
+    <path d="M304.0 277.1 Q319.6 272.0 316.7 255.1 Q307.2 264.9 304.0 277.1 Z" fill="url(#earBase)" stroke="none"/>
+    <path d="M304.0 277.1 Q319.6 272.0 316.7 255.1 Q307.2 264.9 304.0 277.1 Z" fill="url(#grainGold)" stroke="url(#wheatStroke)" stroke-width="1.3"/>
+    <line x1="304.0" y1="277.1" x2="310.3" y2="266.1" stroke="url(#wheatStroke)" stroke-width="0.8" stroke-opacity="0.5"/>
+    <path d="M316.7 255.1 Q326.7 230.6 329.8 202.2" stroke="url(#wheatStroke)" stroke-width="0.9" fill="none"/>
+    <path d="M304.0 261.4 Q287.9 256.2 291.0 238.7 Q300.7 248.8 304.0 261.4 Z" fill="url(#earBase)" stroke="none"/>
+    <path d="M304.0 261.4 Q287.9 256.2 291.0 238.7 Q300.7 248.8 304.0 261.4 Z" fill="url(#grainGold)" stroke="url(#wheatStroke)" stroke-width="1.3"/>
+    <line x1="304.0" y1="261.4" x2="297.5" y2="250.1" stroke="url(#wheatStroke)" stroke-width="0.8" stroke-opacity="0.5"/>
+    <path d="M291.0 238.7 Q280.7 213.2 277.4 183.6" stroke="url(#wheatStroke)" stroke-width="0.9" fill="none"/>
+    <path d="M304.1 245.8 Q320.2 240.7 317.3 223.2 Q307.5 233.2 304.1 245.8 Z" fill="url(#earBase)" stroke="none"/>
+    <path d="M304.1 245.8 Q320.2 240.7 317.3 223.2 Q307.5 233.2 304.1 245.8 Z" fill="url(#grainGold)" stroke="url(#wheatStroke)" stroke-width="1.3"/>
+    <line x1="304.1" y1="245.8" x2="310.7" y2="234.5" stroke="url(#wheatStroke)" stroke-width="0.8" stroke-opacity="0.5"/>
+    <path d="M317.3 223.2 Q327.7 197.7 331.3 168.2" stroke="url(#wheatStroke)" stroke-width="0.9" fill="none"/>
+    <path d="M304.2 230.3 Q287.9 224.9 291.1 207.2 Q300.9 217.5 304.2 230.3 Z" fill="url(#earBase)" stroke="none"/>
+    <path d="M304.2 230.3 Q287.9 224.9 291.1 207.2 Q300.9 217.5 304.2 230.3 Z" fill="url(#grainGold)" stroke="url(#wheatStroke)" stroke-width="1.3"/>
+    <line x1="304.2" y1="230.3" x2="297.7" y2="218.7" stroke="url(#wheatStroke)" stroke-width="0.8" stroke-opacity="0.5"/>
+    <path d="M291.1 207.2 Q280.9 181.3 277.7 151.3" stroke="url(#wheatStroke)" stroke-width="0.9" fill="none"/>
+    <path d="M304.3 214.8 Q320.7 209.7 317.8 192.0 Q307.8 202.1 304.3 214.8 Z" fill="url(#earBase)" stroke="none"/>
+    <path d="M304.3 214.8 Q320.7 209.7 317.8 192.0 Q307.8 202.1 304.3 214.8 Z" fill="url(#grainGold)" stroke="url(#wheatStroke)" stroke-width="1.3"/>
+    <line x1="304.3" y1="214.8" x2="311.1" y2="203.4" stroke="url(#wheatStroke)" stroke-width="0.8" stroke-opacity="0.5"/>
+    <path d="M317.8 192.0 Q328.5 166.2 332.3 136.4" stroke="url(#wheatStroke)" stroke-width="0.9" fill="none"/>
+    <path d="M304.5 199.3 Q288.5 193.9 291.8 176.5 Q301.4 186.7 304.5 199.3 Z" fill="url(#earBase)" stroke="none"/>
+    <path d="M304.5 199.3 Q288.5 193.9 291.8 176.5 Q301.4 186.7 304.5 199.3 Z" fill="url(#grainGold)" stroke="url(#wheatStroke)" stroke-width="1.3"/>
+    <line x1="304.5" y1="199.3" x2="298.1" y2="187.9" stroke="url(#wheatStroke)" stroke-width="0.8" stroke-opacity="0.5"/>
+    <path d="M291.8 176.5 Q281.8 150.8 278.8 121.2" stroke="url(#wheatStroke)" stroke-width="0.9" fill="none"/>
+    <path d="M304.8 183.9 Q321.0 179.0 318.2 161.5 Q308.3 171.4 304.8 183.9 Z" fill="url(#earBase)" stroke="none"/>
+    <path d="M304.8 183.9 Q321.0 179.0 318.2 161.5 Q308.3 171.4 304.8 183.9 Z" fill="url(#grainGold)" stroke="url(#wheatStroke)" stroke-width="1.3"/>
+    <line x1="304.8" y1="183.9" x2="311.5" y2="172.7" stroke="url(#wheatStroke)" stroke-width="0.8" stroke-opacity="0.5"/>
+    <path d="M318.2 161.5 Q329.0 136.1 332.9 106.7" stroke="url(#wheatStroke)" stroke-width="0.9" fill="none"/>
+    <path d="M305.1 168.6 Q289.5 163.2 292.8 146.3 Q302.1 156.3 305.1 168.6 Z" fill="url(#earBase)" stroke="none"/>
+    <path d="M305.1 168.6 Q289.5 163.2 292.8 146.3 Q302.1 156.3 305.1 168.6 Z" fill="url(#grainGold)" stroke="url(#wheatStroke)" stroke-width="1.3"/>
+    <line x1="305.1" y1="168.6" x2="298.9" y2="157.4" stroke="url(#wheatStroke)" stroke-width="0.8" stroke-opacity="0.5"/>
+    <path d="M292.8 146.3 Q283.2 121.7 280.7 93.2" stroke="url(#wheatStroke)" stroke-width="0.9" fill="none"/>
+    <path d="M305.4 153.3 Q321.1 148.6 318.6 131.6 Q308.9 141.1 305.4 153.3 Z" fill="url(#earBase)" stroke="none"/>
+    <path d="M305.4 153.3 Q321.1 148.6 318.6 131.6 Q308.9 141.1 305.4 153.3 Z" fill="url(#grainGold)" stroke="url(#wheatStroke)" stroke-width="1.3"/>
+    <line x1="305.4" y1="153.3" x2="312.0" y2="142.4" stroke="url(#wheatStroke)" stroke-width="0.8" stroke-opacity="0.5"/>
+    <path d="M318.6 131.6 Q329.2 107.4 333.0 79.0" stroke="url(#wheatStroke)" stroke-width="0.9" fill="none"/>
+    <path d="M305.8 138.0 Q291.0 132.8 294.3 116.8 Q303.0 126.3 305.8 138.0 Z" fill="url(#earBase)" stroke="none"/>
+    <path d="M305.8 138.0 Q291.0 132.8 294.3 116.8 Q303.0 126.3 305.8 138.0 Z" fill="url(#grainGold)" stroke="url(#wheatStroke)" stroke-width="1.3"/>
+    <line x1="305.8" y1="138.0" x2="300.0" y2="127.4" stroke="url(#wheatStroke)" stroke-width="0.8" stroke-opacity="0.5"/>
+    <path d="M294.3 116.8 Q285.2 93.9 283.2 67.1" stroke="url(#wheatStroke)" stroke-width="0.9" fill="none"/>
+    <path d="M306.2 122.8 Q321.2 118.5 318.8 102.3 Q309.6 111.3 306.2 122.8 Z" fill="url(#earBase)" stroke="none"/>
+    <path d="M306.2 122.8 Q321.2 118.5 318.8 102.3 Q309.6 111.3 306.2 122.8 Z" fill="url(#grainGold)" stroke="url(#wheatStroke)" stroke-width="1.3"/>
+    <line x1="306.2" y1="122.8" x2="312.5" y2="112.6" stroke="url(#wheatStroke)" stroke-width="0.8" stroke-opacity="0.5"/>
+    <path d="M318.8 102.3 Q329.1 79.9 332.6 53.3" stroke="url(#wheatStroke)" stroke-width="0.9" fill="none"/>
+    <path d="M306.6 107.7 Q293.0 102.8 296.1 87.9 Q304.1 96.8 306.6 107.7 Z" fill="url(#earBase)" stroke="none"/>
+    <path d="M306.6 107.7 Q293.0 102.8 296.1 87.9 Q304.1 96.8 306.6 107.7 Z" fill="url(#grainGold)" stroke="url(#wheatStroke)" stroke-width="1.3"/>
+    <line x1="306.6" y1="107.7" x2="301.4" y2="97.8" stroke="url(#wheatStroke)" stroke-width="0.8" stroke-opacity="0.5"/>
+    <path d="M296.1 87.9 Q287.7 67.2 286.3 42.7" stroke="url(#wheatStroke)" stroke-width="0.9" fill="none"/>
+    <path d="M307.2 92.6 Q321.1 88.6 319.0 73.5 Q310.4 81.9 307.2 92.6 Z" fill="url(#earBase)" stroke="none"/>
+    <path d="M307.2 92.6 Q321.1 88.6 319.0 73.5 Q310.4 81.9 307.2 92.6 Z" fill="url(#grainGold)" stroke="url(#wheatStroke)" stroke-width="1.3"/>
+    <line x1="307.2" y1="92.6" x2="313.1" y2="83.0" stroke="url(#wheatStroke)" stroke-width="0.8" stroke-opacity="0.5"/>
+    <path d="M319.0 73.5 Q328.8 53.4 331.8 29.1" stroke="url(#wheatStroke)" stroke-width="0.9" fill="none"/>
+    <path d="M307.7 77.5 Q295.2 73.0 298.2 59.4 Q305.5 67.6 307.7 77.5 Z" fill="url(#earBase)" stroke="none"/>
+    <path d="M307.7 77.5 Q295.2 73.0 298.2 59.4 Q305.5 67.6 307.7 77.5 Z" fill="url(#grainGold)" stroke="url(#wheatStroke)" stroke-width="1.3"/>
+    <line x1="307.7" y1="77.5" x2="302.9" y2="68.4" stroke="url(#wheatStroke)" stroke-width="0.8" stroke-opacity="0.5"/>
+    <path d="M298.2 59.4 Q290.4 41.3 289.8 19.4" stroke="url(#wheatStroke)" stroke-width="0.9" fill="none"/>
+    <path d="M308.0 70.0 Q320.8 66.4 318.9 52.7 Q311.0 60.3 308.0 70.0 Z" fill="url(#earBase)" stroke="none"/>
+    <path d="M308.0 70.0 Q320.8 66.4 318.9 52.7 Q311.0 60.3 308.0 70.0 Z" fill="url(#grainGold)" stroke="url(#wheatStroke)" stroke-width="1.3"/>
+    <line x1="308.0" y1="70.0" x2="313.5" y2="61.3" stroke="url(#wheatStroke)" stroke-width="0.8" stroke-opacity="0.5"/>
+    <path d="M318.9 52.7 Q328.0 35.2 330.4 13.5" stroke="url(#wheatStroke)" stroke-width="0.9" fill="none"/>
+    <!-- ==================== FLOATING GRAIN ACCENTS ==================== -->
+    <ellipse cx="75" cy="220" rx="4.5" ry="9.5" transform="rotate(25 75 220)" fill="url(#earBase)"/>
+    <ellipse cx="75" cy="220" rx="4.5" ry="9.5" transform="rotate(25 75 220)" fill="url(#grainGold)" stroke="url(#wheatStroke)" stroke-width="1.1"/>
+    <line x1="75" y1="212" x2="83" y2="198" stroke="url(#wheatStroke)" stroke-width="0.8"/>
+    <ellipse cx="95" cy="310" rx="4.5" ry="9.5" transform="rotate(-20 95 310)" fill="url(#earBase)"/>
+    <ellipse cx="95" cy="310" rx="4.5" ry="9.5" transform="rotate(-20 95 310)" fill="url(#grainGold)" stroke="url(#wheatStroke)" stroke-width="1.1"/>
+    <line x1="95" y1="302" x2="87" y2="288" stroke="url(#wheatStroke)" stroke-width="0.8"/>
+    <ellipse cx="210" cy="80" rx="4.5" ry="9.5" transform="rotate(-30 210 80)" fill="url(#earBase)"/>
+    <ellipse cx="210" cy="80" rx="4.5" ry="9.5" transform="rotate(-30 210 80)" fill="url(#grainGold)" stroke="url(#wheatStroke)" stroke-width="1.1"/>
+    <line x1="210" y1="72" x2="202" y2="58" stroke="url(#wheatStroke)" stroke-width="0.8"/>
+    <ellipse cx="380" cy="95" rx="4.5" ry="9.5" transform="rotate(35 380 95)" fill="url(#earBase)"/>
+    <ellipse cx="380" cy="95" rx="4.5" ry="9.5" transform="rotate(35 380 95)" fill="url(#grainGold)" stroke="url(#wheatStroke)" stroke-width="1.1"/>
+    <line x1="380" y1="87" x2="388" y2="73" stroke="url(#wheatStroke)" stroke-width="0.8"/>
+    <ellipse cx="415" cy="260" rx="4.5" ry="9.5" transform="rotate(20 415 260)" fill="url(#earBase)"/>
+    <ellipse cx="415" cy="260" rx="4.5" ry="9.5" transform="rotate(20 415 260)" fill="url(#grainGold)" stroke="url(#wheatStroke)" stroke-width="1.1"/>
+    <line x1="415" y1="252" x2="423" y2="238" stroke="url(#wheatStroke)" stroke-width="0.8"/>
   </g>
 </svg>
