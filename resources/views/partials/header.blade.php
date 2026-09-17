@@ -60,7 +60,6 @@
                                                         <img src="{{ asset('images/product_atta_white.jpg') }}" alt="Raghuvir Chakki Atta">
                                                     </div>
                                                     <div class="mega-item-info">
-                                                        <span class="mega-item-subtitle">Everyday Staple</span>
                                                         <h5>Chakki Atta</h5>
                                                         <p>100% pure stone-ground whole wheat for super soft, nutritious daily rotis.</p>
                                                         <div class="mega-card-action">
@@ -76,7 +75,6 @@
                                                         <img src="{{ asset('images/product_atta_white.jpg') }}" alt="Raghuvir Bati Atta">
                                                     </div>
                                                     <div class="mega-item-info">
-                                                        <span class="mega-item-subtitle">Traditional Recipe</span>
                                                         <h5>Bati Atta</h5>
                                                         <p>Coarsely stone-ground for rich authentic flavor and crispy Dal Batis &amp; Baflas.</p>
                                                         <div class="mega-card-action">
@@ -92,7 +90,6 @@
                                                         <img src="{{ asset('images/product_atta_white.jpg') }}" alt="Commercial Wheat Atta">
                                                     </div>
                                                     <div class="mega-item-info">
-                                                        <span class="mega-item-subtitle">High Yield Grade</span>
                                                         <h5>Wheat Atta</h5>
                                                         <p>Engineered for high water absorption &amp; yield for caterers, bakeries &amp; hotels.</p>
                                                         <div class="mega-card-action">

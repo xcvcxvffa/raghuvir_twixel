@@ -1039,21 +1039,11 @@ header.main-header .header-sticky.active {
 	width: 100%;
 }
 
-.mega-item-subtitle {
-	font-size: 10.5px;
-	font-weight: 700;
-	text-transform: uppercase;
-	letter-spacing: 0.5px;
-	color: #EF801C;
-	display: block;
-	margin-bottom: 2px;
-}
-
 .mega-item-info h5 {
-	font-size: 16.5px;
+	font-size: 17px;
 	font-weight: 800;
 	color: #201813;
-	margin: 0 0 5px 0;
+	margin: 2px 0 6px 0;
 	font-family: var(--default-font);
 	transition: color 0.2s ease;
 }
