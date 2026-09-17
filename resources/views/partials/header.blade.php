@@ -24,7 +24,6 @@
                                         <!-- Mega Menu Top Bar -->
                                         <div class="mega-menu-top">
                                             <div class="mega-menu-heading">
-                                                <span class="mega-pill"><i class="fa-solid fa-wheat-awn"></i> 100% Pure &amp; Stone-Ground</span>
                                                 <h4>Our Premium Flour Range</h4>
                                             </div>
                                             <a href="{{ route('products') }}" class="mega-view-all-link">

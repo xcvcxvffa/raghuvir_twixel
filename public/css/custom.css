@@ -783,23 +783,6 @@ header.main-header .header-sticky.active {
 .mega-menu-heading {
 	display: flex;
 	align-items: center;
-	gap: 12px;
-}
-
-.mega-pill {
-	display: inline-flex;
-	align-items: center;
-	gap: 6px;
-	background: #FFF7ED !important;
-	color: #D96A08 !important;
-	border: 1px solid #FCD9B6 !important;
-	font-size: 11.5px;
-	font-weight: 700;
-	text-transform: uppercase;
-	letter-spacing: 0.4px;
-	padding: 5px 14px !important;
-	border-radius: 30px !important;
-	width: fit-content;
 }
 
 .mega-menu-heading h4 {
