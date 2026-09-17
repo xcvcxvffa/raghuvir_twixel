@@ -38,7 +38,6 @@
                                             <!-- Left Featured Highlight Banner -->
                                             <div class="mega-featured-banner">
                                                 <div class="mega-featured-inner">
-                                                    <span class="mega-featured-badge"><i class="fa-solid fa-crown"></i> Heritage Milling</span>
                                                     <h5>Farm-Fresh Direct to Your Kitchen</h5>
                                                     <p>Cleaned, slow stone-ground on traditional chakkis with zero maida and natural golden wheat germ intact.</p>
                                                     <ul class="mega-featured-perks">
@@ -57,9 +56,6 @@
                                             <div class="mega-products-grid">
                                                 <!-- Card 1: Chakki Atta -->
                                                 <a href="{{ route('product-details', ['product' => 'atta']) }}" class="mega-product-item">
-                                                    <div class="mega-item-badge best-seller">
-                                                        <i class="fa-solid fa-crown"></i> Bestseller
-                                                    </div>
                                                     <div class="mega-thumb-wrap">
                                                         <img src="{{ asset('images/product_atta_white.jpg') }}" alt="Raghuvir Chakki Atta">
                                                     </div>
@@ -76,9 +72,6 @@
 
                                                 <!-- Card 2: Bati Atta -->
                                                 <a href="{{ route('product-details', ['product' => 'bati']) }}" class="mega-product-item">
-                                                    <div class="mega-item-badge traditional">
-                                                        <i class="fa-solid fa-fire-flame-curved"></i> Specialty
-                                                    </div>
                                                     <div class="mega-thumb-wrap">
                                                         <img src="{{ asset('images/product_atta_white.jpg') }}" alt="Raghuvir Bati Atta">
                                                     </div>
@@ -95,9 +88,6 @@
 
                                                 <!-- Card 3: Commercial Wheat Atta -->
                                                 <a href="{{ route('product-details', ['product' => 'wheat']) }}" class="mega-product-item">
-                                                    <div class="mega-item-badge commercial">
-                                                        <i class="fa-solid fa-building"></i> Commercial
-                                                    </div>
                                                     <div class="mega-thumb-wrap">
                                                         <img src="{{ asset('images/product_atta_white.jpg') }}" alt="Commercial Wheat Atta">
                                                     </div>
