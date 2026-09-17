@@ -24,7 +24,7 @@
                                         <!-- Mega Menu Top Bar -->
                                         <div class="mega-menu-top">
                                             <div class="mega-menu-heading">
-                                                <span class="mega-pill"><i class="fa-solid fa-wheat-awn"></i> 100% Pure &amp; Hygienic</span>
+                                                <span class="mega-pill"><i class="fa-solid fa-wheat-awn"></i> 100% Pure &amp; Stone-Ground</span>
                                                 <h4>Our Premium Flour Range</h4>
                                             </div>
                                             <a href="{{ route('products') }}" class="mega-view-all-link">
@@ -37,14 +37,19 @@
                                         <div class="mega-menu-main-content">
                                             <!-- Left Featured Highlight Banner -->
                                             <div class="mega-featured-banner">
-                                                <div>
-                                                    <span class="mega-featured-badge"><i class="fa-solid fa-star"></i> Purity First</span>
-                                                    <h5>Farm Fresh to Your Kitchen</h5>
-                                                    <p>Cleaned, stone-ground, and hygienically packed with low moisture to keep rotis soft and wholesome all day.</p>
+                                                <div class="mega-featured-inner">
+                                                    <span class="mega-featured-badge"><i class="fa-solid fa-crown"></i> Heritage Milling</span>
+                                                    <h5>Farm-Fresh Direct to Your Kitchen</h5>
+                                                    <p>Cleaned, slow stone-ground on traditional chakkis with zero maida and natural golden wheat germ intact.</p>
+                                                    <ul class="mega-featured-perks">
+                                                        <li><i class="fa-solid fa-circle-check"></i> 100% MP Sharbati Wheat</li>
+                                                        <li><i class="fa-solid fa-circle-check"></i> Traditional Slow Stone Ground</li>
+                                                        <li><i class="fa-solid fa-circle-check"></i> Zero Preservatives or Chemicals</li>
+                                                    </ul>
                                                 </div>
                                                 <a href="{{ route('products') }}" class="mega-featured-link">
-                                                    <span>Explore Catalog</span>
-                                                    <i class="fa-solid fa-circle-arrow-right"></i>
+                                                    <span>Explore Full Catalog</span>
+                                                    <i class="fa-solid fa-arrow-right"></i>
                                                 </a>
                                             </div>
 
@@ -52,48 +57,57 @@
                                             <div class="mega-products-grid">
                                                 <!-- Card 1: Chakki Atta -->
                                                 <a href="{{ route('product-details', ['product' => 'atta']) }}" class="mega-product-item">
-                                                    <div class="mega-item-badge best-seller">Bestseller</div>
+                                                    <div class="mega-item-badge best-seller">
+                                                        <i class="fa-solid fa-crown"></i> Bestseller
+                                                    </div>
                                                     <div class="mega-thumb-wrap">
                                                         <img src="{{ asset('images/product_atta_white.jpg') }}" alt="Raghuvir Chakki Atta">
                                                     </div>
                                                     <div class="mega-item-info">
+                                                        <span class="mega-item-subtitle">Everyday Staple</span>
                                                         <h5>Chakki Atta</h5>
-                                                        <p>100% pure stone-ground flour for daily soft rotis.</p>
-                                                        <div class="mega-item-meta">
-                                                            <span class="mega-size-badge"><i class="fa-solid fa-box"></i> 5kg, 30kg</span>
-                                                            <span class="mega-explore-btn">View <i class="fa-solid fa-angle-right"></i></span>
+                                                        <p>100% pure stone-ground whole wheat for super soft, nutritious daily rotis.</p>
+                                                        <div class="mega-card-action">
+                                                            <span>Explore Product</span>
+                                                            <i class="fa-solid fa-arrow-right"></i>
                                                         </div>
                                                     </div>
                                                 </a>
 
                                                 <!-- Card 2: Bati Atta -->
                                                 <a href="{{ route('product-details', ['product' => 'bati']) }}" class="mega-product-item">
-                                                    <div class="mega-item-badge traditional">Specialty</div>
+                                                    <div class="mega-item-badge traditional">
+                                                        <i class="fa-solid fa-fire-flame-curved"></i> Specialty
+                                                    </div>
                                                     <div class="mega-thumb-wrap">
-                                                        <img src="{{ asset('images/product_atta.jpg') }}" alt="Raghuvir Bati Atta">
+                                                        <img src="{{ asset('images/product_atta_white.jpg') }}" alt="Raghuvir Bati Atta">
                                                     </div>
                                                     <div class="mega-item-info">
+                                                        <span class="mega-item-subtitle">Traditional Recipe</span>
                                                         <h5>Bati Atta</h5>
-                                                        <p>Coarsely milled for authentic crispy Dal Batis &amp; Baflas.</p>
-                                                        <div class="mega-item-meta">
-                                                            <span class="mega-size-badge"><i class="fa-solid fa-box"></i> 30kg</span>
-                                                            <span class="mega-explore-btn">View <i class="fa-solid fa-angle-right"></i></span>
+                                                        <p>Coarsely stone-ground for rich authentic flavor and crispy Dal Batis &amp; Baflas.</p>
+                                                        <div class="mega-card-action">
+                                                            <span>Explore Product</span>
+                                                            <i class="fa-solid fa-arrow-right"></i>
                                                         </div>
                                                     </div>
                                                 </a>
 
                                                 <!-- Card 3: Commercial Wheat Atta -->
                                                 <a href="{{ route('product-details', ['product' => 'wheat']) }}" class="mega-product-item">
-                                                    <div class="mega-item-badge commercial">Commercial</div>
+                                                    <div class="mega-item-badge commercial">
+                                                        <i class="fa-solid fa-building"></i> Commercial
+                                                    </div>
                                                     <div class="mega-thumb-wrap">
                                                         <img src="{{ asset('images/product_atta_white.jpg') }}" alt="Commercial Wheat Atta">
                                                     </div>
                                                     <div class="mega-item-info">
+                                                        <span class="mega-item-subtitle">High Yield Grade</span>
                                                         <h5>Wheat Atta</h5>
-                                                        <p>High-yield grade for caterers, bakeries &amp; hotels.</p>
-                                                        <div class="mega-item-meta">
-                                                            <span class="mega-size-badge"><i class="fa-solid fa-box"></i> 49kg</span>
-                                                            <span class="mega-explore-btn">View <i class="fa-solid fa-angle-right"></i></span>
+                                                        <p>Engineered for high water absorption &amp; yield for caterers, bakeries &amp; hotels.</p>
+                                                        <div class="mega-card-action">
+                                                            <span>Explore Product</span>
+                                                            <i class="fa-solid fa-arrow-right"></i>
                                                         </div>
                                                     </div>
                                                 </a>
@@ -104,21 +118,22 @@
                                         <div class="mega-menu-bottom">
                                             <div class="mega-features-list">
                                                 <div class="mega-feature-chip">
-                                                    <i class="fa-solid fa-seedling"></i>
-                                                    <span>Farm-Fresh Selected Wheat</span>
+                                                    <span class="chip-icon"><i class="fa-solid fa-wheat-awn"></i></span>
+                                                    <span>Selected Golden Wheat</span>
                                                 </div>
                                                 <div class="mega-feature-chip">
-                                                    <i class="fa-solid fa-shield-halved"></i>
-                                                    <span>Untouched By Hands</span>
+                                                    <span class="chip-icon"><i class="fa-solid fa-shield-halved"></i></span>
+                                                    <span>100% Untouched Milling</span>
                                                 </div>
                                                 <div class="mega-feature-chip">
-                                                    <i class="fa-solid fa-truck-fast"></i>
-                                                    <span>Daily Mill Fresh</span>
+                                                    <span class="chip-icon"><i class="fa-solid fa-truck-fast"></i></span>
+                                                    <span>Direct Mill-Fresh Dispatch</span>
                                                 </div>
                                             </div>
                                             <div class="mega-bottom-action">
                                                 <a href="https://wa.me/919725427727?text={{ rawurlencode('Hello Raghuvir Atta, I would like to inquire about bulk ordering your products.') }}" target="_blank" class="mega-btn-whatsapp">
-                                                    <i class="fa-brands fa-whatsapp"></i> Bulk Inquiry
+                                                    <i class="fa-brands fa-whatsapp"></i>
+                                                    <span>Bulk Inquiry</span>
                                                 </a>
                                             </div>
                                         </div>
@@ -129,9 +144,9 @@
                                 <!-- Mobile Submenu for SlickNav -->
                                 <ul class="mobile-sub-only">
                                     <li><a href="{{ route('products') }}">All Products Catalog</a></li>
-                                    <li><a href="{{ route('product-details', ['product' => 'atta']) }}">Raghuvir Chakki Atta (5kg, 30kg)</a></li>
-                                    <li><a href="{{ route('product-details', ['product' => 'bati']) }}">Raghuvir Bati Atta (30kg)</a></li>
-                                    <li><a href="{{ route('product-details', ['product' => 'wheat']) }}">Raghuvir Commercial Wheat Atta (49kg)</a></li>
+                                    <li><a href="{{ route('product-details', ['product' => 'atta']) }}">Raghuvir Chakki Atta</a></li>
+                                    <li><a href="{{ route('product-details', ['product' => 'bati']) }}">Raghuvir Bati Atta</a></li>
+                                    <li><a href="{{ route('product-details', ['product' => 'wheat']) }}">Raghuvir Commercial Wheat Atta</a></li>
                                 </ul>
                             </li>
                             <!-- Our Products Mega Menu End -->
