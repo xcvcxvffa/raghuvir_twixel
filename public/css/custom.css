@@ -565,10 +565,10 @@ header.main-header .header-sticky {
 	width: calc(100% - 40px) !important;
 	max-width: calc(100% - 40px) !important;
 	margin: 0 auto !important;
-	background: rgba(248, 246, 239, 0) !important;
-	backdrop-filter: blur(20px);
-	-webkit-backdrop-filter: blur(20px);
-	border-radius: 14px 14px 0 0 !important;
+	background: transparent !important;
+	backdrop-filter: none !important;
+	-webkit-backdrop-filter: none !important;
+	border-radius: 0 !important;
 	border: none !important;
 	box-shadow: none !important;
 	z-index: 100;
