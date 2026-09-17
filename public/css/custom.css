@@ -1012,18 +1012,19 @@ header.main-header .header-sticky.active {
    Hero Continuous Marquee Slider Styles (Text Ticker)
    ======================================================== */
 .hero-marquee-slider {
+	width: 100% !important;
 	overflow: hidden;
 	position: relative;
 	display: flex;
 	align-items: center;
-	mask-image: linear-gradient(to right, transparent 0%, black 4%, black 96%, transparent 100%);
-	-webkit-mask-image: linear-gradient(to right, transparent 0%, black 4%, black 96%, transparent 100%);
+	mask-image: linear-gradient(to right, transparent 0%, black 3%, black 97%, transparent 100%);
+	-webkit-mask-image: linear-gradient(to right, transparent 0%, black 3%, black 97%, transparent 100%);
 }
 
 .hero-marquee-track {
 	display: flex;
 	width: max-content;
-	animation: continuousMarqueeScroll 32s linear infinite;
+	animation: continuousMarqueeScroll 35s linear infinite;
 	will-change: transform;
 }
 
@@ -1034,38 +1035,40 @@ header.main-header .header-sticky.active {
 .hero-marquee-group {
 	display: flex;
 	align-items: center;
-	gap: 28px;
+	gap: 32px;
 	flex-shrink: 0;
-	padding-right: 28px;
+	padding-right: 32px;
 }
 
 .hero-marquee-group .marquee-item {
 	display: inline-flex;
 	align-items: center;
-	gap: 9px;
-	color: var(--white-color);
-	font-size: 16px;
-	font-weight: 500;
+	gap: 10px;
+	font-family: var(--default-font) !important;
+	color: var(--white-color) !important;
+	font-size: 20px !important;
+	font-weight: 700 !important;
+	line-height: normal !important;
 	white-space: nowrap;
-	letter-spacing: 0.25px;
+	letter-spacing: normal;
 	transition: color 0.2s ease, transform 0.2s ease;
 	cursor: default;
 }
 
 .hero-marquee-group .marquee-item:hover {
-	color: var(--accent-color);
+	color: var(--accent-color) !important;
 	transform: translateY(-1px);
 }
 
 .hero-marquee-group .marquee-item i {
 	color: var(--accent-color);
-	font-size: 14px;
+	font-size: 16px;
 }
 
 .hero-marquee-group .marquee-sep {
 	color: var(--accent-color);
-	font-size: 13px;
-	opacity: 0.75;
+	font-size: 15px;
+	opacity: 0.85;
 }
 
 @keyframes continuousMarqueeScroll {
@@ -1079,25 +1082,30 @@ header.main-header .header-sticky.active {
 
 @media (max-width: 991px) {
 	.hero-marquee-group {
-		gap: 20px;
-		padding-right: 20px;
+		gap: 22px;
+		padding-right: 22px;
 	}
 	.hero-marquee-group .marquee-item {
-		font-size: 14.5px;
+		font-size: 17px !important;
+	}
+	.hero-marquee-group .marquee-item i {
+		font-size: 14px;
 	}
 }
 
 @media (max-width: 767px) {
 	.hero-marquee-slider {
-		width: 100%;
-		margin-top: 5px;
+		width: 100% !important;
 	}
 	.hero-marquee-group {
-		gap: 16px;
-		padding-right: 16px;
+		gap: 18px;
+		padding-right: 18px;
 	}
 	.hero-marquee-group .marquee-item {
-		font-size: 13.5px;
+		font-size: 15px !important;
+	}
+	.hero-marquee-group .marquee-item i {
+		font-size: 13px;
 	}
 }
 

@@ -65,14 +65,8 @@
                     <div class="col-lg-12">
                         <!-- Hero Company Slider Body Start -->
                         <div class="hero-company-slider-body">
-                            <!-- Hero Company Slider Content Start -->
-                            <div class="hero-company-slider-content">
-                                <h3>Trusted By More Than <span class="counter">100</span>+ Companies</h3>
-                            </div>
-                            <!-- Hero Company Slider Content End -->
-
                             <!-- Hero Company Marquee Start -->
-                            <div class="hero-company-slider hero-marquee-slider">
+                            <div class="hero-marquee-slider w-100">
                                 <div class="hero-marquee-track">
                                     <!-- Group 1 -->
                                     <div class="hero-marquee-group">
