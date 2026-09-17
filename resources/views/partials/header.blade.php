@@ -57,7 +57,7 @@
                                                 <!-- Card 1: Chakki Atta -->
                                                 <a href="{{ route('product-details', ['product' => 'atta']) }}" class="mega-product-item">
                                                     <div class="mega-thumb-wrap">
-                                                        <img src="{{ asset('images/product_atta_white.jpg') }}" alt="Raghuvir Chakki Atta">
+                                                        <img src="{{ asset('images/product_atta_transparent.png') }}" alt="Raghuvir Chakki Atta">
                                                     </div>
                                                     <div class="mega-item-info">
                                                         <h5>Chakki Atta</h5>
@@ -72,7 +72,7 @@
                                                 <!-- Card 2: Bati Atta -->
                                                 <a href="{{ route('product-details', ['product' => 'bati']) }}" class="mega-product-item">
                                                     <div class="mega-thumb-wrap">
-                                                        <img src="{{ asset('images/product_atta_white.jpg') }}" alt="Raghuvir Bati Atta">
+                                                        <img src="{{ asset('images/product_atta_transparent.png') }}" alt="Raghuvir Bati Atta">
                                                     </div>
                                                     <div class="mega-item-info">
                                                         <h5>Bati Atta</h5>
@@ -87,7 +87,7 @@
                                                 <!-- Card 3: Commercial Wheat Atta -->
                                                 <a href="{{ route('product-details', ['product' => 'wheat']) }}" class="mega-product-item">
                                                     <div class="mega-thumb-wrap">
-                                                        <img src="{{ asset('images/product_atta_white.jpg') }}" alt="Commercial Wheat Atta">
+                                                        <img src="{{ asset('images/product_atta_transparent.png') }}" alt="Commercial Wheat Atta">
                                                     </div>
                                                     <div class="mega-item-info">
                                                         <h5>Wheat Atta</h5>
