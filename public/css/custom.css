@@ -850,27 +850,38 @@ header.main-header .header-sticky.active {
 
 /* Left Featured Banner */
 .mega-featured-banner {
-	background: linear-gradient(150deg, #FBF6ED 0%, #F4E8D3 100%) !important;
-	border: 1px solid #E6D8C3 !important;
+	background: linear-gradient(150deg, #FBF7F0 0%, #F5EAD7 100%) !important;
+	border: 1.5px solid #E8DECA !important;
 	border-radius: 20px !important;
-	padding: 24px 22px 22px !important;
+	padding: 26px 22px 22px !important;
 	display: flex !important;
 	flex-direction: column !important;
-	justify-content: space-between !important;
+	justify-content: flex-start !important;
 	position: relative !important;
 	overflow: hidden !important;
 	box-shadow: 0 4px 16px rgba(0, 0, 0, 0.02) !important;
 }
 
 .mega-featured-banner::after {
-	content: '🌾';
+	content: '';
 	position: absolute;
-	right: -12px;
-	bottom: -18px;
-	font-size: 110px;
-	opacity: 0.10;
+	right: -10px;
+	bottom: -15px;
+	width: 210px;
+	height: 270px;
+	background-image: url('../images/wheat-pattern-bg.svg');
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: right bottom;
+	opacity: 0.90;
 	pointer-events: none;
-	line-height: 1;
+	z-index: 1;
+	transition: transform 0.4s ease, opacity 0.4s ease;
+}
+
+.mega-featured-banner:hover::after {
+	transform: scale(1.05) translateY(-4px);
+	opacity: 1;
 }
 
 .mega-featured-inner {
@@ -878,98 +889,56 @@ header.main-header .header-sticky.active {
 	z-index: 2;
 }
 
-.mega-featured-badge {
-	display: inline-flex;
-	align-items: center;
-	gap: 5px;
-	background: #EF801C !important;
-	color: #FFFFFF !important;
-	font-size: 11px;
-	font-weight: 800;
-	text-transform: uppercase;
-	letter-spacing: 0.4px;
-	padding: 4px 12px !important;
-	border-radius: 30px !important;
-	width: fit-content;
-	margin-bottom: 14px;
-}
-
 .mega-featured-banner h5 {
 	font-size: 20px;
 	font-weight: 800;
-	color: #221812;
+	color: #201711;
 	line-height: 1.35;
-	margin: 2px 0 10px 0;
+	margin: 0 0 10px 0;
 	font-family: var(--default-font);
 }
 
 .mega-featured-banner p {
-	font-size: 12px;
+	font-size: 12.5px;
 	line-height: 1.55;
-	color: #584C41;
-	margin: 0;
+	color: #5C5045;
+	margin: 0 0 18px 0;
 }
 
 .mega-featured-perks {
 	list-style: none;
 	padding: 0;
-	margin: 16px 0 0 0;
+	margin: 0;
 	display: flex;
 	flex-direction: column;
-	gap: 9px;
+	gap: 10px;
 }
 
 .mega-featured-perks li {
 	display: flex;
 	align-items: center;
-	gap: 8px;
+	gap: 10px;
 	font-size: 12px;
-	font-weight: 600;
-	color: #42362C;
+	font-weight: 700;
+	color: #382C22;
+	background: rgba(255, 255, 255, 0.70);
+	backdrop-filter: blur(6px);
+	padding: 8px 12px;
+	border-radius: 10px;
+	border: 1px solid rgba(230, 216, 195, 0.75);
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+	transition: all 0.25s ease;
+}
+
+.mega-featured-perks li:hover {
+	background: rgba(255, 255, 255, 0.92);
+	border-color: #EF801C;
+	transform: translateX(3px);
 }
 
 .mega-featured-perks li i {
 	color: #EF801C;
-	font-size: 12px;
-}
-
-.main-menu ul li .mega-featured-link,
-.mega-featured-link {
-	display: inline-flex !important;
-	align-items: center !important;
-	justify-content: space-between !important;
-	gap: 10px !important;
-	color: #241A15 !important;
-	font-weight: 700 !important;
-	font-size: 13px !important;
-	padding: 11px 18px !important;
-	background: #FFFFFF !important;
-	border-radius: 12px !important;
-	border: 1px solid #DCD0BD !important;
-	margin-top: 20px !important;
-	box-shadow: 0 3px 8px rgba(0, 0, 0, 0.04) !important;
-	transition: all 0.25s ease !important;
-	text-decoration: none !important;
-	position: relative;
-	z-index: 2;
-}
-
-.main-menu ul li .mega-featured-link:hover,
-.mega-featured-link:hover {
-	background: #EF801C !important;
-	color: #FFFFFF !important;
-	border-color: #EF801C !important;
-	transform: translateY(-2px) !important;
-	box-shadow: 0 8px 20px rgba(239, 128, 28, 0.28) !important;
-}
-
-.mega-featured-link i {
-	font-size: 12px;
-	transition: transform 0.25s ease;
-}
-
-.mega-featured-link:hover i {
-	transform: translateX(3px);
+	font-size: 12.5px;
 }
 
 /* Right Products 3-Col Grid */

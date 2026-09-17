@@ -46,10 +46,6 @@
                                                         <li><i class="fa-solid fa-circle-check"></i> Zero Preservatives or Chemicals</li>
                                                     </ul>
                                                 </div>
-                                                <a href="{{ route('products') }}" class="mega-featured-link">
-                                                    <span>Explore Full Catalog</span>
-                                                    <i class="fa-solid fa-arrow-right"></i>
-                                                </a>
                                             </div>
 
                                             <!-- Right 3-Col Product Cards Grid -->
