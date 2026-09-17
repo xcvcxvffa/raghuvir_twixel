@@ -24,21 +24,30 @@
 .product-main-showcase-box {
     background: #FFFFFF;
     border-radius: 18px;
-    padding: 35px 25px;
+    padding: 30px 65px;
     display: flex;
     align-items: center;
     justify-content: center;
     border: 1px solid #ECE7DD;
     box-shadow: 0 4px 20px rgba(0,0,0,0.03);
     position: relative;
-    min-height: 380px;
-    overflow: hidden;
+    min-height: 440px;
+    box-sizing: border-box;
+}
+.product-main-showcase-box figure {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
 }
 .product-main-showcase-box img {
-    max-height: 350px;
+    max-height: 380px;
     width: auto;
     max-width: 100%;
     object-fit: contain;
+    display: block;
     transition: opacity 0.22s ease, transform 0.25s ease;
 }
 .main-image-nav-btn {
@@ -101,18 +110,19 @@
     display: none;
 }
 .product-thumb-item {
-    flex: 0 0 70px;
-    height: 70px;
+    flex: 0 0 72px;
+    height: 72px;
     border-radius: 12px;
     border: 2px solid #EBE4D8;
-    background: #FAF7F2;
-    padding: 5px;
+    background: #FFFFFF;
+    padding: 4px;
     cursor: pointer;
     transition: all 0.25s ease;
     display: flex;
     align-items: center;
     justify-content: center;
     overflow: hidden;
+    box-sizing: border-box;
 }
 .product-thumb-item:hover {
     border-color: var(--accent-color, #EF801C);
@@ -127,8 +137,11 @@
 .product-thumb-item img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
-    border-radius: 7px;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    border-radius: 6px;
+    display: block;
 }
 .product-single-content {
     width: calc(50% - 30px);
@@ -446,12 +459,12 @@
         margin-bottom: 25px;
     }
     .product-main-showcase-box {
-        padding: 20px 15px;
+        padding: 15px 48px;
         min-height: 280px;
         border-radius: 14px;
     }
     .product-main-showcase-box img {
-        max-height: 240px;
+        max-height: 250px;
     }
     .main-image-nav-btn {
         width: 38px;
