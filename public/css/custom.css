@@ -925,30 +925,30 @@ header.main-header .header-sticky.active {
 
 .mega-thumb-wrap {
 	width: 100%;
-	height: 140px;
+	height: 175px;
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	margin: 0 0 10px 0;
+	margin: 0 0 12px 0;
 	background: radial-gradient(circle at 50% 50%, rgba(239, 128, 28, 0.08) 0%, rgba(254, 250, 245, 0.7) 60%, rgba(255, 255, 255, 0) 100%);
-	border-radius: 14px !important;
-	padding: 6px;
+	border-radius: 16px !important;
+	padding: 8px;
 	box-sizing: border-box;
 }
 
 .mega-thumb-wrap img {
-	max-height: 125px;
+	max-height: 162px;
 	width: auto;
 	max-width: 100%;
 	object-fit: contain;
-	filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.12));
+	filter: drop-shadow(0 12px 22px rgba(0, 0, 0, 0.13));
 	transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), filter 0.35s ease;
 }
 
 .main-menu ul li .mega-product-item:hover .mega-thumb-wrap img,
 .mega-product-item:hover .mega-thumb-wrap img {
-	transform: translateY(-6px) scale(1.08);
-	filter: drop-shadow(0 14px 22px rgba(239, 128, 28, 0.22));
+	transform: translateY(-6px) scale(1.06);
+	filter: drop-shadow(0 16px 26px rgba(239, 128, 28, 0.24));
 }
 
 .mega-item-info {
@@ -957,7 +957,7 @@ header.main-header .header-sticky.active {
 }
 
 .mega-item-info h5 {
-	font-size: 17px;
+	font-size: 18px;
 	font-weight: 800;
 	color: #201813;
 	margin: 2px 0 0 0;
