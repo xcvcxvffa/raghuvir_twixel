@@ -55,19 +55,19 @@ class PageController extends Controller
     {
         $products = [
             [
-                'slug' => 'bati',
-                'title' => 'Bati Atta',
-                'subtitle' => '100% Pure & Farm Fresh',
-                'sizes' => ['5kg', '30kg'],
-                'description' => 'Raghuvir Bati Atta is specially milled to the perfect texture for making delicious, authentic Batis. Ground from handpicked premium wheat grains, it ensures your Batis are crispy on the outside and soft on the inside.',
-                'image' => 'images/product_atta_white.jpg',
-            ],
-            [
                 'slug' => 'atta',
                 'title' => 'Whole Wheat Atta',
                 'subtitle' => '100% Pure & Farm Fresh',
                 'sizes' => ['5kg', '30kg'],
                 'description' => 'Raghuvir Hygienic Chakki Atta is made from premium quality wheat, clean and pure, rich in natural dietary fiber and nutrients. Fresh, soft, and healthy rotis for your family.',
+                'image' => 'images/product_atta_white.jpg',
+            ],
+            [
+                'slug' => 'bati',
+                'title' => 'Bati Atta',
+                'subtitle' => '100% Pure & Farm Fresh',
+                'sizes' => ['5kg', '30kg'],
+                'description' => 'Raghuvir Bati Atta is specially milled to the perfect texture for making delicious, authentic Batis. Ground from handpicked premium wheat grains, it ensures your Batis are crispy on the outside and soft on the inside.',
                 'image' => 'images/product_atta_white.jpg',
             ],
             [

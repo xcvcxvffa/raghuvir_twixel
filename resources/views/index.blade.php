@@ -502,34 +502,6 @@
                     <div class="product-item wow fadeInUp">
                         <!-- Product Item Image Start -->
                         <div class="product-item-img">
-                            <a href="{{ route('product-details', ['product' => 'bati']) }}" data-cursor-text="View">
-                                <figure>
-                                    <img src="{{ asset('images/product_atta_white.jpg') }}" alt="Bati Atta">
-                                </figure>
-                            </a>
-                        </div>
-                        <!-- Product Item Image End -->
-
-                        <!-- Product Item Body Start -->
-                        <div class="product-item-body">                            
-                            <div class="product-item-content">
-                                <h2><a href="{{ route('product-details', ['product' => 'bati']) }}">Bati Atta</a></h2>
-                            </div>
-
-                            <div class="product-item-btn">
-                                <a href="{{ route('product-details', ['product' => 'bati']) }}" class="btn-default">View Details</a>
-                            </div>
-                        </div>
-                        <!-- Product Item Body End -->
-                    </div>
-                    <!-- Product Item End -->
-                </div>
-
-                <div class="col-lg-4 col-md-6">
-                    <!-- Product Item Start -->
-                    <div class="product-item wow fadeInUp" data-wow-delay="0.2s">
-                        <!-- Product Item Image Start -->
-                        <div class="product-item-img">
                             <a href="{{ route('product-details', ['product' => 'atta']) }}" data-cursor-text="View">
                                 <figure>
                                     <img src="{{ asset('images/product_atta_white.jpg') }}" alt="Whole Wheat Atta">
@@ -546,6 +518,34 @@
 
                             <div class="product-item-btn">
                                 <a href="{{ route('product-details', ['product' => 'atta']) }}" class="btn-default">View Details</a>
+                            </div>
+                        </div>
+                        <!-- Product Item Body End -->
+                    </div>
+                    <!-- Product Item End -->
+                </div>
+
+                <div class="col-lg-4 col-md-6">
+                    <!-- Product Item Start -->
+                    <div class="product-item wow fadeInUp" data-wow-delay="0.2s">
+                        <!-- Product Item Image Start -->
+                        <div class="product-item-img">
+                            <a href="{{ route('product-details', ['product' => 'bati']) }}" data-cursor-text="View">
+                                <figure>
+                                    <img src="{{ asset('images/product_atta_white.jpg') }}" alt="Bati Atta">
+                                </figure>
+                            </a>
+                        </div>
+                        <!-- Product Item Image End -->
+
+                        <!-- Product Item Body Start -->
+                        <div class="product-item-body">                            
+                            <div class="product-item-content">
+                                <h2><a href="{{ route('product-details', ['product' => 'bati']) }}">Bati Atta</a></h2>
+                            </div>
+
+                            <div class="product-item-btn">
+                                <a href="{{ route('product-details', ['product' => 'bati']) }}" class="btn-default">View Details</a>
                             </div>
                         </div>
                         <!-- Product Item Body End -->

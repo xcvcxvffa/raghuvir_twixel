@@ -52,8 +52,8 @@
                         <div class="footer-links">
                             <h3>Our Products</h3>
                             <ul>
-                                <li><a href="{{ route('product-details', ['product' => 'bati']) }}">Bati Atta</a></li>
                                 <li><a href="{{ route('product-details', ['product' => 'atta']) }}">Whole Wheat Atta</a></li>
+                                <li><a href="{{ route('product-details', ['product' => 'bati']) }}">Bati Atta</a></li>
                                 <li><a href="{{ route('product-details', ['product' => 'wheat']) }}">Wheat Bran</a></li>
                             </ul>
                         </div>

@@ -44,23 +44,23 @@
 
                                             <!-- Right 3-Col Product Cards Grid -->
                                             <div class="mega-products-grid">
-                                                <!-- Card 1: Bati Atta -->
-                                                <a href="{{ route('product-details', ['product' => 'bati']) }}" class="mega-product-item">
-                                                    <div class="mega-thumb-wrap">
-                                                        <img src="{{ asset('images/product_atta_transparent.png') }}" alt="Raghuvir Bati Atta">
-                                                    </div>
-                                                    <div class="mega-item-info">
-                                                        <h5>Bati Atta</h5>
-                                                    </div>
-                                                </a>
-
-                                                <!-- Card 2: Whole Wheat Atta -->
+                                                <!-- Card 1: Whole Wheat Atta -->
                                                 <a href="{{ route('product-details', ['product' => 'atta']) }}" class="mega-product-item">
                                                     <div class="mega-thumb-wrap">
                                                         <img src="{{ asset('images/product_atta_transparent.png') }}" alt="Raghuvir Whole Wheat Atta">
                                                     </div>
                                                     <div class="mega-item-info">
                                                         <h5>Whole Wheat Atta</h5>
+                                                    </div>
+                                                </a>
+
+                                                <!-- Card 2: Bati Atta -->
+                                                <a href="{{ route('product-details', ['product' => 'bati']) }}" class="mega-product-item">
+                                                    <div class="mega-thumb-wrap">
+                                                        <img src="{{ asset('images/product_atta_transparent.png') }}" alt="Raghuvir Bati Atta">
+                                                    </div>
+                                                    <div class="mega-item-info">
+                                                        <h5>Bati Atta</h5>
                                                     </div>
                                                 </a>
 
@@ -106,7 +106,6 @@
                                 <!-- Mobile Submenu for SlickNav -->
                                 <ul class="mobile-sub-only">
                                     <li><a href="{{ route('product-details', ['product' => 'atta']) }}">Whole Wheat Atta</a></li>
-                                    
                                     <li><a href="{{ route('product-details', ['product' => 'bati']) }}">Bati Atta</a></li>
                                     <li><a href="{{ route('product-details', ['product' => 'wheat']) }}">Wheat Bran</a></li>
                                 </ul>
