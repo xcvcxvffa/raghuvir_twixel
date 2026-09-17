@@ -1008,6 +1008,187 @@ header.main-header .header-sticky.active {
 	height: 40px;
 }
 
+/* ========================================================
+   Hero Continuous Marquee Ticker Styles
+   ======================================================== */
+.hero-marquee-ticker-section {
+	position: relative;
+	background: rgba(26, 18, 14, 0.82) !important;
+	backdrop-filter: blur(20px) !important;
+	-webkit-backdrop-filter: blur(20px) !important;
+	border-top: 1px solid rgba(255, 255, 255, 0.12) !important;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.12) !important;
+	padding: 18px 0 !important;
+	z-index: 2;
+	overflow: hidden;
+}
+
+.hero-marquee-bar {
+	display: flex;
+	align-items: center;
+	width: 100%;
+	position: relative;
+}
+
+.hero-marquee-badge {
+	flex-shrink: 0;
+	display: inline-flex;
+	align-items: center;
+	gap: 10px;
+	background: linear-gradient(135deg, rgba(239, 128, 28, 0.24), rgba(239, 128, 28, 0.08));
+	border: 1px solid rgba(239, 128, 28, 0.45);
+	padding: 8px 20px;
+	border-radius: 30px;
+	margin-right: 28px;
+	z-index: 3;
+	white-space: nowrap;
+	box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.hero-marquee-badge i {
+	color: #EF801C;
+	font-size: 15px;
+}
+
+.pulse-live-indicator {
+	width: 8px;
+	height: 8px;
+	border-radius: 50%;
+	background: #EF801C;
+	box-shadow: 0 0 0 0 rgba(239, 128, 28, 0.7);
+	animation: pulseLiveDot 1.8s infinite;
+}
+
+@keyframes pulseLiveDot {
+	0% {
+		box-shadow: 0 0 0 0 rgba(239, 128, 28, 0.7);
+	}
+	70% {
+		box-shadow: 0 0 0 8px rgba(239, 128, 28, 0);
+	}
+	100% {
+		box-shadow: 0 0 0 0 rgba(239, 128, 28, 0);
+	}
+}
+
+.hero-marquee-badge .badge-title {
+	color: #FFFFFF;
+	font-weight: 700;
+	font-size: 13.5px;
+	letter-spacing: 0.8px;
+	text-transform: uppercase;
+}
+
+.hero-marquee-viewport {
+	flex: 1;
+	overflow: hidden;
+	position: relative;
+	mask-image: linear-gradient(to right, transparent 0%, black 4%, black 96%, transparent 100%);
+	-webkit-mask-image: linear-gradient(to right, transparent 0%, black 4%, black 96%, transparent 100%);
+}
+
+.hero-marquee-track {
+	display: flex;
+	width: max-content;
+	animation: continuousMarqueeScroll 40s linear infinite;
+	will-change: transform;
+}
+
+.hero-marquee-track:hover {
+	animation-play-state: paused;
+}
+
+.hero-marquee-group {
+	display: flex;
+	align-items: center;
+	gap: 32px;
+	flex-shrink: 0;
+	padding-right: 32px;
+}
+
+.marquee-item {
+	display: inline-flex;
+	align-items: center;
+	gap: 9px;
+	color: rgba(255, 255, 255, 0.95);
+	font-size: 15px;
+	font-weight: 500;
+	white-space: nowrap;
+	letter-spacing: 0.25px;
+	transition: color 0.2s ease, transform 0.2s ease;
+	cursor: default;
+}
+
+.marquee-item:hover {
+	color: #EF801C;
+	transform: translateY(-1px);
+}
+
+.marquee-item i {
+	color: #EF801C;
+	font-size: 14px;
+}
+
+.marquee-sep {
+	color: #EF801C;
+	font-size: 13px;
+	opacity: 0.75;
+}
+
+@keyframes continuousMarqueeScroll {
+	0% {
+		transform: translateX(0);
+	}
+	100% {
+		transform: translateX(-50%);
+	}
+}
+
+@media (max-width: 991px) {
+	.hero-marquee-ticker-section {
+		padding: 15px 0 !important;
+	}
+	.hero-marquee-badge {
+		padding: 6px 15px;
+		margin-right: 18px;
+	}
+	.hero-marquee-badge .badge-title {
+		font-size: 12px;
+	}
+	.marquee-item {
+		font-size: 14px;
+	}
+	.hero-marquee-group {
+		gap: 24px;
+		padding-right: 24px;
+	}
+}
+
+@media (max-width: 767px) {
+	.hero-marquee-ticker-section {
+		padding: 13px 0 !important;
+	}
+	.hero-marquee-bar {
+		flex-direction: column;
+		align-items: center;
+		gap: 12px;
+	}
+	.hero-marquee-badge {
+		margin-right: 0;
+		padding: 5px 14px;
+	}
+	.hero-marquee-viewport {
+		width: 100%;
+	}
+	.marquee-item {
+		font-size: 13.5px;
+	}
+	.hero-marquee-group {
+		gap: 20px;
+		padding-right: 20px;
+	}
+}
+
 /************************************/
 /***       05. About Us css	      ***/
 /************************************/
