@@ -850,8 +850,7 @@ header.main-header .header-sticky.active {
 
 /* Left Featured Banner */
 .mega-featured-banner {
-	background: linear-gradient(150deg, rgba(254, 252, 248, 0.90) 0%, rgba(248, 240, 226, 0.88) 100%), url('../images/wheat-pattern-seamless.jpg') repeat !important;
-	background-size: auto, 260px !important;
+	background: linear-gradient(150deg, #FBF7F0 0%, #F5EAD7 100%) !important;
 	border: 1.5px solid #E8DECA !important;
 	border-radius: 20px !important;
 	padding: 26px 22px 22px !important;
@@ -866,24 +865,23 @@ header.main-header .header-sticky.active {
 .mega-featured-banner::after {
 	content: '';
 	position: absolute;
-	right: -5px;
-	bottom: -10px;
-	width: 205px;
-	height: 275px;
-	background-image: url('../images/wheat-sheaf-transparent.png');
+	right: -8px;
+	bottom: -12px;
+	width: 220px;
+	height: 280px;
+	background-image: url('../images/wheat-pattern-bg.svg');
 	background-size: contain;
 	background-repeat: no-repeat;
 	background-position: right bottom;
-	opacity: 0.40;
+	opacity: 0.82;
 	pointer-events: none;
 	z-index: 1;
-	mix-blend-mode: multiply;
 	transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
 }
 
 .mega-featured-banner:hover::after {
-	transform: scale(1.06) translateY(-4px);
-	opacity: 0.58;
+	transform: scale(1.04) translateY(-3px);
+	opacity: 0.95;
 }
 
 .mega-featured-inner {
