@@ -15,12 +15,12 @@
                             <li class="nav-item"><a class="nav-link" href="{{ route('home') }}">Home</a></li>
                             <li class="nav-item"><a class="nav-link" href="{{ route('about') }}">About Us</a></li>
                             <!-- Our Products Mega Menu Start -->
-                            <li class="nav-item submenu has-mega-menu">
+                            <li class="nav-item submenu has-mega-menu" id="navMegaMenuOurProducts">
                                 <a class="nav-link" href="{{ route('products') }}">Our Products</a>
                                 
-                                <!-- Desktop Mega Menu Box Start -->
-                                <div class="mega-menu-box">
-                                    <div class="mega-menu-inner">
+                                <!-- Desktop Mega Menu Safe Wrapper Start -->
+                                <div class="mega-menu-wrapper">
+                                    <div class="mega-menu-card">
                                         <!-- Mega Menu Top Bar -->
                                         <div class="mega-menu-top">
                                             <div class="mega-menu-heading">
@@ -33,55 +33,71 @@
                                             </a>
                                         </div>
 
-                                        <!-- Mega Menu Products 3-Col Grid -->
-                                        <div class="mega-menu-grid">
-                                            <!-- Card 1: Chakki Atta -->
-                                            <a href="{{ route('product-details', ['product' => 'atta']) }}" class="mega-product-item">
-                                                <div class="mega-item-badge best-seller">Bestseller</div>
-                                                <div class="mega-thumb-wrap">
-                                                    <img src="{{ asset('images/product_atta_white.jpg') }}" alt="Raghuvir Chakki Atta">
+                                        <!-- Mega Menu Main Body: Left Featured Banner + Right 3 Product Cards -->
+                                        <div class="mega-menu-main-content">
+                                            <!-- Left Featured Highlight Banner -->
+                                            <div class="mega-featured-banner">
+                                                <div>
+                                                    <span class="mega-featured-badge"><i class="fa-solid fa-star"></i> Purity First</span>
+                                                    <h5>Farm Fresh to Your Kitchen</h5>
+                                                    <p>Cleaned, stone-ground, and hygienically packed with low moisture to keep rotis soft and wholesome all day.</p>
                                                 </div>
-                                                <div class="mega-item-info">
-                                                    <h5>Raghuvir Chakki Atta</h5>
-                                                    <p>100% pure stone-ground chakki flour for soft &amp; nutritious daily rotis.</p>
-                                                    <div class="mega-item-meta">
-                                                        <span class="mega-size-badge"><i class="fa-solid fa-box"></i> 5kg, 30kg</span>
-                                                        <span class="mega-explore-btn">Explore <i class="fa-solid fa-angle-right"></i></span>
-                                                    </div>
-                                                </div>
-                                            </a>
+                                                <a href="{{ route('products') }}" class="mega-featured-link">
+                                                    <span>Explore Catalog</span>
+                                                    <i class="fa-solid fa-circle-arrow-right"></i>
+                                                </a>
+                                            </div>
 
-                                            <!-- Card 2: Bati Atta -->
-                                            <a href="{{ route('product-details', ['product' => 'bati']) }}" class="mega-product-item">
-                                                <div class="mega-item-badge traditional">Specialty</div>
-                                                <div class="mega-thumb-wrap">
-                                                    <img src="{{ asset('images/product_atta.jpg') }}" alt="Raghuvir Bati Atta">
-                                                </div>
-                                                <div class="mega-item-info">
-                                                    <h5>Raghuvir Bati Atta</h5>
-                                                    <p>Specially milled coarse texture for authentic crispy Dal Batis &amp; Baflas.</p>
-                                                    <div class="mega-item-meta">
-                                                        <span class="mega-size-badge"><i class="fa-solid fa-box"></i> 30kg</span>
-                                                        <span class="mega-explore-btn">Explore <i class="fa-solid fa-angle-right"></i></span>
+                                            <!-- Right 3-Col Product Cards Grid -->
+                                            <div class="mega-products-grid">
+                                                <!-- Card 1: Chakki Atta -->
+                                                <a href="{{ route('product-details', ['product' => 'atta']) }}" class="mega-product-item">
+                                                    <div class="mega-item-badge best-seller">Bestseller</div>
+                                                    <div class="mega-thumb-wrap">
+                                                        <img src="{{ asset('images/product_atta_white.jpg') }}" alt="Raghuvir Chakki Atta">
                                                     </div>
-                                                </div>
-                                            </a>
+                                                    <div class="mega-item-info">
+                                                        <h5>Chakki Atta</h5>
+                                                        <p>100% pure stone-ground flour for daily soft rotis.</p>
+                                                        <div class="mega-item-meta">
+                                                            <span class="mega-size-badge"><i class="fa-solid fa-box"></i> 5kg, 30kg</span>
+                                                            <span class="mega-explore-btn">View <i class="fa-solid fa-angle-right"></i></span>
+                                                        </div>
+                                                    </div>
+                                                </a>
 
-                                            <!-- Card 3: Commercial Wheat Atta -->
-                                            <a href="{{ route('product-details', ['product' => 'wheat']) }}" class="mega-product-item">
-                                                <div class="mega-item-badge commercial">Commercial</div>
-                                                <div class="mega-thumb-wrap">
-                                                    <img src="{{ asset('images/product_atta_white.jpg') }}" alt="Commercial Wheat Atta">
-                                                </div>
-                                                <div class="mega-item-info">
-                                                    <h5>Commercial Wheat Atta</h5>
-                                                    <p>High-yield commercial flour for restaurants, catering &amp; bulk baking.</p>
-                                                    <div class="mega-item-meta">
-                                                        <span class="mega-size-badge"><i class="fa-solid fa-box"></i> 49kg</span>
-                                                        <span class="mega-explore-btn">Explore <i class="fa-solid fa-angle-right"></i></span>
+                                                <!-- Card 2: Bati Atta -->
+                                                <a href="{{ route('product-details', ['product' => 'bati']) }}" class="mega-product-item">
+                                                    <div class="mega-item-badge traditional">Specialty</div>
+                                                    <div class="mega-thumb-wrap">
+                                                        <img src="{{ asset('images/product_atta.jpg') }}" alt="Raghuvir Bati Atta">
                                                     </div>
-                                                </div>
-                                            </a>
+                                                    <div class="mega-item-info">
+                                                        <h5>Bati Atta</h5>
+                                                        <p>Coarsely milled for authentic crispy Dal Batis &amp; Baflas.</p>
+                                                        <div class="mega-item-meta">
+                                                            <span class="mega-size-badge"><i class="fa-solid fa-box"></i> 30kg</span>
+                                                            <span class="mega-explore-btn">View <i class="fa-solid fa-angle-right"></i></span>
+                                                        </div>
+                                                    </div>
+                                                </a>
+
+                                                <!-- Card 3: Commercial Wheat Atta -->
+                                                <a href="{{ route('product-details', ['product' => 'wheat']) }}" class="mega-product-item">
+                                                    <div class="mega-item-badge commercial">Commercial</div>
+                                                    <div class="mega-thumb-wrap">
+                                                        <img src="{{ asset('images/product_atta_white.jpg') }}" alt="Commercial Wheat Atta">
+                                                    </div>
+                                                    <div class="mega-item-info">
+                                                        <h5>Wheat Atta</h5>
+                                                        <p>High-yield grade for caterers, bakeries &amp; hotels.</p>
+                                                        <div class="mega-item-meta">
+                                                            <span class="mega-size-badge"><i class="fa-solid fa-box"></i> 49kg</span>
+                                                            <span class="mega-explore-btn">View <i class="fa-solid fa-angle-right"></i></span>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div>
                                         </div>
 
                                         <!-- Mega Menu Bottom Highlights Strip -->
@@ -97,7 +113,7 @@
                                                 </div>
                                                 <div class="mega-feature-chip">
                                                     <i class="fa-solid fa-truck-fast"></i>
-                                                    <span>Daily Fresh Mill Supply</span>
+                                                    <span>Daily Mill Fresh</span>
                                                 </div>
                                             </div>
                                             <div class="mega-bottom-action">
@@ -108,7 +124,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!-- Desktop Mega Menu Box End -->
+                                <!-- Desktop Mega Menu Safe Wrapper End -->
 
                                 <!-- Mobile Submenu for SlickNav -->
                                 <ul class="mobile-sub-only">
@@ -154,3 +170,20 @@
         <div class="responsive-menu"></div>
     </div>
 </header>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var megaNav = document.getElementById('navMegaMenuOurProducts');
+    if (!megaNav) return;
+    var closeTimer;
+    megaNav.addEventListener('mouseenter', function() {
+        clearTimeout(closeTimer);
+        megaNav.classList.add('is-open');
+    });
+    megaNav.addEventListener('mouseleave', function() {
+        closeTimer = setTimeout(function() {
+            megaNav.classList.remove('is-open');
+        }, 280);
+    });
+});
+</script>
