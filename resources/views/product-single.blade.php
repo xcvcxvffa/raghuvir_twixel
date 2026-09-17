@@ -24,30 +24,35 @@
 .product-main-showcase-box {
     background: #FFFFFF;
     border-radius: 18px;
-    padding: 30px 65px;
+    padding: 30px 45px;
     display: flex;
     align-items: center;
     justify-content: center;
     border: 1px solid #ECE7DD;
     box-shadow: 0 4px 20px rgba(0,0,0,0.03);
     position: relative;
-    min-height: 440px;
+    min-height: 480px;
     box-sizing: border-box;
 }
-.product-main-showcase-box figure {
-    margin: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 100%;
+.product-main-figure {
+    margin: 0 !important;
+    padding: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    height: auto !important;
+    overflow: visible !important;
 }
 .product-main-showcase-box img {
-    max-height: 380px;
-    width: auto;
-    max-width: 100%;
-    object-fit: contain;
-    display: block;
+    max-height: 420px !important;
+    height: auto !important;
+    width: auto !important;
+    max-width: 100% !important;
+    aspect-ratio: auto !important;
+    object-fit: contain !important;
+    display: block !important;
+    margin: 0 auto !important;
     transition: opacity 0.22s ease, transform 0.25s ease;
 }
 .main-image-nav-btn {
@@ -620,14 +625,14 @@
                     <!-- Main Product Showcase Box Start -->
                     <div class="product-about-box product-single-card wow fadeInUp">
                         <!-- Product Image Gallery Start -->
-                        <div class="product-single-image product-gallery-wrap">
+                        <div class="product-gallery-wrap">
                             <!-- 1. Upper Box: Main Product Image Showcase with Left/Right Navigation Arrows -->
                             <div class="product-main-showcase-box">
                                 <button type="button" class="main-image-nav-btn prev-btn" onclick="slideMainImage('prev')" aria-label="Previous Image">
                                     <i class="fa-solid fa-chevron-left"></i>
                                 </button>
                                 
-                                <figure style="margin: 0; display: flex; align-items: center; justify-content: center; width: 100%; height: 100%;">
+                                <figure class="product-main-figure">
                                     <img id="product-main-img" src="{{ asset($image ?? 'images/product_atta_white.jpg') }}" alt="{{ $title }}">
                                 </figure>
                                 

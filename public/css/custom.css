@@ -4244,13 +4244,14 @@ header.main-header .header-sticky.active {
 
 .product-single-image {
 	border-radius: 20px;
-	overflow: hidden;
+	overflow: visible;
 }
 
 .product-single-image figure img {
 	width: 100%;
-	aspect-ratio: 1 / 0.85;
-	object-fit: cover;
+	height: auto;
+	aspect-ratio: auto;
+	object-fit: contain;
 }
 
 .customer-rating-box {
@@ -5474,7 +5475,9 @@ header.main-header .header-sticky.active {
 	}
 
 	.product-single-image figure img {
-		aspect-ratio: 1 / 0.7;
+		aspect-ratio: auto;
+		height: auto;
+		object-fit: contain;
 	}
 
 	.team-member-about,
