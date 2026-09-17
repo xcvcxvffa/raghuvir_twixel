@@ -18,19 +18,100 @@
 .product-single-image-box {
     background: #FFFFFF;
     border-radius: 16px;
-    padding: 30px 20px;
+    padding: 30px 24px 22px;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     border: 1px solid #ECE7DD;
     box-shadow: 0 4px 18px rgba(0,0,0,0.03);
     width: calc(50% - 30px);
 }
-.product-single-image-box img {
-    max-height: 380px;
+.product-main-image-display {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 330px;
+}
+.product-main-image-display img {
+    max-height: 350px;
     width: auto;
     max-width: 100%;
     object-fit: contain;
+    transition: opacity 0.22s ease, transform 0.25s ease;
+}
+.product-thumb-slider-wrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    margin-top: 18px;
+    padding-top: 16px;
+    border-top: 1px solid #EFEAE1;
+}
+.product-thumb-track {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    padding: 4px 2px;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    flex: 1;
+}
+.product-thumb-track::-webkit-scrollbar {
+    display: none;
+}
+.product-thumb-item {
+    flex: 0 0 68px;
+    height: 68px;
+    border-radius: 12px;
+    border: 2px solid #EBE4D8;
+    background: #FAF7F2;
+    padding: 4px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+.product-thumb-item:hover {
+    border-color: var(--accent-color, #EF801C);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+}
+.product-thumb-item.active {
+    border-color: var(--accent-color, #EF801C);
+    box-shadow: 0 0 0 2px rgba(239, 128, 28, 0.25);
+    background: #FFFFFF;
+}
+.product-thumb-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 7px;
+}
+.thumb-nav-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #FAF7F2;
+    border: 1.5px solid #E0D4C3;
+    color: var(--primary-color, #241A15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+.thumb-nav-btn:hover {
+    background: var(--accent-color, #EF801C);
+    border-color: var(--accent-color, #EF801C);
+    color: #FFFFFF;
 }
 .product-single-content {
     width: calc(50% - 30px);
@@ -480,9 +561,41 @@
                     <div class="product-about-box product-single-card wow fadeInUp">
                         <!-- Product Image Start -->
                         <div class="product-single-image product-single-image-box">
-                            <figure style="margin: 0; display: flex; align-items: center; justify-content: center; width: 100%;">
-                                <img src="{{ asset('images/product_atta_white.jpg') }}" alt="{{ $title }}">
-                            </figure>
+                            <!-- Main Active Product Image Display -->
+                            <div class="product-main-image-display">
+                                <figure style="margin: 0; display: flex; align-items: center; justify-content: center; width: 100%;">
+                                    <img id="product-main-img" src="{{ asset($image ?? 'images/product_atta_white.jpg') }}" alt="{{ $title }}">
+                                </figure>
+                            </div>
+                            
+                            <!-- Product Image Thumbnails Slider -->
+                            <div class="product-thumb-slider-wrap">
+                                <button type="button" class="thumb-nav-btn prev-btn" onclick="slideThumbs('prev')" aria-label="Previous image">
+                                    <i class="fa-solid fa-chevron-left"></i>
+                                </button>
+                                
+                                <div class="product-thumb-track" id="productThumbTrack">
+                                    <div class="product-thumb-item active" onclick="switchProductImage(this, '{{ asset('images/product_atta_white.jpg') }}')">
+                                        <img src="{{ asset('images/product_atta_white.jpg') }}" alt="Pack Front View">
+                                    </div>
+                                    <div class="product-thumb-item" onclick="switchProductImage(this, '{{ asset('images/product_atta.jpg') }}')">
+                                        <img src="{{ asset('images/product_atta.jpg') }}" alt="Pack Perspective">
+                                    </div>
+                                    <div class="product-thumb-item" onclick="switchProductImage(this, '{{ asset('images/product-image-1.jpg') }}')">
+                                        <img src="{{ asset('images/product-image-1.jpg') }}" alt="Harvest Wheat Grains">
+                                    </div>
+                                    <div class="product-thumb-item" onclick="switchProductImage(this, '{{ asset('images/ideal_roti.jpg') }}')">
+                                        <img src="{{ asset('images/ideal_roti.jpg') }}" alt="Fresh Soft Roti">
+                                    </div>
+                                    <div class="product-thumb-item" onclick="switchProductImage(this, '{{ asset('images/ideal_paratha.jpg') }}')">
+                                        <img src="{{ asset('images/ideal_paratha.jpg') }}" alt="Crispy Paratha">
+                                    </div>
+                                </div>
+                                
+                                <button type="button" class="thumb-nav-btn next-btn" onclick="slideThumbs('next')" aria-label="Next image">
+                                    <i class="fa-solid fa-chevron-right"></i>
+                                </button>
+                            </div>
                         </div>
                         <!-- Product Image End -->
 
@@ -556,6 +669,39 @@
                                     const inquiryBtn = document.getElementById('inquiry-btn');
                                     const contactBaseUrl = @json(route('contact'));
                                     inquiryBtn.href = `${contactBaseUrl}/${encodeURIComponent(productTitle)}/${encodeURIComponent(selectedSize)}`;
+                                }
+
+                                function switchProductImage(element, newSrc) {
+                                    const mainImg = document.getElementById('product-main-img');
+                                    if (!mainImg) return;
+                                    
+                                    mainImg.style.opacity = '0.25';
+                                    mainImg.style.transform = 'scale(0.97)';
+                                    
+                                    setTimeout(() => {
+                                        mainImg.src = newSrc;
+                                        mainImg.style.opacity = '1';
+                                        mainImg.style.transform = 'scale(1)';
+                                    }, 180);
+                                    
+                                    const track = document.getElementById('productThumbTrack');
+                                    if (track) {
+                                        track.querySelectorAll('.product-thumb-item').forEach(item => {
+                                            item.classList.remove('active');
+                                        });
+                                    }
+                                    element.classList.add('active');
+                                }
+
+                                function slideThumbs(direction) {
+                                    const track = document.getElementById('productThumbTrack');
+                                    if (!track) return;
+                                    const scrollAmount = 140;
+                                    if (direction === 'next') {
+                                        track.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+                                    } else {
+                                        track.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+                                    }
                                 }
                             </script>                               
                         </div>
