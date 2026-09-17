@@ -1,130 +1,192 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500" fill="none">
-  <!-- Soft Ambient Glow -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 450 600" fill="none">
   <defs>
-    <linearGradient id="wheatGoldGrad" x1="0%" y1="100%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#EF801C" stop-opacity="0.25"/>
-      <stop offset="60%" stop-color="#D97706" stop-opacity="0.18"/>
-      <stop offset="100%" stop-color="#B45309" stop-opacity="0.08"/>
+    <linearGradient id="goldLine" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#D97706" stop-opacity="0.75"/>
+      <stop offset="40%" stop-color="#EF801C" stop-opacity="0.65"/>
+      <stop offset="100%" stop-color="#F59E0B" stop-opacity="0.45"/>
     </linearGradient>
-    <linearGradient id="grainFill" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#EF801C" stop-opacity="0.15"/>
-      <stop offset="100%" stop-color="#F59E0B" stop-opacity="0.05"/>
+    <linearGradient id="goldFill" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#EF801C" stop-opacity="0.22"/>
+      <stop offset="50%" stop-color="#F59E0B" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#FEF3C7" stop-opacity="0.08"/>
+    </linearGradient>
+    <linearGradient id="leafGrad" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#D97706" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#F59E0B" stop-opacity="0.10"/>
     </linearGradient>
   </defs>
 
-  <g stroke="url(#wheatGoldGrad)" stroke-linecap="round" stroke-linejoin="round">
-    <!-- Stalk 1 (Central Primary Wheat Ear) -->
-    <path d="M260 500 C255 380, 265 240, 290 90" stroke-width="2.5"/>
+  <g stroke="url(#goldLine)" stroke-linecap="round" stroke-linejoin="round">
     
-    <!-- Central Ear Grains (Alternating pairs) -->
-    <!-- Grain 1 -->
-    <path d="M285 110 C270 100, 265 85, 275 75 C285 85, 285 100, 285 110 Z" fill="url(#grainFill)" stroke-width="1.6"/>
-    <path d="M275 75 L255 40" stroke-width="1.2"/>
+    <!-- ==============================================
+         MAIN CENTRAL WHEAT STALK (Tall, Regal, Arched)
+         ============================================== -->
+    <!-- Central Rachis / Stem -->
+    <path d="M280 600 C275 480, 280 340, 310 140" stroke-width="2.2"/>
     
-    <!-- Grain 2 -->
-    <path d="M290 120 C305 110, 312 95, 305 85 C295 95, 292 110, 290 120 Z" fill="url(#grainFill)" stroke-width="1.6"/>
-    <path d="M305 85 L328 50" stroke-width="1.2"/>
+    <!-- Wheat Tip Awns -->
+    <path d="M310 140 L318 40" stroke-width="1.2"/>
+    <path d="M308 142 L290 55" stroke-width="1.0"/>
+    <path d="M312 142 L340 50" stroke-width="1.0"/>
+    <path d="M309 140 L302 30" stroke-width="1.2"/>
 
-    <!-- Grain 3 -->
-    <path d="M280 145 C262 135, 258 118, 268 108 C280 118, 280 135, 280 145 Z" fill="url(#grainFill)" stroke-width="1.6"/>
-    <path d="M268 108 L240 70" stroke-width="1.2"/>
+    <!-- Central Ear: Detailed Kernels with Curved Glumes & Long Awns -->
+    <!-- Pair 1 (Top) -->
+    <path d="M305 160 C292 150, 288 135, 298 125 C308 132, 308 150, 305 160 Z" fill="url(#goldFill)" stroke-width="1.5"/>
+    <path d="M298 125 C275 95, 255 70, 240 50" stroke-width="1.0"/>
+    
+    <path d="M312 165 C325 155, 330 140, 322 130 C310 138, 310 155, 312 165 Z" fill="url(#goldFill)" stroke-width="1.5"/>
+    <path d="M322 130 C345 100, 370 75, 385 55" stroke-width="1.0"/>
 
-    <!-- Grain 4 -->
-    <path d="M285 155 C302 145, 310 128, 300 118 C288 128, 285 145, 285 155 Z" fill="url(#grainFill)" stroke-width="1.6"/>
-    <path d="M300 118 L330 85" stroke-width="1.2"/>
+    <!-- Pair 2 -->
+    <path d="M302 190 C286 178, 280 160, 292 148 C305 156, 305 178, 302 190 Z" fill="url(#goldFill)" stroke-width="1.5"/>
+    <path d="M292 148 C265 115, 240 85, 220 65" stroke-width="1.1"/>
 
-    <!-- Grain 5 -->
-    <path d="M275 180 C255 170, 250 152, 262 142 C275 152, 275 170, 275 180 Z" fill="url(#grainFill)" stroke-width="1.6"/>
-    <path d="M262 142 L230 105" stroke-width="1.2"/>
+    <path d="M312 198 C328 185, 336 168, 324 156 C310 165, 310 188, 312 198 Z" fill="url(#goldFill)" stroke-width="1.5"/>
+    <path d="M324 156 C352 120, 380 95, 405 75" stroke-width="1.1"/>
 
-    <!-- Grain 6 -->
-    <path d="M280 190 C300 180, 308 162, 298 152 C285 162, 280 180, 280 190 Z" fill="url(#grainFill)" stroke-width="1.6"/>
-    <path d="M298 152 L332 120" stroke-width="1.2"/>
+    <!-- Pair 3 -->
+    <path d="M298 225 C280 210, 272 190, 286 178 C300 188, 300 212, 298 225 Z" fill="url(#goldFill)" stroke-width="1.5"/>
+    <path d="M286 178 C255 140, 225 110, 205 90" stroke-width="1.1"/>
 
-    <!-- Grain 7 -->
-    <path d="M272 215 C250 205, 245 186, 258 176 C272 186, 272 205, 272 215 Z" fill="url(#grainFill)" stroke-width="1.6"/>
-    <path d="M258 176 L222 140" stroke-width="1.2"/>
+    <path d="M310 235 C328 220, 338 200, 324 188 C308 198, 308 222, 310 235 Z" fill="url(#goldFill)" stroke-width="1.5"/>
+    <path d="M324 188 C358 150, 390 125, 415 105" stroke-width="1.1"/>
 
-    <!-- Grain 8 -->
-    <path d="M278 225 C298 215, 305 196, 295 186 C282 196, 278 215, 278 225 Z" fill="url(#grainFill)" stroke-width="1.6"/>
-    <path d="M295 186 L332 155" stroke-width="1.2"/>
+    <!-- Pair 4 -->
+    <path d="M294 262 C274 246, 268 225, 282 212 C298 222, 298 248, 294 262 Z" fill="url(#goldFill)" stroke-width="1.5"/>
+    <path d="M282 212 C248 170, 215 140, 195 120" stroke-width="1.1"/>
 
-    <!-- Grain 9 -->
-    <path d="M270 250 C248 240, 242 220, 255 210 C270 220, 270 240, 270 250 Z" fill="url(#grainFill)" stroke-width="1.6"/>
-    <path d="M255 210 L220 180" stroke-width="1.2"/>
+    <path d="M308 272 C328 256, 338 235, 324 222 C308 232, 306 258, 308 272 Z" fill="url(#goldFill)" stroke-width="1.5"/>
+    <path d="M324 222 C360 180, 395 155, 420 135" stroke-width="1.1"/>
 
-    <!-- Grain 10 -->
-    <path d="M275 260 C295 250, 302 230, 292 220 C278 230, 275 250, 275 260 Z" fill="url(#grainFill)" stroke-width="1.6"/>
-    <path d="M292 220 L330 190" stroke-width="1.2"/>
+    <!-- Pair 5 -->
+    <path d="M290 300 C270 282, 262 260, 278 246 C294 258, 294 285, 290 300 Z" fill="url(#goldFill)" stroke-width="1.5"/>
+    <path d="M278 246 C242 200, 208 170, 185 150" stroke-width="1.1"/>
 
-    <!-- Grain 11 -->
-    <path d="M268 285 C246 275, 242 255, 254 245 C268 255, 268 275, 268 285 Z" fill="url(#grainFill)" stroke-width="1.6"/>
-    <path d="M254 245 L222 218" stroke-width="1.2"/>
+    <path d="M304 310 C325 292, 336 270, 320 256 C304 268, 302 295, 304 310 Z" fill="url(#goldFill)" stroke-width="1.5"/>
+    <path d="M320 256 C358 215, 395 190, 422 170" stroke-width="1.1"/>
 
-    <!-- Grain 12 -->
-    <path d="M272 295 C292 285, 298 265, 288 255 C275 265, 272 285, 272 295 Z" fill="url(#grainFill)" stroke-width="1.6"/>
-    <path d="M288 255 L325 228" stroke-width="1.2"/>
+    <!-- Pair 6 -->
+    <path d="M288 338 C266 320, 258 296, 274 282 C290 294, 290 322, 288 338 Z" fill="url(#goldFill)" stroke-width="1.5"/>
+    <path d="M274 282 C238 235, 205 205, 180 185" stroke-width="1.1"/>
 
-    <!-- Stalk 2 (Left Leaning Wheat Ear) -->
-    <path d="M240 500 C230 400, 210 280, 160 160" stroke-width="2.2"/>
+    <path d="M300 348 C322 330, 332 306, 316 292 C298 304, 298 332, 300 348 Z" fill="url(#goldFill)" stroke-width="1.5"/>
+    <path d="M316 292 C355 250, 390 225, 415 205" stroke-width="1.1"/>
 
-    <path d="M165 175 C150 165, 140 150, 148 140 C160 148, 162 165, 165 175 Z" fill="url(#grainFill)" stroke-width="1.5"/>
-    <path d="M148 140 L125 110" stroke-width="1.1"/>
+    <!-- Pair 7 (Base) -->
+    <path d="M285 375 C265 356, 256 332, 272 318 C288 330, 288 358, 285 375 Z" fill="url(#goldFill)" stroke-width="1.5"/>
+    <path d="M272 318 C238 275, 208 245, 185 225" stroke-width="1.0"/>
 
-    <path d="M172 185 C185 175, 195 160, 188 150 C175 160, 172 175, 172 185 Z" fill="url(#grainFill)" stroke-width="1.5"/>
-    <path d="M188 150 L212 120" stroke-width="1.1"/>
+    <path d="M296 385 C318 366, 328 342, 312 328 C295 340, 294 368, 296 385 Z" fill="url(#goldFill)" stroke-width="1.5"/>
+    <path d="M312 328 C350 288, 385 262, 408 242" stroke-width="1.0"/>
 
-    <path d="M175 210 C158 200, 148 185, 158 175 C170 185, 172 200, 175 210 Z" fill="url(#grainFill)" stroke-width="1.5"/>
-    <path d="M158 175 L132 145" stroke-width="1.1"/>
 
-    <path d="M182 220 C198 210, 206 195, 198 185 C185 195, 182 210, 182 220 Z" fill="url(#grainFill)" stroke-width="1.5"/>
-    <path d="M198 185 L225 155" stroke-width="1.1"/>
+    <!-- ==============================================
+         LEFT LEANING WHEAT STALK (Arched gracefully left)
+         ============================================== -->
+    <path d="M255 600 C240 470, 210 320, 140 180" stroke-width="2.0"/>
 
-    <path d="M188 245 C170 235, 160 218, 172 208 C185 218, 185 235, 188 245 Z" fill="url(#grainFill)" stroke-width="1.5"/>
-    <path d="M172 208 L142 180" stroke-width="1.1"/>
+    <!-- Left Ear Tip Awns -->
+    <path d="M140 180 L80 105" stroke-width="1.1"/>
+    <path d="M138 182 L105 85" stroke-width="1.1"/>
+    <path d="M142 180 L160 95" stroke-width="1.0"/>
 
-    <path d="M194 255 C210 245, 218 228, 210 218 C196 228, 194 245, 194 255 Z" fill="url(#grainFill)" stroke-width="1.5"/>
-    <path d="M210 218 L238 190" stroke-width="1.1"/>
+    <!-- Left Ear Kernels -->
+    <path d="M145 200 C130 188, 120 172, 130 162 C142 170, 145 190, 145 200 Z" fill="url(#goldFill)" stroke-width="1.4"/>
+    <path d="M130 162 C105 130, 75 105, 50 85" stroke-width="1.0"/>
 
-    <path d="M198 280 C180 270, 172 252, 184 242 C198 252, 196 270, 198 280 Z" fill="url(#grainFill)" stroke-width="1.5"/>
-    <path d="M184 242 L155 215" stroke-width="1.1"/>
+    <path d="M155 210 C170 198, 178 182, 168 172 C155 180, 152 200, 155 210 Z" fill="url(#goldFill)" stroke-width="1.4"/>
+    <path d="M168 172 C195 138, 225 110, 245 90" stroke-width="1.0"/>
 
-    <path d="M204 290 C220 280, 226 262, 218 252 C205 262, 204 280, 204 290 Z" fill="url(#grainFill)" stroke-width="1.5"/>
-    <path d="M218 252 L245 225" stroke-width="1.1"/>
+    <path d="M152 235 C135 222, 124 205, 135 192 C148 202, 152 222, 152 235 Z" fill="url(#goldFill)" stroke-width="1.4"/>
+    <path d="M135 192 C105 155, 70 128, 42 108" stroke-width="1.0"/>
 
-    <!-- Stalk 3 (Right Sweeping Wheat Ear) -->
-    <path d="M270 500 C285 410, 320 310, 355 210" stroke-width="2.2"/>
+    <path d="M164 245 C180 232, 190 215, 178 202 C164 212, 162 232, 164 245 Z" fill="url(#goldFill)" stroke-width="1.4"/>
+    <path d="M178 202 C208 168, 240 140, 262 120" stroke-width="1.0"/>
 
-    <path d="M350 225 C340 210, 342 195, 355 188 C365 198, 358 215, 350 225 Z" fill="url(#grainFill)" stroke-width="1.5"/>
-    <path d="M355 188 L370 155" stroke-width="1.1"/>
+    <path d="M160 270 C142 255, 130 238, 142 225 C156 235, 160 255, 160 270 Z" fill="url(#goldFill)" stroke-width="1.4"/>
+    <path d="M142 225 C110 188, 75 160, 45 138" stroke-width="1.0"/>
 
-    <path d="M345 250 C332 238, 332 222, 344 215 C355 225, 352 240, 345 250 Z" fill="url(#grainFill)" stroke-width="1.5"/>
-    <path d="M344 215 L360 185" stroke-width="1.1"/>
+    <path d="M172 280 C190 266, 200 248, 188 235 C172 246, 170 266, 172 280 Z" fill="url(#goldFill)" stroke-width="1.4"/>
+    <path d="M188 235 C220 200, 252 172, 275 152" stroke-width="1.0"/>
 
-    <path d="M355 260 C368 248, 378 232, 372 225 C360 235, 355 250, 355 260 Z" fill="url(#grainFill)" stroke-width="1.5"/>
-    <path d="M372 225 L392 198" stroke-width="1.1"/>
+    <path d="M168 308 C150 292, 138 274, 150 260 C165 270, 168 292, 168 308 Z" fill="url(#goldFill)" stroke-width="1.4"/>
+    <path d="M150 260 C118 220, 80 192, 50 170" stroke-width="1.0"/>
 
-    <path d="M338 285 C325 272, 325 255, 337 248 C348 258, 345 275, 338 285 Z" fill="url(#grainFill)" stroke-width="1.5"/>
-    <path d="M337 248 L355 218" stroke-width="1.1"/>
+    <path d="M180 318 C198 302, 208 284, 195 270 C180 282, 178 304, 180 318 Z" fill="url(#goldFill)" stroke-width="1.4"/>
+    <path d="M195 270 C228 235, 260 208, 282 188" stroke-width="1.0"/>
 
-    <path d="M348 295 C362 282, 370 268, 364 258 C352 268, 348 285, 348 295 Z" fill="url(#grainFill)" stroke-width="1.5"/>
-    <path d="M364 258 L385 230" stroke-width="1.1"/>
+    <path d="M176 345 C158 328, 146 310, 158 296 C172 306, 176 328, 176 345 Z" fill="url(#goldFill)" stroke-width="1.4"/>
+    <path d="M158 296 C125 255, 88 228, 60 205" stroke-width="1.0"/>
 
-    <path d="M332 320 C320 308, 320 292, 332 284 C342 295, 340 310, 332 320 Z" fill="url(#grainFill)" stroke-width="1.5"/>
-    <path d="M332 284 L350 255" stroke-width="1.1"/>
+    <path d="M188 355 C206 338, 216 320, 202 306 C186 318, 186 340, 188 355 Z" fill="url(#goldFill)" stroke-width="1.4"/>
+    <path d="M202 306 C235 270, 268 242, 290 222" stroke-width="1.0"/>
 
-    <path d="M340 330 C354 318, 362 302, 355 294 C344 304, 340 320, 340 330 Z" fill="url(#grainFill)" stroke-width="1.5"/>
-    <path d="M355 294 L375 268" stroke-width="1.1"/>
 
-    <!-- Flowing Botanical Leaves -->
-    <path d="M255 420 C210 390, 160 385, 110 405 C150 370, 210 375, 252 400" fill="url(#grainFill)" stroke-width="1.8"/>
-    <path d="M265 440 C315 420, 360 425, 395 450 C360 410, 310 405, 262 425" fill="url(#grainFill)" stroke-width="1.8"/>
-    <path d="M235 460 C180 440, 130 450, 85 480 C125 435, 185 430, 230 445" fill="url(#grainFill)" stroke-width="1.6"/>
+    <!-- ==============================================
+         RIGHT SWEEPING WHEAT STALK (Full, Outstretched)
+         ============================================== -->
+    <path d="M300 600 C310 470, 350 340, 395 210" stroke-width="2.0"/>
 
-    <!-- Floating Grain Particles -->
-    <ellipse cx="120" cy="180" rx="4" ry="9" transform="rotate(25 120 180)" fill="url(#grainFill)" stroke-width="1"/>
-    <ellipse cx="220" cy="90" rx="4.5" ry="10" transform="rotate(-30 220 90)" fill="url(#grainFill)" stroke-width="1"/>
-    <ellipse cx="340" cy="130" rx="3.5" ry="8" transform="rotate(40 340 130)" fill="url(#grainFill)" stroke-width="1"/>
-    <ellipse cx="140" cy="310" rx="4" ry="9" transform="rotate(-15 140 310)" fill="url(#grainFill)" stroke-width="1"/>
+    <!-- Right Ear Tip Awns -->
+    <path d="M395 210 L430 120" stroke-width="1.1"/>
+    <path d="M393 212 L410 100" stroke-width="1.1"/>
+    <path d="M398 210 L448 135" stroke-width="1.0"/>
+
+    <!-- Right Ear Kernels -->
+    <path d="M388 230 C375 218, 372 202, 382 192 C395 200, 396 220, 388 230 Z" fill="url(#goldFill)" stroke-width="1.4"/>
+    <path d="M382 192 C365 155, 350 128, 335 105" stroke-width="1.0"/>
+
+    <path d="M398 240 C412 228, 420 212, 410 202 C398 210, 395 230, 398 240 Z" fill="url(#goldFill)" stroke-width="1.4"/>
+    <path d="M410 202 C435 165, 452 135, 460 115" stroke-width="1.0"/>
+
+    <path d="M382 265 C368 252, 362 235, 374 222 C388 232, 390 252, 382 265 Z" fill="url(#goldFill)" stroke-width="1.4"/>
+    <path d="M374 222 C352 182, 330 152, 312 130" stroke-width="1.0"/>
+
+    <path d="M394 275 C410 262, 418 245, 406 232 C392 242, 390 265, 394 275 Z" fill="url(#goldFill)" stroke-width="1.4"/>
+    <path d="M406 232 C432 195, 452 165, 465 145" stroke-width="1.0"/>
+
+    <path d="M376 300 C360 286, 352 268, 365 255 C380 265, 382 288, 376 300 Z" fill="url(#goldFill)" stroke-width="1.4"/>
+    <path d="M365 255 C340 212, 318 182, 298 160" stroke-width="1.0"/>
+
+    <path d="M388 310 C405 296, 414 278, 400 265 C386 276, 384 300, 388 310 Z" fill="url(#goldFill)" stroke-width="1.4"/>
+    <path d="M400 265 C428 228, 448 198, 462 178" stroke-width="1.0"/>
+
+    <path d="M370 338 C352 322, 345 304, 358 290 C372 300, 375 324, 370 338 Z" fill="url(#goldFill)" stroke-width="1.4"/>
+    <path d="M358 290 C330 248, 305 218, 285 195" stroke-width="1.0"/>
+
+    <path d="M382 348 C398 332, 408 314, 394 300 C378 312, 378 335, 382 348 Z" fill="url(#goldFill)" stroke-width="1.4"/>
+    <path d="M394 300 C422 262, 442 232, 458 212" stroke-width="1.0"/>
+
+
+    <!-- ==============================================
+         GRACEFUL BOTANICAL WHEAT LEAVES
+         ============================================== -->
+    <!-- Left Arcing Leaf -->
+    <path d="M260 520 C200 480, 130 470, 60 495 C115 450, 195 455, 255 495" fill="url(#leafGrad)" stroke-width="1.8"/>
+    <!-- Left Mid Leaf -->
+    <path d="M230 420 C170 375, 110 380, 50 410 C100 355, 175 360, 222 398" fill="url(#leafGrad)" stroke-width="1.6"/>
+    <!-- Right Arching Leaf -->
+    <path d="M285 540 C345 505, 405 515, 450 550 C410 490, 340 480, 280 515" fill="url(#leafGrad)" stroke-width="1.8"/>
+    <!-- Right Mid Leaf -->
+    <path d="M310 440 C370 410, 420 420, 450 455 C420 395, 360 385, 305 418" fill="url(#leafGrad)" stroke-width="1.6"/>
+
+    <!-- ==============================================
+         FLOATING WHEAT GRAINS / SEEDS
+         ============================================== -->
+    <g fill="url(#goldFill)" stroke-width="1.1">
+      <ellipse cx="105" cy="240" rx="5" ry="11" transform="rotate(35 105 240)"/>
+      <line x1="109" y1="230" x2="118" y2="210" stroke-width="0.9"/>
+      
+      <ellipse cx="230" cy="80" rx="5" ry="12" transform="rotate(-35 230 80)"/>
+      <line x1="226" y1="70" x2="218" y2="48" stroke-width="0.9"/>
+      
+      <ellipse cx="360" cy="110" rx="4.5" ry="10" transform="rotate(45 360 110)"/>
+      <line x1="365" y1="102" x2="378" y2="82" stroke-width="0.9"/>
+
+      <ellipse cx="70" cy="350" rx="4.5" ry="10" transform="rotate(-25 70 350)"/>
+      <ellipse cx="410" cy="280" rx="4" ry="9" transform="rotate(20 410 280)"/>
+    </g>
+
   </g>
 </svg>

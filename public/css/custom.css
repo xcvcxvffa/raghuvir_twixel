@@ -850,7 +850,8 @@ header.main-header .header-sticky.active {
 
 /* Left Featured Banner */
 .mega-featured-banner {
-	background: linear-gradient(150deg, #FBF7F0 0%, #F5EAD7 100%) !important;
+	background: linear-gradient(150deg, rgba(254, 252, 248, 0.90) 0%, rgba(248, 240, 226, 0.88) 100%), url('../images/wheat-pattern-seamless.jpg') repeat !important;
+	background-size: auto, 260px !important;
 	border: 1.5px solid #E8DECA !important;
 	border-radius: 20px !important;
 	padding: 26px 22px 22px !important;
@@ -865,23 +866,24 @@ header.main-header .header-sticky.active {
 .mega-featured-banner::after {
 	content: '';
 	position: absolute;
-	right: -10px;
-	bottom: -15px;
-	width: 210px;
-	height: 270px;
-	background-image: url('../images/wheat-pattern-bg.svg');
+	right: -5px;
+	bottom: -10px;
+	width: 205px;
+	height: 275px;
+	background-image: url('../images/wheat-sheaf-transparent.png');
 	background-size: contain;
 	background-repeat: no-repeat;
 	background-position: right bottom;
-	opacity: 0.90;
+	opacity: 0.40;
 	pointer-events: none;
 	z-index: 1;
-	transition: transform 0.4s ease, opacity 0.4s ease;
+	mix-blend-mode: multiply;
+	transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
 }
 
 .mega-featured-banner:hover::after {
-	transform: scale(1.05) translateY(-4px);
-	opacity: 1;
+	transform: scale(1.06) translateY(-4px);
+	opacity: 0.58;
 }
 
 .mega-featured-inner {
@@ -899,46 +901,10 @@ header.main-header .header-sticky.active {
 }
 
 .mega-featured-banner p {
-	font-size: 12.5px;
-	line-height: 1.55;
+	font-size: 13px;
+	line-height: 1.6;
 	color: #5C5045;
-	margin: 0 0 18px 0;
-}
-
-.mega-featured-perks {
-	list-style: none;
-	padding: 0;
 	margin: 0;
-	display: flex;
-	flex-direction: column;
-	gap: 10px;
-}
-
-.mega-featured-perks li {
-	display: flex;
-	align-items: center;
-	gap: 10px;
-	font-size: 12px;
-	font-weight: 700;
-	color: #382C22;
-	background: rgba(255, 255, 255, 0.70);
-	backdrop-filter: blur(6px);
-	padding: 8px 12px;
-	border-radius: 10px;
-	border: 1px solid rgba(230, 216, 195, 0.75);
-	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
-	transition: all 0.25s ease;
-}
-
-.mega-featured-perks li:hover {
-	background: rgba(255, 255, 255, 0.92);
-	border-color: #EF801C;
-	transform: translateX(3px);
-}
-
-.mega-featured-perks li i {
-	color: #EF801C;
-	font-size: 12.5px;
 }
 
 /* Right Products 3-Col Grid */

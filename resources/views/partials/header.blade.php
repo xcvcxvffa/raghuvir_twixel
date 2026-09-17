@@ -40,11 +40,6 @@
                                                 <div class="mega-featured-inner">
                                                     <h5>Farm-Fresh Direct to Your Kitchen</h5>
                                                     <p>Cleaned, slow stone-ground on traditional chakkis with zero maida and natural golden wheat germ intact.</p>
-                                                    <ul class="mega-featured-perks">
-                                                        <li><i class="fa-solid fa-circle-check"></i> 100% MP Sharbati Wheat</li>
-                                                        <li><i class="fa-solid fa-circle-check"></i> Traditional Slow Stone Ground</li>
-                                                        <li><i class="fa-solid fa-circle-check"></i> Zero Preservatives or Chemicals</li>
-                                                    </ul>
                                                 </div>
                                             </div>
 
