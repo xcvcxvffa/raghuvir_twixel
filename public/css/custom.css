@@ -1044,13 +1044,20 @@ header.main-header .header-sticky.active {
 	display: inline-flex;
 	align-items: center;
 	gap: 10px;
-	font-family: var(--default-font) !important;
-	color: var(--white-color) !important;
+	font-family: "Bricolage Grotesque", sans-serif !important;
+	color: #FFFFFF !important;
+	background-color: transparent !important;
 	font-size: 20px !important;
-	font-weight: 700 !important;
+	font-weight: 600 !important;
 	line-height: normal !important;
+	letter-spacing: normal !important;
+	word-spacing: 0px !important;
+	text-transform: none !important;
+	text-decoration: none !important;
+	font-style: normal !important;
 	white-space: nowrap;
-	letter-spacing: normal;
+	margin: 0px !important;
+	padding: 0px !important;
 	transition: color 0.2s ease, transform 0.2s ease;
 	cursor: default;
 }
@@ -1082,14 +1089,14 @@ header.main-header .header-sticky.active {
 
 @media (max-width: 991px) {
 	.hero-marquee-group {
-		gap: 22px;
-		padding-right: 22px;
+		gap: 24px;
+		padding-right: 24px;
 	}
 	.hero-marquee-group .marquee-item {
-		font-size: 17px !important;
+		font-size: 18px !important;
 	}
 	.hero-marquee-group .marquee-item i {
-		font-size: 14px;
+		font-size: 15px;
 	}
 }
 
@@ -1102,7 +1109,7 @@ header.main-header .header-sticky.active {
 		padding-right: 18px;
 	}
 	.hero-marquee-group .marquee-item {
-		font-size: 15px !important;
+		font-size: 16px !important;
 	}
 	.hero-marquee-group .marquee-item i {
 		font-size: 13px;
