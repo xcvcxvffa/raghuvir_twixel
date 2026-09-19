@@ -457,7 +457,6 @@
 @endsection
 
 @push('scripts')
-<script>
     // Live Avatar File Picker & Auto Submit Preview
     function handleAvatarUpload(input) {
         if (input.files && input.files[0]) {
@@ -476,33 +475,6 @@
             document.getElementById('avatarUploadForm').submit();
         }
     }
-
-    // Password Eye Toggle
-    document.addEventListener('DOMContentLoaded', function () {
-        const toggleButtons = document.querySelectorAll('.password-toggle-btn');
-
-        toggleButtons.forEach(btn => {
-            btn.addEventListener('click', function () {
-                const targetId = this.getAttribute('data-target');
-                const targetInput = document.getElementById(targetId);
-                const icon = this.querySelector('i');
-
-                if (targetInput) {
-                    if (targetInput.type === 'password') {
-                        targetInput.type = 'text';
-                        icon.classList.remove('fa-eye');
-                        icon.classList.add('fa-eye-slash');
-                        this.title = 'Hide Password';
-                    } else {
-                        targetInput.type = 'password';
-                        icon.classList.remove('fa-eye-slash');
-                        icon.classList.add('fa-eye');
-                        this.title = 'Show Password';
-                    }
-                }
-            });
-        });
-    });
 
     // Realtime Password Strength Evaluator
     function evaluatePasswordStrength(password) {

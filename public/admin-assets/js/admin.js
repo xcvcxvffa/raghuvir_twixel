@@ -152,30 +152,40 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // 4. Password Toggle (for Login screen)
-    const passwordToggles = document.querySelectorAll('.password-toggle-btn');
-    passwordToggles.forEach(function (btn) {
-        btn.addEventListener('click', function () {
-            const targetInputId = this.getAttribute('data-target');
-            const targetInput = document.getElementById(targetInputId);
-            const icon = this.querySelector('i');
+    // 4. Universal Password Toggle (Global Delegated Handler)
+    document.addEventListener('click', function (e) {
+        const toggleBtn = e.target.closest('.password-toggle-btn');
+        if (!toggleBtn) return;
 
-            if (targetInput) {
-                if (targetInput.type === 'password') {
-                    targetInput.type = 'text';
-                    if (icon) {
-                        icon.classList.remove('fa-eye');
-                        icon.classList.add('fa-eye-slash');
-                    }
+        e.preventDefault();
+        e.stopPropagation();
+
+        const targetInputId = toggleBtn.getAttribute('data-target');
+        let targetInput = targetInputId ? document.getElementById(targetInputId) : null;
+        
+        if (!targetInput) {
+            const parent = toggleBtn.closest('.input-with-icon') || toggleBtn.parentElement;
+            if (parent) {
+                targetInput = parent.querySelector('input');
+            }
+        }
+
+        const icon = toggleBtn.querySelector('i, svg');
+
+        if (targetInput) {
+            const isPassword = targetInput.type === 'password';
+            targetInput.type = isPassword ? 'text' : 'password';
+
+            if (icon) {
+                if (isPassword) {
+                    icon.className = 'fa-solid fa-eye-slash';
+                    toggleBtn.title = 'Hide Password';
                 } else {
-                    targetInput.type = 'password';
-                    if (icon) {
-                        icon.classList.remove('fa-eye-slash');
-                        icon.classList.add('fa-eye');
-                    }
+                    icon.className = 'fa-regular fa-eye';
+                    toggleBtn.title = 'Show Password';
                 }
             }
-        });
+        }
     });
 
     // 5. Chart.js Initializations
