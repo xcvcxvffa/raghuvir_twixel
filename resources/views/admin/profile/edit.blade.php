@@ -457,6 +457,7 @@
 @endsection
 
 @push('scripts')
+<script>
     // Live Avatar File Picker & Auto Submit Preview
     function handleAvatarUpload(input) {
         if (input.files && input.files[0]) {
