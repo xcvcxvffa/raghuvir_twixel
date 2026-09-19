@@ -497,89 +497,40 @@
             </div>
 
             <div class="row">
-                <div class="col-lg-4 col-md-6">
-                    <!-- Product Item Start -->
-                    <div class="product-item wow fadeInUp">
-                        <!-- Product Item Image Start -->
-                        <div class="product-item-img">
-                            <a href="{{ route('product-details', ['product' => 'atta']) }}" data-cursor-text="View">
-                                <figure>
-                                    <img src="{{ asset('images/product_atta_white.jpg') }}" alt="Whole Wheat Atta">
-                                </figure>
-                            </a>
-                        </div>
-                        <!-- Product Item Image End -->
-
-                        <!-- Product Item Body Start -->
-                        <div class="product-item-body">                            
-                            <div class="product-item-content">
-                                <h2><a href="{{ route('product-details', ['product' => 'atta']) }}">Whole Wheat Atta</a></h2>
+                @forelse($featuredProducts as $index => $prod)
+                    <div class="col-lg-4 col-md-6">
+                        <!-- Product Item Start -->
+                        <div class="product-item wow fadeInUp" data-wow-delay="{{ 0.2 * ($index % 3) }}s">
+                            <!-- Product Item Image Start -->
+                            <div class="product-item-img">
+                                <a href="{{ route('product-details', ['product' => $prod->slug]) }}" data-cursor-text="View">
+                                    <figure>
+                                        <img src="{{ $prod->image_url }}" alt="{{ $prod->image_alt ?: $prod->name }}">
+                                    </figure>
+                                </a>
                             </div>
+                            <!-- Product Item Image End -->
 
-                            <div class="product-item-btn">
-                                <a href="{{ route('product-details', ['product' => 'atta']) }}" class="btn-default">View Details</a>
+                            <!-- Product Item Body Start -->
+                            <div class="product-item-body">                            
+                                <div class="product-item-content">
+                                    <span style="display: block; font-size: 13px; font-weight: 600; color: var(--accent-color); margin-bottom: 4px;">{{ $prod->subtitle ?: '100% Pure & Farm Fresh' }}</span>
+                                    <h2><a href="{{ route('product-details', ['product' => $prod->slug]) }}">{{ $prod->name }}</a></h2>
+                                </div>
+
+                                <div class="product-item-btn">
+                                    <a href="{{ route('product-details', ['product' => $prod->slug]) }}" class="btn-default">View Details</a>
+                                </div>
                             </div>
+                            <!-- Product Item Body End -->
                         </div>
-                        <!-- Product Item Body End -->
+                        <!-- Product Item End -->
                     </div>
-                    <!-- Product Item End -->
-                </div>
-
-                <div class="col-lg-4 col-md-6">
-                    <!-- Product Item Start -->
-                    <div class="product-item wow fadeInUp" data-wow-delay="0.2s">
-                        <!-- Product Item Image Start -->
-                        <div class="product-item-img">
-                            <a href="{{ route('product-details', ['product' => 'bati']) }}" data-cursor-text="View">
-                                <figure>
-                                    <img src="{{ asset('images/product_atta_white.jpg') }}" alt="Bati Atta">
-                                </figure>
-                            </a>
-                        </div>
-                        <!-- Product Item Image End -->
-
-                        <!-- Product Item Body Start -->
-                        <div class="product-item-body">                            
-                            <div class="product-item-content">
-                                <h2><a href="{{ route('product-details', ['product' => 'bati']) }}">Bati Atta</a></h2>
-                            </div>
-
-                            <div class="product-item-btn">
-                                <a href="{{ route('product-details', ['product' => 'bati']) }}" class="btn-default">View Details</a>
-                            </div>
-                        </div>
-                        <!-- Product Item Body End -->
+                @empty
+                    <div class="col-12 text-center py-4">
+                        <p>No products available at the moment.</p>
                     </div>
-                    <!-- Product Item End -->
-                </div>
-
-                <div class="col-lg-4 col-md-6">
-                    <!-- Product Item Start -->
-                    <div class="product-item wow fadeInUp" data-wow-delay="0.4s">
-                        <!-- Product Item Image Start -->
-                        <div class="product-item-img">
-                            <a href="{{ route('product-details', ['product' => 'wheat']) }}" data-cursor-text="View">
-                                <figure>
-                                    <img src="{{ asset('images/product_atta_white.jpg') }}" alt="Wheat Bran">
-                                </figure>
-                            </a>
-                        </div>
-                        <!-- Product Item Image End -->
-
-                        <!-- Product Item Body Start -->
-                        <div class="product-item-body">                            
-                            <div class="product-item-content">
-                                <h2><a href="{{ route('product-details', ['product' => 'wheat']) }}">Wheat Bran</a></h2>
-                            </div>
-
-                            <div class="product-item-btn">
-                                <a href="{{ route('product-details', ['product' => 'wheat']) }}" class="btn-default">View Details</a>
-                            </div>
-                        </div>
-                        <!-- Product Item Body End -->
-                    </div>
-                    <!-- Product Item End -->
-                </div>
+                @endforelse
 
                 <div class="col-lg-12">
                     <!-- Section Footer Text Start -->
@@ -1093,104 +1044,66 @@
             </div>
 
             <div class="row">
-                <div class="col-xl-4 col-md-6">
-                    <!-- Post Item Start -->
-                    <div class="post-item wow fadeInUp">                        
-                        <!-- Post Item Body Start -->
-                        <div class="post-item-box">
-                            <!-- Post Featured Image Start-->
-                            <div class="post-featured-image">
-                                <a href="{{ route('blog-details') }}" data-cursor-text="View">
-                                    <figure class="image-anime">
-                                        <img src="{{ asset('images/post-1.jpg') }}" alt="">
-                                    </figure>
-                                </a>
-                            </div>
-                            <!-- Post Featured Image End -->
+                @if(isset($latestBlogs) && $latestBlogs->isNotEmpty())
+                    @foreach($latestBlogs as $index => $blog)
+                        <div class="col-xl-4 col-md-6">
+                            <!-- Post Item Start -->
+                            <div class="post-item wow fadeInUp" data-wow-delay="{{ $index * 0.2 }}s">                        
+                                <!-- Post Item Body Start -->
+                                <div class="post-item-box">
+                                    <!-- Post Featured Image Start-->
+                                    <div class="post-featured-image">
+                                        <a href="{{ route('blog.single', $blog->slug) }}" data-cursor-text="View">
+                                            <figure class="image-anime" style="height: 250px; overflow: hidden;">
+                                                <img src="{{ $blog->image_url }}" alt="{{ $blog->title }}" style="width: 100%; height: 100%; object-fit: cover;">
+                                            </figure>
+                                        </a>
+                                    </div>
+                                    <!-- Post Featured Image End -->
 
-                            <!-- Post Item Content Start -->
-                            <div class="post-item-content">
-                                <h2><a href="{{ route('blog-details') }}">The True Benefits of Choosing Organic for Your Family</a></h2>
-                                <p>Explore why chemical free produce supports better health, richer nutrition, and a safer environment.</p>
+                                    <!-- Post Item Content Start -->
+                                    <div class="post-item-content">
+                                        <div style="font-size: 0.775rem; color: #EF801C; font-weight: 700; margin-bottom: 0.4rem;">
+                                            <i class="fa-solid fa-tag"></i> {{ $blog->category }} • {{ $blog->reading_time }}
+                                        </div>
+                                        <h2><a href="{{ route('blog.single', $blog->slug) }}">{{ $blog->title }}</a></h2>
+                                        <p>{{ $blog->excerpt ?? Str::limit(strip_tags($blog->content), 95) }}</p>
+                                    </div>
+                                    <!-- Post Item Content End -->                                                         
+                                </div>
+                                <!-- Post Item Body End -->
+                                 
+                                <!-- Post Item Readmore Button Start-->
+                                <div class="post-item-btn">
+                                    <a href="{{ route('blog.single', $blog->slug) }}" class="readmore-btn">read more</a>
+                                </div>
+                                <!-- Post Item Readmore Button End-->
                             </div>
-                            <!-- Post Item Content End -->                                                         
+                            <!-- Post Item End -->
                         </div>
-                        <!-- Post Item Body End -->
-                         
-                        <!-- Post Item Readmore Button Start-->
-                        <div class="post-item-btn">
-                            <a href="{{ route('blog-details') }}" class="readmore-btn">read more</a>
+                    @endforeach
+                @else
+                    <div class="col-xl-4 col-md-6">
+                        <div class="post-item wow fadeInUp">                        
+                            <div class="post-item-box">
+                                <div class="post-featured-image">
+                                    <a href="{{ route('blog') }}" data-cursor-text="View">
+                                        <figure class="image-anime">
+                                            <img src="{{ asset('images/post-1.jpg') }}" alt="">
+                                        </figure>
+                                    </a>
+                                </div>
+                                <div class="post-item-content">
+                                    <h2><a href="{{ route('blog') }}">The True Benefits of Choosing 100% Sharbati Whole Wheat</a></h2>
+                                    <p>Explore why chemical free produce supports better health, richer nutrition, and a safer environment.</p>
+                                </div>
+                            </div>
+                            <div class="post-item-btn">
+                                <a href="{{ route('blog') }}" class="readmore-btn">read more</a>
+                            </div>
                         </div>
-                        <!-- Post Item Readmore Button End-->
                     </div>
-                    <!-- Post Item End -->
-                </div>
-
-                <div class="col-xl-4 col-md-6">
-                    <!-- Post Item Start -->
-                    <div class="post-item wow fadeInUp" data-wow-delay="0.2s">                        
-                        <!-- Post Item Body Start -->
-                        <div class="post-item-box">
-                            <!-- Post Featured Image Start-->
-                            <div class="post-featured-image">
-                                <a href="{{ route('blog-details') }}" data-cursor-text="View">
-                                    <figure class="image-anime">
-                                        <img src="{{ asset('images/post-2.jpg') }}" alt="">
-                                    </figure>
-                                </a>
-                            </div>
-                            <!-- Post Featured Image End -->
-
-                            <!-- Post Item Content Start -->
-                            <div class="post-item-content">
-                                <h2><a href="{{ route('blog-details') }}">Bringing Traditional Farming Wisdom Into Modern Agriculture</a></h2>
-                                <p>Discover how ancient knowledge and modern blend to create a more efficient and sustainable farm system.</p>
-                            </div>
-                            <!-- Post Item Content End -->                                                         
-                        </div>
-                        <!-- Post Item Body End -->
-                         
-                        <!-- Post Item Readmore Button Start-->
-                        <div class="post-item-btn">
-                            <a href="{{ route('blog-details') }}" class="readmore-btn">read more</a>
-                        </div>
-                        <!-- Post Item Readmore Button End-->
-                    </div>
-                    <!-- Post Item End -->
-                </div>
-
-                <div class="col-xl-4 col-md-6">
-                    <!-- Post Item Start -->
-                    <div class="post-item wow fadeInUp" data-wow-delay="0.4s">                        
-                        <!-- Post Item Body Start -->
-                        <div class="post-item-box">
-                            <!-- Post Featured Image Start-->
-                            <div class="post-featured-image">
-                                <a href="{{ route('blog-details') }}" data-cursor-text="View">
-                                    <figure class="image-anime">
-                                        <img src="{{ asset('images/post-3.jpg') }}" alt="">
-                                    </figure>
-                                </a>
-                            </div>
-                            <!-- Post Featured Image End -->
-
-                            <!-- Post Item Content Start -->
-                            <div class="post-item-content">
-                                <h2><a href="{{ route('blog-details') }}">Natural Pest Control That Protects Both Crops and Nature</a></h2>
-                                <p>Find out how we manage pests the organic way without chemicals, while keeping the ecosystem balanced.</p>
-                            </div>
-                            <!-- Post Item Content End -->                                                         
-                        </div>
-                        <!-- Post Item Body End -->
-                         
-                        <!-- Post Item Readmore Button Start-->
-                        <div class="post-item-btn">
-                            <a href="{{ route('blog-details') }}" class="readmore-btn">read more</a>
-                        </div>
-                        <!-- Post Item Readmore Button End-->
-                    </div>
-                    <!-- Post Item End -->
-                </div>
+                @endif
             </div>
         </div>
     </div>

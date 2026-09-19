@@ -112,32 +112,45 @@
     <!-- Page Header Section End -->
 
     @php
-        $productList = $products ?? [
-            [
-                'slug' => 'atta',
-                'title' => 'Whole Wheat Atta',
-                'subtitle' => '100% Pure & Farm Fresh',
-                'sizes' => ['5kg', '30kg'],
-                'description' => 'Raghuvir Hygienic Whole Wheat Atta is made from premium quality wheat, clean and pure, rich in natural dietary fiber and nutrients. Ensuring fresh, soft, and healthy rotis for your family.',
-                'image' => 'images/product_atta_white.jpg',
-            ],
-            [
-                'slug' => 'bati',
-                'title' => 'Bati Atta',
-                'subtitle' => '100% Pure & Farm Fresh',
-                'sizes' => ['5kg', '30kg'],
-                'description' => 'Raghuvir Bati Atta is specially milled to the perfect texture for making delicious, authentic Batis. Ground from handpicked premium wheat grains, it ensures your Batis are crispy on the outside and soft on the inside.',
-                'image' => 'images/product_atta_white.jpg',
-            ],
-            [
-                'slug' => 'wheat',
-                'title' => 'Wheat Bran',
-                'subtitle' => '100% Pure & Farm Fresh',
-                'sizes' => ['49kg'],
-                'description' => 'Raghuvir Wheat Bran is high-quality, fiber-rich flour ideal for bulk baking, catering, and home use. Milled under strict quality controls to maintain its nutritional integrity.',
-                'image' => 'images/product_atta_white.jpg',
-            ]
-        ];
+        if ($products instanceof \Illuminate\Support\Collection && $products->isNotEmpty()) {
+            $productList = $products->map(function($p) {
+                return [
+                    'slug' => $p->slug,
+                    'title' => $p->name,
+                    'subtitle' => $p->subtitle ?? '100% Pure & Farm Fresh',
+                    'sizes' => $p->sizes_list,
+                    'description' => $p->short_description,
+                    'image' => $p->image_url,
+                ];
+            })->toArray();
+        } else {
+            $productList = $products ?? [
+                [
+                    'slug' => 'atta',
+                    'title' => 'Whole Wheat Atta',
+                    'subtitle' => '100% Pure & Farm Fresh',
+                    'sizes' => ['5kg', '30kg'],
+                    'description' => 'Raghuvir Hygienic Whole Wheat Atta is made from premium quality wheat, clean and pure, rich in natural dietary fiber and nutrients. Ensuring fresh, soft, and healthy rotis for your family.',
+                    'image' => 'images/product_atta_white.jpg',
+                ],
+                [
+                    'slug' => 'bati',
+                    'title' => 'Bati Atta',
+                    'subtitle' => '100% Pure & Farm Fresh',
+                    'sizes' => ['5kg', '30kg'],
+                    'description' => 'Raghuvir Bati Atta is specially milled to the perfect texture for making delicious, authentic Batis. Ground from handpicked premium wheat grains, it ensures your Batis are crispy on the outside and soft on the inside.',
+                    'image' => 'images/product_atta_white.jpg',
+                ],
+                [
+                    'slug' => 'wheat',
+                    'title' => 'Wheat Bran',
+                    'subtitle' => '100% Pure & Farm Fresh',
+                    'sizes' => ['49kg'],
+                    'description' => 'Raghuvir Wheat Bran is high-quality, fiber-rich flour ideal for bulk baking, catering, and home use. Milled under strict quality controls to maintain its nutritional integrity.',
+                    'image' => 'images/product_atta_white.jpg',
+                ]
+            ];
+        }
     @endphp
 
 
@@ -208,13 +221,17 @@
 
                         <!-- Action Buttons Start -->
                         <div class="inquiry-buttons" style="display: flex; gap: 14px; align-items: center; flex-wrap: wrap;">
+                            @php
+                                $waRaw = setting('whatsapp_number', '+919725427727');
+                                $waClean = preg_replace('/[^0-9]/', '', $waRaw);
+                            @endphp
                             <!-- Request Inquiry Button -->
                             <a href="{{ route('contact', ['product' => $product['title'], 'size' => $defaultSize]) }}" class="btn-default btn-inquiry">
                                 Request Inquiry <i class="fa-solid fa-paper-plane" style="margin-left: 8px;"></i>
                             </a>
                             
                             <!-- WhatsApp Button -->
-                            <a href="https://wa.me/919725427727?text={{ rawurlencode("Hello Raghuvir Atta, I am interested in inquiring about {$product['title']} ({$defaultSize}).") }}" target="_blank" class="btn-default btn-whatsapp">
+                            <a href="https://wa.me/{{ $waClean }}?text={{ rawurlencode("Hello Raghuvir Atta, I am interested in inquiring about {$product['title']} ({$defaultSize}).") }}" target="_blank" class="btn-default btn-whatsapp" data-wa-clean="{{ $waClean }}">
                                 Chat On WhatsApp <i class="fa-brands fa-whatsapp" style="margin-left: 8px; font-size: 20px;"></i>
                             </a>
 
@@ -256,8 +273,9 @@
             // Update WhatsApp Button Link
             const whatsappBtn = card.querySelector('.btn-whatsapp');
             if (whatsappBtn) {
+                const waClean = whatsappBtn.getAttribute('data-wa-clean') || '919725427727';
                 const waMessage = `Hello Raghuvir Atta, I am interested in inquiring about ${productTitle} (${selectedSize}).`;
-                whatsappBtn.href = `https://wa.me/919725427727?text=${encodeURIComponent(waMessage)}`;
+                whatsappBtn.href = `https://wa.me/${waClean}?text=${encodeURIComponent(waMessage)}`;
             }
 
             // Update Request Inquiry Button Link

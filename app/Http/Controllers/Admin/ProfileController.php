@@ -1,0 +1,122 @@
+<?php
+
+namespace App\Http\Controllers\Admin;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules\Password;
+use Illuminate\View\View;
+
+class ProfileController extends Controller
+{
+    /**
+     * Show the profile settings form.
+     */
+    public function edit(): View
+    {
+        $user = Auth::user();
+
+        return view('admin.profile.edit', compact('user'));
+    }
+
+    /**
+     * Update basic personal information.
+     */
+    public function update(Request $request): RedirectResponse
+    {
+        $user = Auth::user();
+
+        $validated = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => [
+                'required',
+                'string',
+                'email',
+                'max:255',
+                Rule::unique('users', 'email')->ignore($user->id),
+            ],
+            'phone' => ['nullable', 'string', 'max:25'],
+        ]);
+
+        $user->name = $validated['name'];
+        $user->email = $validated['email'];
+        $user->phone = $validated['phone'];
+        $user->save();
+
+        return back()->with('success', 'Personal information updated successfully.');
+    }
+
+    /**
+     * Update account password.
+     */
+    public function updatePassword(Request $request): RedirectResponse
+    {
+        $validated = $request->validate([
+            'current_password' => ['required', 'current_password'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+        ], [
+            'current_password.current_password' => 'The provided current password does not match our records.',
+            'password.confirmed' => 'The new password confirmation does not match.',
+            'password.min' => 'The new password must be at least 8 characters long.',
+        ]);
+
+        $user = Auth::user();
+        $user->password = Hash::make($validated['password']);
+        $user->save();
+
+        return back()->with('success', 'Security password updated successfully.');
+    }
+
+    /**
+     * Upload or update profile avatar photo.
+     */
+    public function updateAvatar(Request $request): RedirectResponse
+    {
+        $request->validate([
+            'avatar' => ['required', 'image', 'mimes:jpeg,png,jpg,webp', 'max:2048'],
+        ], [
+            'avatar.required' => 'Please choose an image file to upload.',
+            'avatar.image' => 'The uploaded file must be a valid image.',
+            'avatar.mimes' => 'Avatar must be a file of type: jpeg, png, jpg, webp.',
+            'avatar.max' => 'Avatar size should not exceed 2MB.',
+        ]);
+
+        $user = Auth::user();
+
+        if ($request->hasFile('avatar')) {
+            // Delete old avatar if exists
+            if ($user->avatar && Storage::disk('public')->exists($user->avatar)) {
+                Storage::disk('public')->delete($user->avatar);
+            }
+
+            // Store new avatar in public/avatars
+            $path = $request->file('avatar')->store('avatars', 'public');
+            $user->avatar = $path;
+            $user->save();
+        }
+
+        return back()->with('success', 'Profile photo updated successfully.');
+    }
+
+    /**
+     * Remove the current profile avatar photo.
+     */
+    public function removeAvatar(): RedirectResponse
+    {
+        $user = Auth::user();
+
+        if ($user->avatar && Storage::disk('public')->exists($user->avatar)) {
+            Storage::disk('public')->delete($user->avatar);
+        }
+
+        $user->avatar = null;
+        $user->save();
+
+        return back()->with('info', 'Profile photo removed.');
+    }
+}

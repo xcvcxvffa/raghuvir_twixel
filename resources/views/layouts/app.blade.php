@@ -5,13 +5,13 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
-	<meta name="description" content="@yield('meta_description', '')">
-	<meta name="keywords" content="@yield('meta_keywords', '')">
-	<meta name="author" content="Awaiken">
+	<meta name="description" content="@yield('meta_description', setting('meta_description', 'Experience pure, traditional stone-ground chakki fresh atta from Raghuvir.'))">
+	<meta name="keywords" content="@yield('meta_keywords', setting('meta_keywords', 'raghuvir atta, whole wheat flour'))">
+	<meta name="author" content="{{ setting('site_title', 'Raghuvir Atta') }}">
 	<!-- Page Title -->
-    <title>@yield('title', 'Soilux - Agriculture & Organic Farm HTML Template')</title>
+    <title>@yield('title', setting('site_title', 'Raghuvir Atta - 100% Pure Sharbati Whole Wheat Flour'))</title>
 	<!-- Favicon Icon -->
-	<link rel="shortcut icon" type="image/x-icon" href="{{ asset('images/Raghuvir Favicon.png') }}">
+	<link rel="shortcut icon" type="image/x-icon" href="{{ setting_asset('site_favicon', 'images/Raghuvir Favicon.png') }}">
 	<!-- Google Fonts Css-->
 	<link rel="preconnect" href="https://fonts.googleapis.com/">
     <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
@@ -33,6 +33,9 @@
 	<!-- Main Custom Css -->
 	<link href="{{ asset('css/custom.css') }}?v={{ file_exists(public_path('css/custom.css')) ? filemtime(public_path('css/custom.css')) : time() }}" rel="stylesheet" media="screen">
 	@stack('styles')
+	@if(setting('custom_header_scripts'))
+		{!! setting('custom_header_scripts') !!}
+	@endif
 </head>
 
 <body>
@@ -101,18 +104,18 @@
     <!-- Scroll To Top Button -->
     <a href="#top" id="scroll-to-top" class="scroll-to-top" style="
         position: fixed;
-        bottom: 30px;
+        bottom: 98px;
         right: 30px;
-        width: 50px;
-        height: 50px;
+        width: 46px;
+        height: 46px;
         background-color: var(--accent-color);
         color: #ffffff;
         border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 20px;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        font-size: 18px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
         z-index: 999;
         opacity: 0;
         visibility: hidden;
@@ -145,5 +148,6 @@
             });
         });
     </script>
+
 </body>
 </html>

@@ -1,0 +1,630 @@
+/* ==========================================================================
+   Syndron UI Components - Custom Select & Material Calendar Date Picker
+   Matches exact designs from user reference images (Image 1 & Image 2)
+   Theme Color: Raghuvir Warm Saffron (#EF801C) & Dark Brown (#74583D)
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   0. Global Layout Overrides for Popups & Dropdowns
+   -------------------------------------------------------------------------- */
+/* Prevent parent cards or containers from clipping dropdown menus or datepickers */
+.card-syndron,
+.card-syndron-body,
+.card-syndron-header,
+.filter-card,
+.table-responsive-container {
+    overflow: visible !important;
+}
+
+.card-syndron.has-open-dropdown,
+.card-syndron:has(.syndron-select-wrapper.is-open),
+.card-syndron:focus-within {
+    z-index: 500 !important;
+    position: relative !important;
+}
+
+/* --------------------------------------------------------------------------
+   1. Modern Dropdown Select (Matching Image 2)
+   -------------------------------------------------------------------------- */
+.syndron-select-wrapper {
+    position: relative;
+    width: 100%;
+    user-select: none;
+}
+
+.syndron-select-wrapper.is-open {
+    z-index: 1000 !important;
+}
+
+.syndron-select-trigger {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    min-height: 40px;
+    padding: 0.55rem 0.95rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--foreground, #0f172a);
+    background-color: var(--card, #ffffff);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border: 1.5px solid var(--border, #e2e8f0);
+    border-radius: var(--radius-md, 10px);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    gap: 0.65rem;
+    box-sizing: border-box;
+}
+
+.syndron-select-trigger:hover {
+    border-color: var(--accent, #EF801C);
+}
+
+.syndron-select-wrapper.is-open .syndron-select-trigger,
+.syndron-select-trigger:focus {
+    border-color: var(--accent, #EF801C);
+    box-shadow: 0 0 0 3px rgba(239, 128, 28, 0.18);
+    outline: none;
+}
+
+.syndron-select-current {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    flex: 1;
+}
+
+.syndron-select-current .current-icon {
+    color: var(--accent, #EF801C);
+    font-size: 0.95rem;
+    flex-shrink: 0;
+}
+
+.syndron-select-chevron {
+    color: var(--muted-foreground, #64748b);
+    font-size: 0.75rem;
+    transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), color 0.15s;
+    flex-shrink: 0;
+}
+
+.syndron-select-wrapper.is-open .syndron-select-chevron {
+    transform: rotate(180deg);
+    color: var(--accent, #EF801C);
+}
+
+/* Dropdown Popup Menu (Image 2 Aesthetic) */
+.syndron-select-menu {
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+    min-width: 100%;
+    width: max-content;
+    max-width: 320px;
+    background: var(--popover, var(--card, #ffffff)) !important;
+    backdrop-filter: var(--glass-blur-lg) !important;
+    -webkit-backdrop-filter: var(--glass-blur-lg) !important;
+    border: 1px solid var(--border-glass, var(--border, #e2e8f0));
+    border-radius: 14px;
+    box-shadow: 0 20px 48px -6px rgba(0, 0, 0, 0.22), 0 8px 18px -4px rgba(0, 0, 0, 0.1) !important;
+    padding: 0.45rem;
+    z-index: 999999 !important;
+    max-height: 240px;
+    overflow-y: auto !important;
+    overflow-x: hidden;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-8px) scale(0.98);
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    scrollbar-width: thin;
+    scrollbar-color: #EF801C rgba(0, 0, 0, 0.04);
+}
+
+/* Dropup (when near bottom of screen) */
+.syndron-select-wrapper.is-dropup .syndron-select-menu {
+    top: auto;
+    bottom: calc(100% + 6px);
+    transform-origin: bottom center;
+    box-shadow: 0 -20px 48px -6px rgba(0, 0, 0, 0.22), 0 -8px 18px -4px rgba(0, 0, 0, 0.1) !important;
+    transform: translateY(8px) scale(0.98);
+}
+
+.syndron-select-wrapper.is-open .syndron-select-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+}
+
+/* Custom Themed Scrollbar for Dropdown Menu */
+.syndron-select-menu::-webkit-scrollbar {
+    width: 6px;
+}
+
+.syndron-select-menu::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.02);
+    border-radius: 9999px;
+    margin: 6px 0;
+}
+
+.syndron-select-menu::-webkit-scrollbar-thumb {
+    background: rgba(239, 128, 28, 0.45);
+    border-radius: 9999px;
+    transition: background 0.2s ease;
+}
+
+.syndron-select-menu::-webkit-scrollbar-thumb:hover {
+    background: #EF801C;
+}
+
+/* Individual Option Items */
+.syndron-select-option {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    padding: 0.7rem 1rem;
+    border-radius: 12px; /* Soft rounded pill */
+    cursor: pointer;
+    font-size: 0.885rem;
+    font-weight: 500;
+    color: var(--foreground, #1e293b);
+    transition: background-color 0.15s ease, color 0.15s ease, transform 0.1s ease;
+    user-select: none;
+}
+
+.syndron-select-option .option-icon {
+    font-size: 0.95rem;
+    color: var(--muted-foreground, #64748b);
+    width: 20px;
+    text-align: center;
+    flex-shrink: 0;
+    transition: color 0.15s ease, transform 0.15s ease;
+}
+
+.syndron-select-option:hover,
+.syndron-select-option.is-highlighted {
+    background: rgba(239, 128, 28, 0.12); /* Soft peach/saffron pill highlight */
+    color: #EF801C;
+}
+
+.syndron-select-option:hover .option-icon,
+.syndron-select-option.is-highlighted .option-icon {
+    color: #EF801C;
+    transform: scale(1.1);
+}
+
+.syndron-select-option .option-label {
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.syndron-select-option .option-check {
+    margin-left: auto;
+    font-size: 0.75rem;
+    color: #EF801C;
+    opacity: 0;
+    transform: scale(0.6);
+    transition: all 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.syndron-select-option.is-selected {
+    background: rgba(239, 128, 28, 0.15);
+    color: #EF801C;
+    font-weight: 700;
+}
+
+.syndron-select-option.is-selected .option-icon {
+    color: #EF801C;
+}
+
+.syndron-select-option.is-selected .option-check {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* Dark Mode Adaptation for Dropdown */
+html.dark .syndron-select-menu {
+    background: #181b1f;
+    border-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.45);
+    scrollbar-color: #EF801C rgba(255, 255, 255, 0.05);
+}
+
+html.dark .syndron-select-menu::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.04);
+}
+
+html.dark .syndron-select-option {
+    color: #e2e8f0;
+}
+
+html.dark .syndron-select-option:hover,
+html.dark .syndron-select-option.is-highlighted {
+    background: rgba(239, 128, 28, 0.2);
+    color: #ff9f43;
+}
+
+
+/* --------------------------------------------------------------------------
+   2. Modern Material Calendar Date Picker (Matching Image 1)
+   -------------------------------------------------------------------------- */
+.syndron-datepicker-input-wrapper {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.syndron-datepicker-trigger-btn {
+    position: absolute;
+    right: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: var(--accent, #EF801C);
+    cursor: pointer;
+    font-size: 0.95rem;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.15s, color 0.15s;
+}
+
+.syndron-datepicker-trigger-btn:hover {
+    color: #D86A05;
+    transform: translateY(-50%) scale(1.1);
+}
+
+/* Modal / Popover Card (Image 1 Aesthetic) */
+.syndron-datepicker-dialog {
+    position: absolute;
+    background: var(--card, #ffffff);
+    border: 1px solid var(--border, #e2e8f0);
+    border-radius: 24px; /* Big smooth rounded corners from Image 1 */
+    box-shadow: 0 24px 50px -10px rgba(0, 0, 0, 0.22), 0 10px 20px -5px rgba(0, 0, 0, 0.08);
+    width: 336px;
+    z-index: 1060;
+    overflow: hidden;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px) scale(0.96);
+    transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+    user-select: none;
+    font-family: inherit;
+}
+
+.syndron-datepicker-dialog.is-open {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+}
+
+/* Calendar Header (Image 1 Style) */
+.syndron-datepicker-header {
+    padding: 1.25rem 1.5rem 0.95rem;
+    background: var(--card, #ffffff);
+    border-bottom: 1px solid var(--border, #e2e8f0);
+}
+
+.syndron-datepicker-caption {
+    font-size: 0.775rem;
+    font-weight: 600;
+    color: var(--muted-foreground, #64748b);
+    text-transform: capitalize;
+    margin-bottom: 0.25rem;
+}
+
+.syndron-datepicker-display-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.syndron-datepicker-display-date {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--foreground, #0f172a);
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+}
+
+/* Functional Pencil Edit Icon */
+.syndron-datepicker-edit-icon {
+    font-size: 1.05rem;
+    color: #EF801C;
+    padding: 7px;
+    border-radius: 50%;
+    cursor: pointer;
+    background: rgba(239, 128, 28, 0.1);
+    transition: all 0.15s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+}
+
+.syndron-datepicker-edit-icon:hover {
+    background: #EF801C;
+    color: #ffffff;
+    transform: scale(1.08);
+}
+
+/* Manual Date Input Mode View */
+.syndron-datepicker-manual-view {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.syndron-manual-input-label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--muted-foreground, #64748b);
+    margin-bottom: 0.25rem;
+    display: block;
+}
+
+.syndron-manual-date-field {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1.5px solid #EF801C;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--foreground, #0f172a);
+    background: var(--card, #ffffff);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(239, 128, 28, 0.15);
+}
+
+.syndron-manual-hint {
+    font-size: 0.75rem;
+    color: var(--muted-foreground, #64748b);
+    line-height: 1.4;
+}
+
+/* Month Navigation Row */
+.syndron-datepicker-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.85rem 1.25rem 0.4rem;
+}
+
+.syndron-datepicker-month-label {
+    font-size: 0.925rem;
+    font-weight: 700;
+    color: var(--foreground, #0f172a);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 8px;
+    transition: background-color 0.15s;
+}
+
+.syndron-datepicker-month-label:hover {
+    background-color: rgba(239, 128, 28, 0.1);
+    color: #EF801C;
+}
+
+.syndron-datepicker-month-label i {
+    font-size: 0.7rem;
+    color: var(--muted-foreground);
+    transition: transform 0.2s ease;
+}
+
+.syndron-datepicker-nav-buttons {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+.syndron-datepicker-nav-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: none;
+    background: transparent;
+    color: var(--foreground, #1e293b);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: all 0.15s ease;
+}
+
+.syndron-datepicker-nav-btn:hover {
+    background-color: rgba(239, 128, 28, 0.12);
+    color: #EF801C;
+    transform: scale(1.05);
+}
+
+/* Day of Week Headers (S M T W T F S) */
+.syndron-datepicker-weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    text-align: center;
+    font-size: 0.775rem;
+    font-weight: 600;
+    color: var(--muted-foreground, #64748b);
+    padding: 0.35rem 1.15rem 0.25rem;
+}
+
+/* 42-Cell Days Grid */
+.syndron-datepicker-days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    padding: 0.25rem 1.15rem 0.75rem;
+    row-gap: 6px;
+}
+
+.syndron-datepicker-day {
+    width: 36px;
+    height: 36px;
+    margin: 0 auto;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.865rem;
+    font-weight: 500;
+    color: var(--foreground, #0f172a);
+    cursor: pointer;
+    transition: all 0.15s ease;
+    border: 1.5px solid transparent;
+}
+
+.syndron-datepicker-day:hover {
+    background-color: rgba(239, 128, 28, 0.12);
+    color: #EF801C;
+}
+
+/* Today Day: Circular Outline with Theme Color */
+.syndron-datepicker-day.is-today {
+    border-color: #EF801C !important;
+    color: #EF801C !important;
+    font-weight: 700;
+}
+
+/* Selected Day: Solid Filled Saffron Circle with Glow */
+.syndron-datepicker-day.is-selected {
+    background: linear-gradient(135deg, #EF801C 0%, #D86A05 100%) !important;
+    color: #ffffff !important;
+    font-weight: 700;
+    border-color: transparent !important;
+    box-shadow: 0 4px 14px rgba(239, 128, 28, 0.42);
+}
+
+/* Outside Month Day */
+.syndron-datepicker-day.is-outside {
+    color: var(--muted-foreground, #94a3b8);
+    opacity: 0.35;
+}
+
+/* Optional Time Picker Row for datetime-local */
+.syndron-datepicker-time-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.65rem 1.25rem;
+    background: var(--secondary, #f8fafc);
+    border-top: 1px solid var(--border, #e2e8f0);
+    border-bottom: 1px solid var(--border, #e2e8f0);
+    font-size: 0.85rem;
+}
+
+.syndron-time-input {
+    width: 44px;
+    text-align: center;
+    padding: 4px 6px;
+    border: 1px solid var(--border, #cbd5e1);
+    border-radius: 6px;
+    background: var(--card, #ffffff);
+    color: var(--foreground, #0f172a);
+    font-size: 0.9rem;
+    font-weight: 700;
+    outline: none;
+}
+
+.syndron-time-input:focus {
+    border-color: #EF801C;
+}
+
+.syndron-ampm-btn {
+    border: 1px solid var(--border, #cbd5e1);
+    background: var(--card, #ffffff);
+    color: var(--foreground, #0f172a);
+    padding: 4px 9px;
+    border-radius: 6px;
+    font-size: 0.775rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.syndron-ampm-btn.is-active {
+    background: #EF801C;
+    color: #ffffff;
+    border-color: #EF801C;
+    box-shadow: 0 2px 6px rgba(239, 128, 28, 0.3);
+}
+
+/* Action Buttons Footer (Cancel & OK in Image 1) */
+.syndron-datepicker-footer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.85rem;
+    padding: 0.75rem 1.5rem 1rem;
+    background: var(--card, #ffffff);
+}
+
+.syndron-datepicker-btn {
+    background: transparent;
+    border: none;
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: #EF801C; /* Theme Saffron Color */
+    cursor: pointer;
+    padding: 6px 14px;
+    border-radius: 8px;
+    transition: all 0.15s ease;
+}
+
+.syndron-datepicker-btn:hover {
+    background: rgba(239, 128, 28, 0.12);
+    color: #D86A05;
+}
+
+.syndron-datepicker-btn.btn-cancel {
+    color: #64748b;
+}
+
+.syndron-datepicker-btn.btn-cancel:hover {
+    background: var(--secondary, #f1f5f9);
+    color: #0f172a;
+}
+
+/* Dark Mode Adaptation for Datepicker */
+html.dark .syndron-datepicker-dialog {
+    background: #181b1f;
+    border-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 24px 50px rgba(0, 0, 0, 0.5);
+}
+
+html.dark .syndron-datepicker-header,
+html.dark .syndron-datepicker-footer {
+    background: #181b1f;
+    border-color: rgba(255, 255, 255, 0.08);
+}
+
+html.dark .syndron-datepicker-day:hover {
+    background-color: rgba(239, 128, 28, 0.2);
+}
+
+html.dark .syndron-datepicker-day.is-selected {
+    background: linear-gradient(135deg, #EF801C 0%, #D86A05 100%) !important;
+    box-shadow: 0 4px 14px rgba(239, 128, 28, 0.45);
+    color: #ffffff !important;
+}
+
+html.dark .syndron-datepicker-btn {
+    color: #ff9f43;
+}
+
+html.dark .syndron-datepicker-time-box {
+    background: #121417;
+    border-color: rgba(255, 255, 255, 0.08);
+}

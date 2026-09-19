@@ -9,21 +9,32 @@
                         <!-- Footer Header Content Start -->
                         <div class="footer-contact-info">
                             <div class="footer-logo">
-                                <img src="{{ asset('images/Raghuvir Logo White.png') }}" alt="" style="max-height: 80px; width: auto;">
+                                <img src="{{ setting_asset('footer_logo', 'images/Raghuvir Logo White.png') }}" alt="{{ setting('site_title', 'Raghuvir Atta') }}" style="max-height: 80px; width: auto;">
                             </div>
 
                             <!-- Section Title Start -->
                             <div class="footer-contact-info-content">
-                                <p>We are committed to sustainable farming, nurturing healthy soil, and providing pure, organic produce straight from our fields to your table.</p>
+                                <p>{{ setting('footer_about', 'We are committed to sustainable farming, nurturing healthy soil, and providing pure, organic produce straight from our fields to your table.') }}</p>
                             </div>
                             <!-- Section Title End -->
 
                             <div class="footer-social-links">
                                 <ul>
-                                    <li><a href="https://wa.me/919725427727?text={{ rawurlencode('Hello Raghuvir Atta, I would like to inquire about your products.') }}" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-whatsapp"></i>WhatsApp</a></li>
-                                    <li><a href="#"><i class="fa-brands fa-facebook-f"></i>Facebook</a></li>
-                                    <li><a href="#"><i class="fa-brands fa-instagram"></i>Instagram</a></li>
-                                    <li><a href="#"><i class="fa-brands fa-linkedin-in"></i>LinkedIn</a></li>
+                                    @if(setting('whatsapp_url'))
+                                        <li><a href="{{ setting('whatsapp_url') }}" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-whatsapp"></i>WhatsApp</a></li>
+                                    @endif
+                                    @if(setting('facebook_url'))
+                                        <li><a href="{{ setting('facebook_url') }}" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-facebook-f"></i>Facebook</a></li>
+                                    @endif
+                                    @if(setting('instagram_url'))
+                                        <li><a href="{{ setting('instagram_url') }}" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-instagram"></i>Instagram</a></li>
+                                    @endif
+                                    @if(setting('linkedin_url'))
+                                        <li><a href="{{ setting('linkedin_url') }}" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-linkedin-in"></i>LinkedIn</a></li>
+                                    @endif
+                                    @if(setting('youtube_url'))
+                                        <li><a href="{{ setting('youtube_url') }}" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-youtube"></i>YouTube</a></li>
+                                    @endif
                                 </ul>
                             </div>
                         </div>
@@ -52,9 +63,15 @@
                         <div class="footer-links">
                             <h3>Our Products</h3>
                             <ul>
-                                <li><a href="{{ route('product-details', ['product' => 'atta']) }}">Whole Wheat Atta</a></li>
-                                <li><a href="{{ route('product-details', ['product' => 'bati']) }}">Bati Atta</a></li>
-                                <li><a href="{{ route('product-details', ['product' => 'wheat']) }}">Wheat Bran</a></li>
+                                @if(isset($footerProducts) && $footerProducts->isNotEmpty())
+                                    @foreach($footerProducts as $fProd)
+                                        <li><a href="{{ route('product-details', ['product' => $fProd->slug]) }}">{{ $fProd->name }}</a></li>
+                                    @endforeach
+                                @else
+                                    <li><a href="{{ route('product-details', ['product' => 'atta']) }}">Whole Wheat Atta</a></li>
+                                    <li><a href="{{ route('product-details', ['product' => 'bati']) }}">Bati Atta</a></li>
+                                    <li><a href="{{ route('product-details', ['product' => 'wheat']) }}">Wheat Bran</a></li>
+                                @endif
                             </ul>
                         </div>
                         <!-- Footer Links End -->
@@ -63,9 +80,9 @@
                         <div class="footer-links footer-contact-list">
                             <h3>Contact Information</h3>
                             <ul>
-                                <li><span>Our Address:</span> Plot No 182, Vibrant Prime Industrial Park, kadadara, GIDC Area, Dehgam, Gandhinagar, Gujarat, 382305</li>
-                                <li><span>Customer Care : </span><a href="tel:+919725427727">+91 97254 27727</a></li>
-                                <li><span>Email Address : </span><a href="mailto:info@domainname.com">info@domainname.com</a></li>
+                                <li><span>Our Address:</span> {{ setting('company_address', 'Plot No 182, Vibrant Prime Industrial Park, kadadara, GIDC Area, Dehgam, Gandhinagar, Gujarat, 382305') }}</li>
+                                <li><span>Customer Care : </span><a href="tel:{{ preg_replace('/[^0-9+]/', '', setting('contact_phone', '+919725427727')) }}">{{ setting('contact_phone', '+91 97254 27727') }}</a></li>
+                                <li><span>Email Address : </span><a href="mailto:{{ setting('contact_email', 'info@raghuviratta.com') }}">{{ setting('contact_email', 'info@raghuviratta.com') }}</a></li>
                             </ul>                                                      
                         </div>
                         <!-- Footer Links End -->
@@ -74,7 +91,7 @@
 
                     <!-- Footer Copyright Text Start -->
                     <div class="footer-copyright-text">
-                        <p>Copyright &copy; 2025 Raghuvir Atta. All Rights Reserved. Designed &amp; Developed by <a href="https://twixel.media/" target="_blank" style="color: var(--accent-color); font-weight: 600;">Twixel Media</a></p>
+                        <p>{!! setting('copyright_text', 'Copyright &copy; 2025 Raghuvir Atta. All Rights Reserved. Designed &amp; Developed by <a href="https://twixel.media/" target="_blank" style="color: var(--accent-color); font-weight: 600;">Twixel Media</a>') !!}</p>
                     </div>
                     <!-- Footer Copyright Text End -->
                 </div>

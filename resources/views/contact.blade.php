@@ -62,7 +62,7 @@
                                 </div>
                                 <div class="contact-info-item-content">
                                     <h3>Phone Number</h3>
-                                    <p><a href="tel:+919725427727">+91 97254 27727</a></p>
+                                    <p><a href="tel:{{ preg_replace('/[^0-9+]/', '', setting('contact_phone', '+919725427727')) }}">{{ setting('contact_phone', '+91 97254 27727') }}</a></p>
                                 </div>
                             </div>
                             <!-- Contact Info Item End  -->
@@ -74,7 +74,7 @@
                                 </div>
                                 <div class="contact-info-item-content">
                                     <h3>Email Address</h3>
-                                    <p><a href="mailto:info@domainname.com">info@domainname.com</a></p>
+                                    <p><a href="mailto:{{ setting('contact_email', 'info@raghuviratta.com') }}">{{ setting('contact_email', 'info@raghuviratta.com') }}</a></p>
                                 </div>
                             </div>
                             <!-- Contact Info Item End  -->
@@ -160,7 +160,7 @@
                 <div class="col-lg-12">
                     <!-- Google Map Start -->
                     <div class="google-map-iframe wow fadeInUp" data-wow-delay="0.2s">
-                        <iframe src="https://maps.google.com/maps?q=Plot%20No%20182,%20Vibrant%20Prime%20Industrial%20Park,%20kadadara,%20GIDC%20Area,%20Dehgam,%20Gandhinagar,%20Gujarat,%20382305&t=&z=14&ie=UTF8&iwloc=&output=embed" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        <iframe src="{{ google_map_embed_url(setting('google_map_embed')) }}" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                     </div>
                     <!-- Google Map End -->
                 </div>

@@ -4,7 +4,7 @@
             <div class="container">
                 <!-- Logo Start -->
                 <a class="navbar-brand" href="{{ route('home') }}">
-                    <img src="{{ asset('images/Raghuvir Logo White.png') }}" alt="Logo" class="header-logo">
+                    <img src="{{ setting_asset('header_logo', 'images/Raghuvir Logo White.png') }}" alt="{{ setting('site_title', 'Raghuvir Atta') }}" class="header-logo">
                 </a>
                 <!-- Logo End -->
 
@@ -44,35 +44,49 @@
 
                                             <!-- Right 3-Col Product Cards Grid -->
                                             <div class="mega-products-grid">
-                                                <!-- Card 1: Whole Wheat Atta -->
-                                                <a href="{{ route('product-details', ['product' => 'atta']) }}" class="mega-product-item">
-                                                    <div class="mega-thumb-wrap">
-                                                        <img src="{{ asset('images/product_atta_transparent.png') }}" alt="Raghuvir Whole Wheat Atta">
-                                                    </div>
-                                                    <div class="mega-item-info">
-                                                        <h5>Whole Wheat Atta</h5>
-                                                    </div>
-                                                </a>
-
-                                                <!-- Card 2: Bati Atta -->
-                                                <a href="{{ route('product-details', ['product' => 'bati']) }}" class="mega-product-item">
-                                                    <div class="mega-thumb-wrap">
-                                                        <img src="{{ asset('images/product_atta_transparent.png') }}" alt="Raghuvir Bati Atta">
-                                                    </div>
-                                                    <div class="mega-item-info">
-                                                        <h5>Bati Atta</h5>
-                                                    </div>
-                                                </a>
-
-                                                <!-- Card 3: Wheat Bran -->
-                                                <a href="{{ route('product-details', ['product' => 'wheat']) }}" class="mega-product-item">
-                                                    <div class="mega-thumb-wrap">
-                                                        <img src="{{ asset('images/product_atta_transparent.png') }}" alt="Raghuvir Wheat Bran">
-                                                    </div>
-                                                    <div class="mega-item-info">
-                                                        <h5>Wheat Bran</h5>
-                                                    </div>
-                                                </a>
+                                                @php
+                                                    $megaMenuProducts = \App\Models\Product::active()
+                                                        ->orderBy('is_featured', 'desc')
+                                                        ->orderBy('sort_order', 'asc')
+                                                        ->take(3)
+                                                        ->get();
+                                                @endphp
+                                                @forelse($megaMenuProducts as $mProd)
+                                                    <a href="{{ route('product-details', ['product' => $mProd->slug]) }}" class="mega-product-item">
+                                                        <div class="mega-thumb-wrap">
+                                                            <img src="{{ $mProd->image_url }}" alt="Raghuvir {{ $mProd->name }}">
+                                                        </div>
+                                                        <div class="mega-item-info">
+                                                            <h5>{{ $mProd->name }}</h5>
+                                                        </div>
+                                                    </a>
+                                                @empty
+                                                    <!-- Default Fallback Cards -->
+                                                    <a href="{{ route('product-details', ['product' => 'whole-wheat-atta']) }}" class="mega-product-item">
+                                                        <div class="mega-thumb-wrap">
+                                                            <img src="{{ asset('images/product_atta_transparent.png') }}" alt="Raghuvir Whole Wheat Atta">
+                                                        </div>
+                                                        <div class="mega-item-info">
+                                                            <h5>Whole Wheat Atta</h5>
+                                                        </div>
+                                                    </a>
+                                                    <a href="{{ route('product-details', ['product' => 'bati']) }}" class="mega-product-item">
+                                                        <div class="mega-thumb-wrap">
+                                                            <img src="{{ asset('images/product_bati_transparent.png') }}" alt="Raghuvir Bati Atta">
+                                                        </div>
+                                                        <div class="mega-item-info">
+                                                            <h5>Bati Atta</h5>
+                                                        </div>
+                                                    </a>
+                                                    <a href="{{ route('product-details', ['product' => 'wheat']) }}" class="mega-product-item">
+                                                        <div class="mega-thumb-wrap">
+                                                            <img src="{{ asset('images/product_wheat_bran_transparent.png') }}" alt="Raghuvir Wheat Bran">
+                                                        </div>
+                                                        <div class="mega-item-info">
+                                                            <h5>Wheat Bran</h5>
+                                                        </div>
+                                                    </a>
+                                                @endforelse
                                             </div>
                                         </div>
 
