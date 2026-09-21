@@ -35,30 +35,6 @@
     </div>
 </div>
 
-{{-- Flash Alert --}}
-@if(session('success'))
-    <div class="gallery-alert gallery-alert-success" id="flashAlert" style="margin-bottom: 1.25rem; display: flex; align-items: center; gap: 0.75rem; padding: 1rem 1.25rem; border-radius: 12px; background: rgba(16, 185, 129, 0.12); border: 1px solid rgba(16, 185, 129, 0.25); color: #10b981;">
-        <i class="fa-solid fa-circle-check" style="font-size: 1.2rem;"></i>
-        <div><strong>Success:</strong> {{ session('success') }}</div>
-        <button type="button" onclick="this.parentElement.remove()" style="margin-left: auto; background: none; border: none; color: inherit; cursor: pointer;"><i class="fa-solid fa-xmark"></i></button>
-    </div>
-@endif
-
-@if(isset($errors) && $errors->any())
-    <div class="gallery-alert gallery-alert-error" style="margin-bottom: 1.25rem; display: flex; align-items: center; gap: 0.75rem; padding: 1rem 1.25rem; border-radius: 12px; background: rgba(239, 68, 68, 0.12); border: 1px solid rgba(239, 68, 68, 0.25); color: #ef4444;">
-        <i class="fa-solid fa-triangle-exclamation" style="font-size: 1.2rem;"></i>
-        <div>
-            <strong>Validation Error:</strong>
-            <ul style="margin: 0.25rem 0 0 1rem; padding: 0;">
-                @foreach($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-        <button type="button" onclick="this.parentElement.remove()" style="margin-left: auto; background: none; border: none; color: inherit; cursor: pointer;"><i class="fa-solid fa-xmark"></i></button>
-    </div>
-@endif
-
 {{-- ===== KPI METRICS ROW ===== --}}
 <div class="metrics-row" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin-bottom: 1.5rem;">
     <div class="metric-card" style="background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 1.25rem;">
@@ -233,9 +209,26 @@
                     </div>
 
                     @if($banner->subtitle)
-                        <p style="font-size: 0.8rem; color: var(--muted-foreground); margin: 0 0 1rem 0; line-height: 1.4;">
+                        <p style="font-size: 0.8rem; color: var(--muted-foreground); margin: 0 0 0.5rem 0; line-height: 1.4;">
                             {{ Str::limit($banner->subtitle, 85) }}
                         </p>
+                    @endif
+
+                    @if($banner->page_key === 'blog-single')
+                        <div style="margin-top: 0.5rem; margin-bottom: 0.5rem; padding: 0.45rem 0.7rem; background: rgba(14, 165, 233, 0.08); border: 1px dashed rgba(14, 165, 233, 0.25); border-radius: 8px; font-size: 0.74rem; color: var(--foreground); display: flex; align-items: center; justify-content: space-between; gap: 0.4rem;">
+                            <div>
+                                <i class="fa-solid fa-circle-info" style="color: #0284c7; margin-right: 3px;"></i>
+                                <span>Master banner for blog posts.</span>
+                            </div>
+                            <a href="{{ route('admin.blogs.index') }}" style="color: #0284c7; font-weight: 700; text-decoration: none; white-space: nowrap; font-size: 0.72rem; display: flex; align-items: center; gap: 3px;">
+                                <span>Per Article</span> <i class="fa-solid fa-arrow-right" style="font-size: 0.65rem;"></i>
+                            </a>
+                        </div>
+                    @elseif($banner->page_key === 'blog')
+                        <div style="margin-top: 0.5rem; margin-bottom: 0.5rem; padding: 0.45rem 0.7rem; background: rgba(239, 128, 28, 0.08); border: 1px dashed rgba(239, 128, 28, 0.25); border-radius: 8px; font-size: 0.74rem; color: var(--foreground);">
+                            <i class="fa-solid fa-newspaper" style="color: #EF801C; margin-right: 3px;"></i>
+                            <span>Main Blog Listing page (/blog) header banner.</span>
+                        </div>
                     @endif
                 </div>
 

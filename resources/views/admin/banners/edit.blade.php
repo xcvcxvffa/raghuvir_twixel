@@ -39,20 +39,6 @@
     </div>
 </div>
 
-@if(isset($errors) && $errors->any())
-    <div class="gallery-alert gallery-alert-error" style="margin-bottom: 1.25rem; display: flex; align-items: center; gap: 0.75rem; padding: 1rem 1.25rem; border-radius: 12px; background: rgba(239, 68, 68, 0.12); border: 1px solid rgba(239, 68, 68, 0.25); color: #ef4444;">
-        <i class="fa-solid fa-triangle-exclamation" style="font-size: 1.2rem;"></i>
-        <div>
-            <strong>Validation Error:</strong>
-            <ul style="margin: 0.25rem 0 0 1rem; padding: 0;">
-                @foreach($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    </div>
-@endif
-
 <div style="display: grid; grid-template-columns: 1fr 340px; gap: 1.5rem; align-items: start;">
     {{-- Main Form Card --}}
     <div style="background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 1.5rem;">

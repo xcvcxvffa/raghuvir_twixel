@@ -94,6 +94,7 @@ class BlogController extends Controller
             'tags' => 'nullable|string|max:255',
             'author_name' => 'nullable|string|max:100',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,webp,svg|max:5120',
+            'banner_image' => 'nullable|image|mimes:jpeg,png,jpg,webp,svg|max:5120',
             'image_alt' => 'nullable|string|max:255',
             'is_published' => 'nullable|boolean',
             'published_at' => 'nullable|date',
@@ -112,6 +113,11 @@ class BlogController extends Controller
         // Handle Image Upload with WebP Conversion
         if ($request->hasFile('image')) {
             $validated['image'] = $this->processAndStoreImage($request->file('image'));
+        }
+
+        // Handle Optional Custom Hero / Breadcrumb Banner Image
+        if ($request->hasFile('banner_image')) {
+            $validated['banner_image'] = $request->file('banner_image')->store('blogs/banners', 'public');
         }
 
         // Set default Image Alt Text for SEO if omitted
@@ -159,8 +165,10 @@ class BlogController extends Controller
             'tags' => 'nullable|string|max:255',
             'author_name' => 'nullable|string|max:100',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,webp,svg|max:5120',
+            'banner_image' => 'nullable|image|mimes:jpeg,png,jpg,webp,svg|max:5120',
             'image_alt' => 'nullable|string|max:255',
             'remove_image' => 'nullable|boolean',
+            'remove_banner_image' => 'nullable|boolean',
             'is_published' => 'nullable|boolean',
             'published_at' => 'nullable|date',
             'meta_title' => 'nullable|string|max:255',
@@ -187,6 +195,22 @@ class BlogController extends Controller
             $validated['image'] = $this->processAndStoreImage($request->file('image'));
         }
 
+        // Handle Breadcrumb Banner Image Deletion
+        if ($request->boolean('remove_banner_image')) {
+            if ($blog->banner_image && Storage::disk('public')->exists($blog->banner_image)) {
+                Storage::disk('public')->delete($blog->banner_image);
+            }
+            $validated['banner_image'] = null;
+        }
+
+        // Handle New Breadcrumb Banner Image Upload
+        if ($request->hasFile('banner_image')) {
+            if ($blog->banner_image && Storage::disk('public')->exists($blog->banner_image)) {
+                Storage::disk('public')->delete($blog->banner_image);
+            }
+            $validated['banner_image'] = $request->file('banner_image')->store('blogs/banners', 'public');
+        }
+
         // Set default Image Alt Text for SEO if omitted and image exists
         if (empty($validated['image_alt']) && ($blog->image || !empty($validated['image']))) {
             $validated['image_alt'] = $validated['title'];
@@ -203,7 +227,7 @@ class BlogController extends Controller
             $validated['author_name'] = $blog->author_name ?: (auth()->user()->name ?? 'Raghuvir Team');
         }
 
-        unset($validated['remove_image']);
+        unset($validated['remove_image'], $validated['remove_banner_image']);
         $blog->update($validated);
 
         return redirect()->route('admin.blogs.index')
@@ -260,6 +284,10 @@ class BlogController extends Controller
     {
         if ($blog->image && !Str::startsWith($blog->image, 'images/')) {
             Storage::disk('public')->delete($blog->image);
+        }
+
+        if ($blog->banner_image && Storage::disk('public')->exists($blog->banner_image)) {
+            Storage::disk('public')->delete($blog->banner_image);
         }
 
         $blog->delete();

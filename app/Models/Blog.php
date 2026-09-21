@@ -18,6 +18,7 @@ class Blog extends Model
         'excerpt',
         'content',
         'image',
+        'banner_image',
         'image_alt',
         'category',
         'tags',
@@ -91,6 +92,20 @@ class Blog extends Model
         }
 
         return asset('storage/' . ltrim($this->image, '/'));
+    }
+
+    /**
+     * Accessor for header breadcrumb banner image URL.
+     * If individual blog has a custom banner_image, use it.
+     * Otherwise fallback to global PageBanner::getImage('blog-single').
+     */
+    public function getBannerImageUrlAttribute(): string
+    {
+        if (!empty($this->banner_image) && \Illuminate\Support\Facades\Storage::disk('public')->exists($this->banner_image)) {
+            return asset('storage/' . $this->banner_image);
+        }
+
+        return \App\Models\PageBanner::getImage('blog-single');
     }
 
     /**
