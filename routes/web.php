@@ -40,6 +40,7 @@ use App\Http\Controllers\Admin\BlogController as AdminBlogController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Admin\LeadController as AdminLeadController;
 use App\Http\Controllers\Admin\GalleryController as AdminGalleryController;
+use App\Http\Controllers\Admin\PageBannerController as AdminPageBannerController;
 
 Route::prefix('admin')->name('admin.')->group(function () {
     // Guest Routes
@@ -73,6 +74,13 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::resource('galleries', AdminGalleryController::class)->except(['show']);
         Route::post('/galleries/{gallery}/toggle-status', [AdminGalleryController::class, 'toggleStatus'])->name('galleries.toggle-status');
         Route::post('/galleries/bulk-action', [AdminGalleryController::class, 'bulkAction'])->name('galleries.bulk-action');
+
+        // Page Banners & Breadcrumb Hero Management
+        Route::get('/banners', [AdminPageBannerController::class, 'index'])->name('banners.index');
+        Route::get('/banners/{banner}/edit', [AdminPageBannerController::class, 'edit'])->name('banners.edit');
+        Route::post('/banners/{banner}/update', [AdminPageBannerController::class, 'update'])->name('banners.update');
+        Route::post('/banners/{banner}/reset', [AdminPageBannerController::class, 'reset'])->name('banners.reset');
+        Route::post('/banners/quick-upload', [AdminPageBannerController::class, 'quickUpload'])->name('banners.quick-upload');
 
         // Profile & Account Settings
         Route::get('/profile', [AdminProfileController::class, 'edit'])->name('profile.edit');

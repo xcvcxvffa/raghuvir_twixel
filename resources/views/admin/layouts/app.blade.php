@@ -90,6 +90,13 @@
                             <span class="badge-tag" style="background: rgba(139, 92, 246, 0.15); color: #8b5cf6; font-weight: 700;">{{ \App\Models\Gallery::count() }}</span>
                         </a>
                     </li>
+                    <li class="sidebar-item {{ request()->routeIs('admin.banners.*') ? 'active' : '' }}">
+                        <a href="{{ route('admin.banners.index') }}" class="sidebar-link">
+                            <i class="fa-solid fa-panorama link-icon"></i>
+                            <span>Page Banners</span>
+                            <span class="badge-tag" style="background: rgba(14, 165, 233, 0.15); color: #0284c7; font-weight: 700;">{{ \App\Models\PageBanner::count() }}</span>
+                        </a>
+                    </li>
                 </ul>
 
                 <div class="sidebar-section-title">System & Settings</div>
@@ -239,7 +246,9 @@
 
             <!-- Main Content Area -->
             <main class="syndron-content">
-                @yield('content')
+                <div class="page-content-wrapper">
+                    @yield('content')
+                </div>
             </main>
 
             <!-- Footer -->
@@ -253,6 +262,9 @@
             </footer>
         </div>
     </div>
+
+    <!-- Mobile Sidebar Backdrop -->
+    <div class="syndron-backdrop" id="syndronBackdrop"></div>
 
     <!-- ===== COMMAND PALETTE SPOTLIGHT SEARCH MODAL (⌘K / Ctrl+K) ===== -->
     <div class="command-palette-backdrop" id="commandPaletteBackdrop">

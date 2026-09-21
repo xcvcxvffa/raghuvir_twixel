@@ -6,7 +6,7 @@
 <!-- Header End -->
 
     <!-- Page Header Section Start -->
-    <div class="page-header bg-section dark-section parallaxie">
+    <div class="page-header bg-section dark-section parallaxie" data-image="{{ \App\Models\PageBanner::getImage('team-details') }}" style="background-image: url('{{ \App\Models\PageBanner::getImage('team-details') }}') !important;">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">

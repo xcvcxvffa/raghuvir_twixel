@@ -90,7 +90,7 @@
 <!-- Header End -->
 
     <!-- Page Header Section Start -->
-    <div class="page-header bg-section dark-section parallaxie">
+    <div class="page-header bg-section dark-section parallaxie" data-image="{{ \App\Models\PageBanner::getImage('products') }}" style="background-image: url('{{ \App\Models\PageBanner::getImage('products') }}') !important;">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
