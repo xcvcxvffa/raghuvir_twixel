@@ -25,6 +25,7 @@ Route::get('/video-gallery', [PageController::class, 'videoGallery'])->name('vid
 Route::get('/faqs', [PageController::class, 'faqs'])->name('faqs');
 Route::get('/404', [PageController::class, 'pageNotFound'])->name('404');
 Route::get('/contact/{product?}/{size?}', [PageController::class, 'contact'])->name('contact');
+Route::post('/inquiry/submit', [PageController::class, 'submitInquiry'])->name('inquiry.submit');
 
 /*
 |--------------------------------------------------------------------------

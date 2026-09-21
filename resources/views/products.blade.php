@@ -139,7 +139,7 @@
                     'subtitle' => '100% Pure & Farm Fresh',
                     'sizes' => ['5kg', '30kg'],
                     'description' => 'Raghuvir Bati Atta is specially milled to the perfect texture for making delicious, authentic Batis. Ground from handpicked premium wheat grains, it ensures your Batis are crispy on the outside and soft on the inside.',
-                    'image' => 'images/product_atta_white.jpg',
+                    'image' => 'images/product_bati_transparent.png',
                 ],
                 [
                     'slug' => 'wheat',
@@ -210,8 +210,7 @@
                                                 transition: all 0.3s ease;
                                             " 
                                             data-size="{{ $size }}" 
-                                            data-product-title="{{ $product['title'] }}" 
-                                            data-contact-url="{{ route('contact') }}">
+                                            data-product-title="{{ $product['title'] }}">
                                         {{ $size }}
                                     </button>
                                 @endforeach
@@ -226,9 +225,12 @@
                                 $waClean = preg_replace('/[^0-9]/', '', $waRaw);
                             @endphp
                             <!-- Request Inquiry Button -->
-                            <a href="{{ route('contact', ['product' => $product['title'], 'size' => $defaultSize]) }}" class="btn-default btn-inquiry">
+                            <button type="button" class="btn-default btn-inquiry"
+                                onclick="openInquiryModal(this)"
+                                data-product="{{ $product['title'] }}"
+                                data-size="{{ $defaultSize }}">
                                 Request Inquiry <i class="fa-solid fa-paper-plane" style="margin-left: 8px;"></i>
-                            </a>
+                            </button>
                             
                             <!-- WhatsApp Button -->
                             <a href="https://wa.me/{{ $waClean }}?text={{ rawurlencode("Hello Raghuvir Atta, I am interested in inquiring about {$product['title']} ({$defaultSize}).") }}" target="_blank" class="btn-default btn-whatsapp" data-wa-clean="{{ $waClean }}">
@@ -268,7 +270,6 @@
 
             const selectedSize = element.getAttribute('data-size');
             const productTitle = element.getAttribute('data-product-title');
-            const contactBaseUrl = element.getAttribute('data-contact-url');
 
             // Update WhatsApp Button Link
             const whatsappBtn = card.querySelector('.btn-whatsapp');
@@ -278,11 +279,27 @@
                 whatsappBtn.href = `https://wa.me/${waClean}?text=${encodeURIComponent(waMessage)}`;
             }
 
-            // Update Request Inquiry Button Link
+            // Update Inquiry Button product/size data
             const inquiryBtn = card.querySelector('.btn-inquiry');
-            if (inquiryBtn && contactBaseUrl) {
-                inquiryBtn.href = `${contactBaseUrl}/${encodeURIComponent(productTitle)}/${encodeURIComponent(selectedSize)}`;
+            if (inquiryBtn) {
+                inquiryBtn.setAttribute('data-product', productTitle);
+                inquiryBtn.setAttribute('data-size', selectedSize);
             }
+        }
+
+        function openInquiryModal(btn) {
+            const product = btn.getAttribute('data-product') || '';
+            const size    = btn.getAttribute('data-size')    || '';
+            document.getElementById('inq-product').value = product;
+            document.getElementById('inq-size').value    = size;
+            document.getElementById('inq-product-label').textContent = product ? `${product}${size ? ' — ' + size : ''}` : '';
+            document.getElementById('inquiryModal').classList.add('inq-open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeInquiryModal() {
+            document.getElementById('inquiryModal').classList.remove('inq-open');
+            document.body.style.overflow = '';
         }
     </script>
 @endsection

@@ -150,4 +150,354 @@
     </script>
 
 </body>
+
+{{-- ════════════════════════════════════════════════════════════════
+     Product Inquiry Popup Modal — globally available on every page
+     ════════════════════════════════════════════════════════════════ --}}
+<div id="inquiryModal" class="inq-backdrop" onclick="handleInquiryBackdropClick(event)" role="dialog" aria-modal="true" aria-labelledby="inqModalTitle">
+    <div class="inq-dialog">
+
+        {{-- Close Button --}}
+        <button type="button" class="inq-close-btn" onclick="closeInquiryModal()" aria-label="Close">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+
+        {{-- Header --}}
+        <div class="inq-header">
+            <div class="inq-header-icon">
+                <i class="fa-solid fa-paper-plane"></i>
+            </div>
+            <div>
+                <h2 class="inq-title" id="inqModalTitle">Request an Inquiry</h2>
+                <p class="inq-subtitle" id="inq-product-label">Fill in the details and we'll get back to you shortly.</p>
+            </div>
+        </div>
+
+        {{-- Form --}}
+        <form id="inquiryForm" class="inq-form" onsubmit="submitInquiryForm(event)">
+            @csrf
+            <input type="hidden" name="product_interest" id="inq-product">
+            <input type="hidden" name="quantity"         id="inq-size">
+
+            <div class="inq-row">
+                <div class="inq-field">
+                    <label class="inq-label" for="inq-name">Full Name <span class="inq-req">*</span></label>
+                    <input type="text" id="inq-name" name="name" class="inq-input" placeholder="Your full name" required autocomplete="name">
+                </div>
+                <div class="inq-field">
+                    <label class="inq-label" for="inq-phone">Phone Number <span class="inq-req">*</span></label>
+                    <input type="tel" id="inq-phone" name="phone" class="inq-input" placeholder="+91 XXXXX XXXXX" required autocomplete="tel">
+                </div>
+            </div>
+
+            <div class="inq-field">
+                <label class="inq-label" for="inq-email">Email Address <span style="font-weight:400; color:#94a3b8; font-size:0.75rem;">(optional)</span></label>
+                <input type="email" id="inq-email" name="email" class="inq-input" placeholder="you@example.com" autocomplete="email">
+            </div>
+
+            <div class="inq-field">
+                <label class="inq-label" for="inq-message">Message <span style="font-weight:400; color:#94a3b8; font-size:0.75rem;">(optional)</span></label>
+                <textarea id="inq-message" name="message" class="inq-input inq-textarea" rows="3" placeholder="Any additional details or questions…"></textarea>
+            </div>
+
+            {{-- Error area --}}
+            <div class="inq-error-box" id="inq-error-box" style="display:none;"></div>
+
+            <button type="submit" class="inq-submit-btn" id="inq-submit-btn">
+                <span id="inq-btn-text"><i class="fa-solid fa-paper-plane" style="margin-right:8px;"></i>Send Inquiry</span>
+                <span id="inq-btn-loader" style="display:none;">
+                    <svg class="inq-spinner" viewBox="0 0 50 50"><circle cx="25" cy="25" r="20" fill="none" stroke="currentColor" stroke-width="5"/></svg>
+                    Sending…
+                </span>
+            </button>
+        </form>
+
+        {{-- Success State --}}
+        <div id="inq-success" class="inq-success" style="display:none;">
+            <div class="inq-success-icon">
+                <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <h3 class="inq-success-title">Inquiry Sent!</h3>
+            <p class="inq-success-desc">Thank you! We've received your inquiry and will contact you shortly.</p>
+            <button type="button" class="inq-close-success-btn" onclick="closeInquiryModal()">Close</button>
+        </div>
+
+    </div>
+</div>
+
+<style>
+/* ── Inquiry Modal ─────────────────────────────────────────────────────────── */
+.inq-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: rgba(10, 18, 36, 0.55);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.25s ease, visibility 0.25s ease;
+}
+.inq-backdrop.inq-open {
+    opacity: 1;
+    visibility: visible;
+}
+.inq-dialog {
+    position: relative;
+    background: #ffffff;
+    border-radius: 20px;
+    width: 100%;
+    max-width: 520px;
+    padding: 32px 32px 28px;
+    box-shadow: 0 25px 60px rgba(0,0,0,0.18), 0 8px 20px rgba(0,0,0,0.1);
+    transform: translateY(20px) scale(0.97);
+    transition: transform 0.3s cubic-bezier(.34,1.56,.64,1);
+}
+.inq-backdrop.inq-open .inq-dialog {
+    transform: translateY(0) scale(1);
+}
+.inq-close-btn {
+    position: absolute;
+    top: 16px; right: 16px;
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    background: #f1f5f9;
+    border: none;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    color: #64748b;
+    transition: background 0.2s, color 0.2s;
+}
+.inq-close-btn:hover { background: #e2e8f0; color: #1e293b; }
+
+/* Header */
+.inq-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    margin-bottom: 24px;
+}
+.inq-header-icon {
+    width: 48px; height: 48px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #EF801C 0%, #f97316 100%);
+    color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+    box-shadow: 0 6px 16px rgba(239,128,28,0.35);
+}
+.inq-title {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0 0 3px;
+    line-height: 1.25;
+}
+.inq-subtitle {
+    font-size: 0.82rem;
+    color: #64748b;
+    margin: 0;
+    font-weight: 500;
+}
+
+/* Form */
+.inq-form { display: flex; flex-direction: column; gap: 16px; }
+.inq-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.inq-field { display: flex; flex-direction: column; gap: 6px; }
+.inq-label {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: #1e293b;
+}
+.inq-req { color: #ef4444; }
+.inq-input {
+    width: 100%;
+    padding: 11px 14px;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 10px;
+    font-size: 0.88rem;
+    color: #1e293b;
+    background: #f8fafc;
+    font-family: inherit;
+    transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+    outline: none;
+    box-sizing: border-box;
+}
+.inq-input:focus {
+    border-color: #EF801C;
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(239,128,28,0.12);
+}
+.inq-textarea { resize: vertical; min-height: 80px; }
+
+/* Error */
+.inq-error-box {
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-size: 0.82rem;
+    color: #b91c1c;
+}
+
+/* Submit */
+.inq-submit-btn {
+    width: 100%;
+    padding: 14px 20px;
+    background: linear-gradient(135deg, #EF801C 0%, #f97316 100%);
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 6px 20px rgba(239,128,28,0.35);
+    margin-top: 4px;
+}
+.inq-submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 28px rgba(239,128,28,0.45);
+}
+.inq-submit-btn:active { transform: translateY(0); }
+.inq-submit-btn:disabled { opacity: 0.65; cursor: not-allowed; transform: none; }
+
+/* Spinner */
+.inq-spinner {
+    width: 18px; height: 18px;
+    animation: inq-spin 0.9s linear infinite;
+    stroke-dasharray: 80;
+    stroke-dashoffset: 60;
+}
+@keyframes inq-spin { to { transform: rotate(360deg); } }
+
+/* Success */
+.inq-success {
+    display: flex; flex-direction: column; align-items: center;
+    gap: 10px; text-align: center; padding: 20px 0 8px;
+}
+.inq-success-icon {
+    width: 72px; height: 72px;
+    border-radius: 50%;
+    background: #d1fae5;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 6px;
+}
+.inq-success-title {
+    font-size: 1.35rem; font-weight: 800; color: #0f172a; margin: 0;
+}
+.inq-success-desc {
+    font-size: 0.88rem; color: #475569; margin: 0; line-height: 1.55;
+}
+.inq-close-success-btn {
+    margin-top: 10px;
+    padding: 12px 36px;
+    background: linear-gradient(135deg, #EF801C 0%, #f97316 100%);
+    color: #fff; border: none; border-radius: 12px;
+    font-size: 0.95rem; font-weight: 700; cursor: pointer;
+    box-shadow: 0 6px 18px rgba(239,128,28,0.3);
+    transition: transform 0.2s;
+}
+.inq-close-success-btn:hover { transform: translateY(-2px); }
+
+/* Mobile */
+@media (max-width: 560px) {
+    .inq-dialog { padding: 24px 20px 22px; border-radius: 16px; }
+    .inq-row { grid-template-columns: 1fr; }
+    .inq-title { font-size: 1.1rem; }
+}
+</style>
+
+<script>
+(function () {
+    /* Open / close helpers */
+    window.openInquiryModal = function (btn) {
+        const product = btn ? (btn.getAttribute('data-product') || '') : '';
+        const size    = btn ? (btn.getAttribute('data-size')    || '') : '';
+        document.getElementById('inq-product').value = product;
+        document.getElementById('inq-size').value    = size;
+        document.getElementById('inq-product-label').textContent =
+            product ? (product + (size ? ' \u2014 ' + size : '')) : 'Fill in the details and we\u2019ll get back to you shortly.';
+        // Reset form state
+        const modal = document.getElementById('inquiryModal');
+        document.getElementById('inquiryForm').style.display  = 'flex';
+        document.getElementById('inq-success').style.display  = 'none';
+        document.getElementById('inq-error-box').style.display = 'none';
+        document.getElementById('inquiryForm').reset();
+        // Restore hidden fields after reset
+        document.getElementById('inq-product').value = product;
+        document.getElementById('inq-size').value    = size;
+        modal.classList.add('inq-open');
+        document.body.style.overflow = 'hidden';
+        setTimeout(function() { document.getElementById('inq-name').focus(); }, 300);
+    };
+
+    window.closeInquiryModal = function () {
+        document.getElementById('inquiryModal').classList.remove('inq-open');
+        document.body.style.overflow = '';
+    };
+
+    window.handleInquiryBackdropClick = function (e) {
+        if (e.target === document.getElementById('inquiryModal')) {
+            closeInquiryModal();
+        }
+    };
+
+    /* ESC key closes modal */
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') { closeInquiryModal(); }
+    });
+
+    /* AJAX form submit */
+    window.submitInquiryForm = function (e) {
+        e.preventDefault();
+        const form    = document.getElementById('inquiryForm');
+        const submitBtn = document.getElementById('inq-submit-btn');
+        const btnText   = document.getElementById('inq-btn-text');
+        const btnLoader = document.getElementById('inq-btn-loader');
+        const errorBox  = document.getElementById('inq-error-box');
+
+        // Loading state
+        submitBtn.disabled = true;
+        btnText.style.display  = 'none';
+        btnLoader.style.display = 'flex';
+        errorBox.style.display  = 'none';
+
+        const data = new FormData(form);
+
+        fetch('{{ route("inquiry.submit") }}', {
+            method: 'POST',
+            headers: { 'X-Requested-With': 'XMLHttpRequest', 'Accept': 'application/json' },
+            body: data
+        })
+        .then(function (res) { return res.json(); })
+        .then(function (json) {
+            if (json.success) {
+                form.style.display = 'none';
+                document.getElementById('inq-success').style.display = 'flex';
+            } else {
+                errorBox.textContent = json.message || 'Something went wrong. Please try again.';
+                errorBox.style.display = 'block';
+                submitBtn.disabled = false;
+                btnText.style.display  = 'flex';
+                btnLoader.style.display = 'none';
+            }
+        })
+        .catch(function () {
+            errorBox.textContent = 'Network error. Please check your connection and try again.';
+            errorBox.style.display = 'block';
+            submitBtn.disabled = false;
+            btnText.style.display  = 'flex';
+            btnLoader.style.display = 'none';
+        });
+    };
+}());
+</script>
+
 </html>

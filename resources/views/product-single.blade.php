@@ -695,9 +695,12 @@
                             @endphp
                             <div class="inquiry-buttons" style="display: flex; gap: 15px; align-items: center; flex-wrap: wrap; margin-top: 25px;">
                                 <!-- Request Inquiry Button -->
-                                <a id="inquiry-btn" href="{{ route('contact', ['product' => $title, 'size' => $default_size]) }}" class="btn-default btn-inquiry">
+                                <button type="button" id="inquiry-btn" class="btn-default btn-inquiry"
+                                    onclick="openInquiryModal(this)"
+                                    data-product="{{ $title }}"
+                                    data-size="{{ $default_size }}">
                                     Request Inquiry <i class="fa-solid fa-paper-plane" style="margin-left: 8px;"></i>
-                                </a>
+                                </button>
                                 
                                 <!-- WhatsApp Button -->
                                 <a id="whatsapp-btn" href="https://wa.me/{{ $waNumberClean }}?text={{ rawurlencode("Hello Raghuvir Atta, I am interested in inquiring about {$title} ({$default_size}).") }}" target="_blank" class="btn-default btn-whatsapp">
@@ -728,11 +731,13 @@
                                     const whatsappBtn = document.getElementById('whatsapp-btn');
                                     const waMessage = `Hello Raghuvir Atta, I am interested in inquiring about ${productTitle} (${selectedSize}).`;
                                     whatsappBtn.href = `https://wa.me/${waNumber}?text=${encodeURIComponent(waMessage)}`;
-                                    
-                                    // Update Request Inquiry Button Link
+
+                                    // Update Inquiry Button product/size data
                                     const inquiryBtn = document.getElementById('inquiry-btn');
-                                    const contactBaseUrl = @json(route('contact'));
-                                    inquiryBtn.href = `${contactBaseUrl}/${encodeURIComponent(productTitle)}/${encodeURIComponent(selectedSize)}`;
+                                    if (inquiryBtn) {
+                                        inquiryBtn.setAttribute('data-product', productTitle);
+                                        inquiryBtn.setAttribute('data-size', selectedSize);
+                                    }
                                 }
 
                                 @php

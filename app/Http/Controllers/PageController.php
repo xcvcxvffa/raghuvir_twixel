@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Blog;
+use App\Models\Lead;
 use Illuminate\Http\Request;
 
 class PageController extends Controller
@@ -323,5 +324,39 @@ class PageController extends Controller
     public function contact($product = null, $size = null)
     {
         return view('contact', compact('product', 'size'));
+    }
+
+    /**
+     * Handle product inquiry popup form submission.
+     */
+    public function submitInquiry(Request $request)
+    {
+        $validated = $request->validate([
+            'name'             => ['required', 'string', 'max:120'],
+            'phone'            => ['required', 'string', 'max:30'],
+            'email'            => ['nullable', 'email', 'max:191'],
+            'product_interest' => ['nullable', 'string', 'max:255'],
+            'quantity'         => ['nullable', 'string', 'max:100'],
+            'message'          => ['nullable', 'string', 'max:1000'],
+        ]);
+
+        Lead::create([
+            'name'             => $validated['name'],
+            'phone'            => $validated['phone'],
+            'email'            => $validated['email'] ?? null,
+            'product_interest' => $validated['product_interest'] ?? null,
+            'quantity'         => $validated['quantity'] ?? null,
+            'message'          => $validated['message'] ?? null,
+            'source'           => 'product_inquiry_popup',
+            'status'           => 'new',
+            'ip_address'       => $request->ip(),
+            'user_agent'       => $request->userAgent(),
+        ]);
+
+        if ($request->expectsJson()) {
+            return response()->json(['success' => true, 'message' => 'Thank you! Your inquiry has been submitted. We will contact you shortly.']);
+        }
+
+        return back()->with('success', 'Thank you! Your inquiry has been submitted.');
     }
 }
