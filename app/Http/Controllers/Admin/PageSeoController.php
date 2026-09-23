@@ -8,16 +8,37 @@ use App\Models\Product;
 use App\Models\Blog;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class PageSeoController extends Controller
 {
     /**
+     * Ensure the page_seos database table exists, auto-migrating if needed.
+     */
+    protected function ensureTableExists(): void
+    {
+        if (!Schema::hasTable('page_seos')) {
+            try {
+                Artisan::call('migrate', ['--force' => true]);
+                if (class_exists(\Database\Seeders\PageSeoSeeder::class)) {
+                    Artisan::call('db:seed', ['--class' => 'PageSeoSeeder', '--force' => true]);
+                }
+            } catch (\Throwable $e) {
+                // Silently continue
+            }
+        }
+    }
+
+    /**
      * Display listing of all page SEO configurations.
      */
     public function index(Request $request): View
     {
+        $this->ensureTableExists();
+
         $query = PageSeo::query();
 
         if ($request->filled('search')) {

@@ -6,11 +6,27 @@ use App\Http\Controllers\Controller;
 use App\Models\PageBanner;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class PageBannerController extends Controller
 {
+    /**
+     * Ensure the page_banners database table exists, auto-migrating if needed.
+     */
+    protected function ensureTableExists(): void
+    {
+        if (!Schema::hasTable('page_banners')) {
+            try {
+                Artisan::call('migrate', ['--force' => true]);
+            } catch (\Throwable $e) {
+                // Silently continue
+            }
+        }
+    }
+
     /**
      * Recommended banner image specifications.
      */
@@ -29,6 +45,8 @@ class PageBannerController extends Controller
      */
     public function index(Request $request): View
     {
+        $this->ensureTableExists();
+
         $query = PageBanner::query();
 
         if ($request->filled('search')) {

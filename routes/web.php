@@ -102,5 +102,25 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/settings', [AdminSettingController::class, 'index'])->name('settings.index');
         Route::post('/settings', [AdminSettingController::class, 'update'])->name('settings.update');
         Route::post('/settings/resolve-map', [AdminSettingController::class, 'resolveMap'])->name('settings.resolve-map');
+
+        // Database Migrations & Optimization Runner
+        Route::get('/migrate', function () {
+            try {
+                \Illuminate\Support\Facades\Artisan::call('migrate', ['--force' => true]);
+                $output = \Illuminate\Support\Facades\Artisan::output();
+
+                if (class_exists(\Database\Seeders\PageSeoSeeder::class)) {
+                    \Illuminate\Support\Facades\Artisan::call('db:seed', ['--class' => 'PageSeoSeeder', '--force' => true]);
+                    $output .= "\n" . \Illuminate\Support\Facades\Artisan::output();
+                }
+
+                \Illuminate\Support\Facades\Artisan::call('optimize:clear');
+                $output .= "\n" . \Illuminate\Support\Facades\Artisan::output();
+
+                return response("<html><body style='background:#0f172a;color:#10b981;font-family:sans-serif;padding:30px;line-height:1.6;'><div style='max-width:800px;margin:0 auto;'><h2 style='color:#10b981;'>✅ Migrations & Tables Updated Successfully!</h2><pre style='background:#1e293b;padding:20px;border-radius:8px;color:#94a3b8;font-family:monospace;white-space:pre-wrap;'>" . htmlspecialchars($output) . "</pre><div style='margin-top:20px;'><a href='/admin/seo' style='display:inline-block;padding:12px 24px;background:#ef801c;color:#fff;text-decoration:none;border-radius:6px;font-weight:bold;'>Go to Page SEO</a> <a href='/admin/dashboard' style='display:inline-block;padding:12px 24px;background:#334155;color:#fff;text-decoration:none;border-radius:6px;font-weight:bold;margin-left:10px;'>Back to Dashboard</a></div></div></body></html>");
+            } catch (\Throwable $e) {
+                return response("<html><body style='background:#0f172a;color:#ef4444;font-family:sans-serif;padding:30px;'><div style='max-width:800px;margin:0 auto;'><h2 style='color:#ef4444;'>❌ Migration Error</h2><pre style='background:#1e293b;padding:20px;border-radius:8px;color:#f87171;font-family:monospace;white-space:pre-wrap;'>" . htmlspecialchars($e->getMessage()) . "</pre></div></body></html>", 500);
+            }
+        })->name('migrate');
     });
 });
