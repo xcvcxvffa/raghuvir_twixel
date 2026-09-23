@@ -909,7 +909,7 @@ header.main-header .header-sticky.active {
 	transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1) !important;
 	text-decoration: none !important;
 	cursor: pointer !important;
-	overflow: hidden !important;
+	overflow: visible !important;
 	box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03) !important;
 }
 
@@ -925,41 +925,40 @@ header.main-header .header-sticky.active {
 
 .mega-thumb-wrap {
 	width: 100%;
-	height: 180px;
+	height: 175px;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	margin: 0 0 12px 0;
 	background: radial-gradient(circle at 50% 50%, rgba(239, 128, 28, 0.08) 0%, rgba(254, 250, 245, 0.7) 60%, rgba(255, 255, 255, 0) 100%);
 	border-radius: 16px !important;
-	padding: 6px;
+	padding: 8px 6px 4px;
 	box-sizing: border-box;
-	overflow: visible;
+	overflow: visible !important;
 }
 
 .mega-thumb-wrap img {
-	height: 100%;
-	max-height: 168px;
+	max-height: 154px;
 	width: auto;
-	max-width: 96%;
+	max-width: 95%;
 	object-fit: contain;
 	filter: drop-shadow(0 12px 22px rgba(0, 0, 0, 0.13));
-	transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), filter 0.35s ease;
+	transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1), filter 0.32s ease;
 }
 
 .main-menu ul li .mega-product-item:hover .mega-thumb-wrap img,
 .mega-product-item:hover .mega-thumb-wrap img {
-	transform: translateY(-6px) scale(1.06);
+	transform: translateY(-3px) scale(1.04);
 	filter: drop-shadow(0 16px 26px rgba(239, 128, 28, 0.24));
 }
 
-/* Bati Atta Image visual balance enhancement */
+/* Bati Atta Image visual balance & no-clip hover */
 .mega-thumb-wrap img.img-scale-bati,
 .mega-thumb-wrap.mega-thumb-bati img,
 .mega-item-bati .mega-thumb-wrap img,
 .mega-thumb-wrap img[alt*="Bati"],
 .mega-thumb-wrap img[src*="bati"] {
-	transform: scale(1.18);
+	transform: scale(1.08);
 	transform-origin: center center;
 }
 
@@ -971,8 +970,8 @@ header.main-header .header-sticky.active {
 .mega-item-bati:hover .mega-thumb-wrap img,
 .mega-product-item:hover .mega-thumb-wrap img[alt*="Bati"],
 .mega-product-item:hover .mega-thumb-wrap img[src*="bati"] {
-	transform: translateY(-6px) scale(1.26);
-	filter: drop-shadow(0 18px 28px rgba(239, 128, 28, 0.26));
+	transform: translateY(-2px) scale(1.12);
+	filter: drop-shadow(0 16px 24px rgba(239, 128, 28, 0.22));
 }
 
 .mega-item-info {
