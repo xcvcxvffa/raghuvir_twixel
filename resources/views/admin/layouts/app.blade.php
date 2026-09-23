@@ -60,7 +60,7 @@
                         <a href="{{ route('admin.products.index') }}" class="sidebar-link">
                             <i class="fa-solid fa-boxes-stacked link-icon"></i>
                             <span>Our Products</span>
-                            <span class="badge-tag" style="background: rgba(239, 128, 28, 0.15); color: #EF801C; font-weight: 700;">{{ \App\Models\Product::count() }}</span>
+                            <span class="badge-tag" style="background: rgba(239, 128, 28, 0.15); color: #EF801C; font-weight: 700;">{{ rescue(fn () => \App\Models\Product::count(), 0, false) }}</span>
                         </a>
                     </li>
                     <li class="sidebar-item {{ request()->routeIs('admin.leads.*') ? 'active' : '' }}">
@@ -68,12 +68,13 @@
                             <i class="fa-solid fa-envelope-open-text link-icon"></i>
                             <span>Inquiries &amp; Leads</span>
                             @php
-                                $newLeadsCount = \App\Models\Lead::where('status', 'new')->count();
+                                $newLeadsCount = rescue(fn () => \App\Models\Lead::where('status', 'new')->count(), 0, false);
+                                $totalLeadsCount = rescue(fn () => \App\Models\Lead::count(), 0, false);
                             @endphp
                             @if($newLeadsCount > 0)
                                 <span class="badge-tag" style="background: rgba(239, 68, 68, 0.15); color: #ef4444; font-weight: 700;">{{ $newLeadsCount }} New</span>
                             @else
-                                <span class="badge-tag">{{ \App\Models\Lead::count() }}</span>
+                                <span class="badge-tag">{{ $totalLeadsCount }}</span>
                             @endif
                         </a>
                     </li>
@@ -87,21 +88,21 @@
                         <a href="{{ route('admin.galleries.index') }}" class="sidebar-link">
                             <i class="fa-solid fa-photo-film link-icon"></i>
                             <span>Media Gallery</span>
-                            <span class="badge-tag" style="background: rgba(139, 92, 246, 0.15); color: #8b5cf6; font-weight: 700;">{{ \App\Models\Gallery::count() }}</span>
+                            <span class="badge-tag" style="background: rgba(139, 92, 246, 0.15); color: #8b5cf6; font-weight: 700;">{{ rescue(fn () => \App\Models\Gallery::count(), 0, false) }}</span>
                         </a>
                     </li>
                     <li class="sidebar-item {{ request()->routeIs('admin.banners.*') ? 'active' : '' }}">
                         <a href="{{ route('admin.banners.index') }}" class="sidebar-link">
                             <i class="fa-solid fa-panorama link-icon"></i>
                             <span>Page Banners</span>
-                            <span class="badge-tag" style="background: rgba(14, 165, 233, 0.15); color: #0284c7; font-weight: 700;">{{ \App\Models\PageBanner::count() }}</span>
+                            <span class="badge-tag" style="background: rgba(14, 165, 233, 0.15); color: #0284c7; font-weight: 700;">{{ rescue(fn () => \App\Models\PageBanner::count(), 0, false) }}</span>
                         </a>
                     </li>
                     <li class="sidebar-item {{ request()->routeIs('admin.seo.*') ? 'active' : '' }}">
                         <a href="{{ route('admin.seo.index') }}" class="sidebar-link">
                             <i class="fa-solid fa-magnifying-glass-chart link-icon"></i>
                             <span>Page SEO</span>
-                            <span class="badge-tag" style="background: rgba(16, 185, 129, 0.15); color: #059669; font-weight: 700;">{{ \App\Models\PageSeo::count() }}</span>
+                            <span class="badge-tag" style="background: rgba(16, 185, 129, 0.15); color: #059669; font-weight: 700;">{{ rescue(fn () => \App\Models\PageSeo::count(), 0, false) }}</span>
                         </a>
                     </li>
                 </ul>

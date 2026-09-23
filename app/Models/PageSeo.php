@@ -63,11 +63,15 @@ class PageSeo extends Model
     public static function getAllCached(): array
     {
         return Cache::rememberForever(self::CACHE_KEY, function () {
-            return static::where('is_active', true)
-                ->get()
-                ->keyBy('page_key')
-                ->map(fn ($item) => $item->getAttributes())
-                ->toArray();
+            try {
+                return static::where('is_active', true)
+                    ->get()
+                    ->keyBy('page_key')
+                    ->map(fn ($item) => $item->getAttributes())
+                    ->toArray();
+            } catch (\Throwable $e) {
+                return [];
+            }
         });
     }
 
