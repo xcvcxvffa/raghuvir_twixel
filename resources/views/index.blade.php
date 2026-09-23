@@ -740,10 +740,7 @@
                                     data-product="Fresh Chakki Atta Doorstep Delivery - Gujarat Wide"
                                     data-size="5kg, 10kg, 30kg & 50kg Packs"
                                     data-blank-message="true"
-                                    data-message=""
-                                >
-                                    Order for Doorstep Delivery 
-                                </button>
+                                >Order for Doorstep Delivery</button>
 
                                 <a href="tel:+919725427727" class="guj-phone-pill">
                                     <div class="guj-phone-icon">
