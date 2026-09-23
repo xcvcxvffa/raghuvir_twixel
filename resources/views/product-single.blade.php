@@ -641,7 +641,7 @@
                                 </button>
                                 
                                 <figure class="product-main-figure">
-                                    <img id="product-main-img" src="{{ asset($image ?? 'images/product_atta_white.jpg') }}" alt="{{ $title }}">
+                                    <img id="product-main-img" src="{{ $gallery_images[0] ?? ($image ?? asset('images/product_atta_white.jpg')) }}" alt="{{ $title }}">
                                 </figure>
                                 
                                 <button type="button" class="main-image-nav-btn next-btn" onclick="slideMainImage('next')" aria-label="Next Image">
@@ -749,13 +749,7 @@
                                 @php
                                     $resolvedGallery = (!empty($gallery_images) && is_array($gallery_images))
                                         ? $gallery_images
-                                        : [
-                                            asset($image ?? 'images/product_atta_white.jpg'),
-                                            asset('images/product_atta.jpg'),
-                                            asset('images/product-image-1.jpg'),
-                                            asset('images/ideal_roti.jpg'),
-                                            asset('images/ideal_paratha.jpg'),
-                                        ];
+                                        : array_filter([$image ?? null]);
                                 @endphp
                                 const galleryImages = @json($resolvedGallery);
                                 let currentGalleryIndex = 0;

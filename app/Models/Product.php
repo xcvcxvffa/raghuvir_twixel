@@ -127,24 +127,62 @@ class Product extends Model
 
     /**
      * Accessor for gallery image URLs array.
+     * Always ensures the primary cover image is first, and filters out cross-product fallbacks.
      */
     public function getGalleryUrlsAttribute(): array
     {
-        if (empty($this->gallery_images) || !is_array($this->gallery_images)) {
-            return [
-                $this->image_url,
-                asset('images/product_atta.jpg'),
-                asset('images/product-image-1.jpg'),
-                asset('images/ideal_roti.jpg'),
-                asset('images/ideal_paratha.jpg'),
-            ];
+        $urls = [];
+        $primaryUrl = $this->image_url;
+
+        // 1. Primary image is ALWAYS index 0 in the slider
+        if (!empty($primaryUrl)) {
+            $urls[] = $primaryUrl;
         }
 
-        return array_map(function ($img) {
-            if (Str::startsWith($img, ['http://', 'https://'])) return $img;
-            if (Str::startsWith($img, 'images/')) return asset($img);
-            return asset('storage/' . ltrim($img, '/'));
-        }, $this->gallery_images);
+        // 2. Add extra gallery images from database
+        if (!empty($this->gallery_images) && is_array($this->gallery_images)) {
+            foreach ($this->gallery_images as $img) {
+                if (empty($img)) {
+                    continue;
+                }
+
+                $url = Str::startsWith($img, ['http://', 'https://'])
+                    ? $img
+                    : (Str::startsWith($img, 'images/') ? asset($img) : asset('storage/' . ltrim($img, '/')));
+
+                // Prevent cross-product image leak (e.g. whole wheat atta images in wheat bran or bati atta)
+                if (!Str::contains($this->slug, 'whole-wheat') && Str::contains($img, ['product_atta_white', 'product_atta_transparent', 'product_atta.jpg'])) {
+                    continue;
+                }
+                if (!Str::contains($this->slug, 'bati') && Str::contains($img, ['product_bati'])) {
+                    continue;
+                }
+
+                // Avoid duplicating the primary image
+                if (!in_array($url, $urls)) {
+                    $urls[] = $url;
+                }
+            }
+        }
+
+        // 3. If only primary image is present, add relevant contextual dish/process images
+        if (count($urls) === 1) {
+            if (Str::contains($this->slug, 'bati')) {
+                $urls[] = asset('images/ideal_dal_bati.jpg');
+                $urls[] = asset('images/ideal_churma.jpg');
+                $urls[] = asset('images/ideal_bafla.jpg');
+            } elseif (Str::contains($this->slug, 'wheat') || Str::contains($this->slug, 'bran')) {
+                $urls[] = asset('images/ideal_commercial.jpg');
+                $urls[] = asset('images/ideal_baking.jpg');
+                $urls[] = asset('images/why-choose-image-2.jpg');
+            } else {
+                $urls[] = asset('images/ideal_roti.jpg');
+                $urls[] = asset('images/ideal_paratha.jpg');
+                $urls[] = asset('images/product-image-1.jpg');
+            }
+        }
+
+        return $urls;
     }
 
     /**
