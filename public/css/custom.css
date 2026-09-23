@@ -3564,13 +3564,6 @@ header.main-header .header-sticky.active {
 	overflow: hidden;
 }
 
-.page-header.product-single-hero {
-	background-position: center bottom !important;
-	background-attachment: scroll !important;
-	background-size: cover !important;
-	padding: 275px 0 140px;
-}
-
 .page-header:before {
 	content: '';
 	position: absolute;
@@ -13707,5 +13700,79 @@ header.main-header .header-sticky.active {
     .product-item-img a {
         height: 250px;
         padding: 16px 12px;
+    }
+}
+
+/* ==========================================================================
+   Product Single Hero Banner - Header Safe Space & Complete Product Visibility
+   Structure: [HEADER / NAVBAR] -> [SAFE EMPTY SPACE] -> [FULL PRODUCT] -> [BOTTOM OF HERO]
+   Maintains ~1920x500 panoramic hero ratio while keeping entire product package visible.
+   ========================================================================== */
+
+/* Large Desktop (>= 1600px, e.g. 1920px Full HD) */
+.page-header.product-single-hero {
+    position: relative;
+    background-repeat: no-repeat !important;
+    background-attachment: scroll !important;
+    background-size: cover !important;
+    background-position: center bottom !important;
+    min-height: 610px !important;
+    padding-top: 240px !important;
+    padding-bottom: 120px !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Standard Desktop / Laptop (1200px - 1599px, e.g. 1440px) */
+@media only screen and (max-width: 1599px) {
+    .page-header.product-single-hero {
+        min-height: 520px !important;
+        padding-top: 200px !important;
+        padding-bottom: 100px !important;
+        background-position: center bottom !important;
+        background-size: cover !important;
+    }
+}
+
+/* Tablet Landscape / Small Desktop (992px - 1199px, e.g. 1024px) */
+@media only screen and (max-width: 1199px) {
+    .page-header.product-single-hero {
+        min-height: 440px !important;
+        padding-top: 170px !important;
+        padding-bottom: 80px !important;
+        background-position: 65% bottom !important;
+        background-size: cover !important;
+    }
+}
+
+/* Tablet Portrait (768px - 991px, e.g. 768px) */
+@media only screen and (max-width: 991px) {
+    .page-header.product-single-hero {
+        min-height: 380px !important;
+        padding-top: 140px !important;
+        padding-bottom: 60px !important;
+        background-position: 72% bottom !important;
+        background-size: cover !important;
+    }
+    .page-header.product-single-hero .page-header-box h1 {
+        font-size: 38px !important;
+    }
+}
+
+/* Mobile Devices (<= 767px, e.g. 390px) */
+@media only screen and (max-width: 767px) {
+    .page-header.product-single-hero {
+        min-height: 330px !important;
+        padding-top: 125px !important;
+        padding-bottom: 45px !important;
+        background-position: 78% bottom !important;
+        background-size: cover !important;
+    }
+    .page-header.product-single-hero .page-header-box h1 {
+        font-size: 30px !important;
+    }
+    .page-header.product-single-hero .page-header-box ol.breadcrumb {
+        font-size: 13px !important;
     }
 }
