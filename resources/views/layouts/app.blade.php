@@ -499,10 +499,19 @@
         // Restore hidden fields after reset
         document.getElementById('inq-product').value = product;
         document.getElementById('inq-size').value    = size;
-        // Auto-fill message with product + size
+        // Auto-fill message with product + size (or leave blank if requested)
         const msgEl = document.getElementById('inq-message');
-        if (msgEl && product) {
-            msgEl.value = 'Hello Raghuvir Atta, I am interested in inquiring about ' + product + (size ? ' (' + size + ')' : '') + '. Please provide more details.';
+        if (msgEl) {
+            const isBlank = btn && (btn.getAttribute('data-blank-message') === 'true' || btn.getAttribute('data-message') === '');
+            if (isBlank) {
+                msgEl.value = '';
+            } else if (btn && btn.getAttribute('data-message')) {
+                msgEl.value = btn.getAttribute('data-message');
+            } else if (product) {
+                msgEl.value = 'Hello Raghuvir Atta, I am interested in inquiring about ' + product + (size ? ' (' + size + ')' : '') + '. Please provide more details.';
+            } else {
+                msgEl.value = '';
+            }
         }
         modal.classList.add('inq-open');
         document.body.style.overflow = 'hidden';

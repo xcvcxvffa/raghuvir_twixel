@@ -52,9 +52,12 @@
                                                         ->get();
                                                 @endphp
                                                 @forelse($megaMenuProducts as $mProd)
-                                                    <a href="{{ route('product-details', ['product' => $mProd->slug]) }}" class="mega-product-item">
-                                                        <div class="mega-thumb-wrap">
-                                                            <img src="{{ $mProd->image_url }}" alt="Raghuvir {{ $mProd->name }}">
+                                                    @php
+                                                        $isBati = \Illuminate\Support\Str::contains(strtolower(($mProd->slug ?? '') . ' ' . ($mProd->name ?? '')), 'bati');
+                                                    @endphp
+                                                    <a href="{{ route('product-details', ['product' => $mProd->slug]) }}" class="mega-product-item {{ $isBati ? 'mega-item-bati' : '' }}">
+                                                        <div class="mega-thumb-wrap {{ $isBati ? 'mega-thumb-bati' : '' }}">
+                                                            <img src="{{ $mProd->image_url }}" alt="Raghuvir {{ $mProd->name }}" class="{{ $isBati ? 'img-scale-bati' : '' }}">
                                                         </div>
                                                         <div class="mega-item-info">
                                                             <h5>{{ $mProd->name }}</h5>
@@ -70,9 +73,9 @@
                                                             <h5>Whole Wheat Atta</h5>
                                                         </div>
                                                     </a>
-                                                    <a href="{{ route('product-details', ['product' => 'bati']) }}" class="mega-product-item">
-                                                        <div class="mega-thumb-wrap">
-                                                            <img src="{{ asset('images/product_bati_transparent.png') }}" alt="Raghuvir Bati Atta">
+                                                    <a href="{{ route('product-details', ['product' => 'bati']) }}" class="mega-product-item mega-item-bati">
+                                                        <div class="mega-thumb-wrap mega-thumb-bati">
+                                                            <img src="{{ asset('images/product_bati_transparent.png') }}" alt="Raghuvir Bati Atta" class="img-scale-bati">
                                                         </div>
                                                         <div class="mega-item-info">
                                                             <h5>Bati Atta</h5>
