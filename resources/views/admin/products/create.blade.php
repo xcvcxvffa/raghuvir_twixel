@@ -88,7 +88,7 @@
                     </div>
 
                     <!-- Subtitle / Tagline & Quote -->
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <div class="form-row-2col">
                         <div class="form-group-admin">
                             <label for="subtitle" class="form-label-admin">Subtitle / Quality Badge</label>
                             <input
@@ -187,10 +187,10 @@
 
                 <div class="card-syndron-body">
                     <!-- Dynamic Specifications Table -->
-                    <div style="border: 1px solid var(--border); border-radius: 10px; overflow-x: auto; background: #FFFFFF;">
+                    <div style="border: 1px solid var(--border); border-radius: 10px; overflow-x: auto; background: var(--card);">
                         <table style="width: 100%; border-collapse: collapse; margin: 0; font-size: 0.85rem; min-width: 500px;">
                             <thead>
-                                <tr style="background: #f8fafc; border-bottom: 1.5px solid var(--border); color: #475569; font-weight: 700; text-transform: uppercase; font-size: 0.725rem; letter-spacing: 0.05em;">
+                                <tr style="background: var(--secondary); border-bottom: 1.5px solid var(--border); color: var(--muted-foreground); font-weight: 700; text-transform: uppercase; font-size: 0.725rem; letter-spacing: 0.05em;">
                                     <th style="width: 44px; padding: 10px 12px; text-align: center;">#</th>
                                     <th style="width: 38%; padding: 10px 14px; text-align: left;">Parameter / Specification Label</th>
                                     <th style="padding: 10px 14px; text-align: left;">Specification Value / Description</th>
@@ -211,13 +211,13 @@
                                     $initialSpecs = (!empty($rawOld) && is_array($rawOld)) ? $rawOld : $defaultSpecs;
                                 @endphp
                                 @foreach($initialSpecs as $idx => $spec)
-                                    <tr class="spec-row" id="spec_row_{{ $idx }}" style="border-bottom: 1px solid var(--border); background: #FFFFFF;">
+                                    <tr class="spec-row" id="spec_row_{{ $idx }}" style="border-bottom: 1px solid var(--border); background: var(--card);">
                                         <td style="padding: 8px 12px; text-align: center; color: var(--muted-foreground); font-weight: 700;" class="row-num">{{ $loop->iteration }}</td>
                                         <td style="padding: 8px 12px;">
-                                            <input type="text" name="specifications[{{ $idx }}][key]" class="form-control-admin" style="font-weight: 600;" value="{{ $spec['key'] ?? '' }}" placeholder="e.g. Main Ingredient, Grain Quality, Moisture" required>
+                                            <input type="text" name="specifications[{{ $idx }}][key]" class="form-control-admin" style="font-weight: 600; width: 100%; box-sizing: border-box;" value="{{ $spec['key'] ?? '' }}" placeholder="e.g. Main Ingredient, Grain Quality, Moisture" required>
                                         </td>
                                         <td style="padding: 8px 12px;">
-                                            <input type="text" name="specifications[{{ $idx }}][value]" class="form-control-admin" value="{{ $spec['value'] ?? '' }}" placeholder="e.g. Pure Golden Wheat, Stone Ground..." required>
+                                            <input type="text" name="specifications[{{ $idx }}][value]" class="form-control-admin" style="width: 100%; box-sizing: border-box;" value="{{ $spec['value'] ?? '' }}" placeholder="e.g. Pure Golden Wheat, Stone Ground..." required>
                                         </td>
                                         <td style="padding: 8px 12px; text-align: center;">
                                             <button type="button" onclick="removeSpecRow(this)" title="Delete Row" style="background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.2); width: 32px; height: 32px; border-radius: 6px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; transition: all 0.2s ease;">
@@ -259,7 +259,7 @@
                 </div>
 
                 <div class="card-syndron-body">
-                    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem;">
+                    <div class="nutrition-macros-grid">
                         <!-- Energy -->
                         <div class="form-group-admin" style="margin-bottom: 0;">
                             <label for="energy_kcal" class="form-label-admin">Energy (kcal)</label>
@@ -314,7 +314,7 @@
                     </div>
 
                     <!-- Serving & Packaging Details -->
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border);">
+                    <div class="nutrition-serving-grid">
                         <div class="form-group-admin" style="margin-bottom: 0;">
                             <label class="form-label-admin">Serving Size</label>
                             <input
@@ -345,7 +345,7 @@
                             <i class="fa-solid fa-list-check" style="color: var(--accent);"></i>
                             <span>Detailed Nutrition Table Breakdown (Shown on Product Page)</span>
                         </div>
-                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem;">
+                        <div class="nutrition-breakdown-grid">
                             <div class="form-group-admin" style="margin-bottom: 0;">
                                 <label class="form-label-admin">Saturated Fat (g)</label>
                                 <input
@@ -628,17 +628,17 @@
                 </div>
 
                 <div class="card-syndron-body" style="padding: 1.25rem;">
-                    <div class="thumbnail-dropzone" style="text-align: center;">
-                        <div style="width: 100%; height: 210px; border-radius: 12px; overflow: hidden; background: #ffffff; border: 1.5px dashed var(--border); display: flex; align-items: center; justify-content: center; position: relative; padding: 10px;">
+                    <div class="product-pack-upload-container" style="display: flex; flex-direction: column; gap: 0.75rem;">
+                        <div style="width: 100%; height: 240px; border-radius: 12px; overflow: hidden; background: #ffffff; border: 2px dashed var(--border); display: flex; align-items: center; justify-content: center; position: relative; padding: 16px; box-shadow: inset 0 2px 6px rgba(0,0,0,0.03);">
                             <img
                                 id="productCoverPreview"
                                 src="{{ asset('images/product_atta_white.jpg') }}"
                                 alt="Pack Preview"
-                                style="max-height: 100%; max-width: 100%; object-fit: contain;"
+                                style="max-height: 100%; max-width: 100%; width: auto; height: auto; object-fit: contain; display: block; margin: 0 auto; filter: drop-shadow(0 6px 14px rgba(0,0,0,0.08));"
                             >
                         </div>
 
-                        <label for="imageInput" class="btn-syndron btn-syndron-secondary" style="width: 100%; justify-content: center; cursor: pointer; margin-top: 0.75rem;">
+                        <label for="imageInput" class="btn-syndron btn-syndron-secondary" style="width: 100%; justify-content: center; cursor: pointer;">
                             <i class="fa-solid fa-arrow-up-from-bracket"></i>
                             <span>Upload Packaging Photo</span>
                         </label>
@@ -650,7 +650,7 @@
                             onchange="previewProductCover(this)"
                             style="display: none;"
                         >
-                        <div class="form-hint" style="margin-top: 0.4rem; text-align: center;">
+                        <div class="form-hint" style="margin-top: 0.15rem; text-align: center;">
                             Transparent PNG or white background recommended. Auto-converted to WebP.
                         </div>
                     </div>
@@ -667,6 +667,49 @@
                             placeholder="e.g. Raghuvir Whole Wheat Atta 100% Pure"
                         >
                     </div>
+                </div>
+            </div>
+
+            <!-- 3b. Header Breadcrumb Banner (Optional) -->
+            <div class="card-syndron" style="margin-bottom: 0;">
+                <div class="card-syndron-header" style="padding: 1.15rem 1.25rem; display: flex; align-items: center; justify-content: space-between;">
+                    <h3 class="card-syndron-title" style="font-size: 0.95rem;">
+                        <i class="fa-solid fa-panorama" style="color: #0284c7;"></i>
+                        <span>Breadcrumb Hero Banner</span>
+                    </h3>
+                    <span style="font-size: 0.7rem; font-weight: 700; color: #0284c7; background: rgba(14, 165, 233, 0.12); padding: 2px 8px; border-radius: 9999px;">Optional</span>
+                </div>
+
+                <div class="card-syndron-body" style="padding: 1.25rem;">
+                    <div style="font-size: 0.78rem; color: var(--muted-foreground); margin-bottom: 0.75rem; line-height: 1.4;">
+                        Custom background banner for this product's header page. If not uploaded, it automatically displays the default master banner from <strong>Page Banners</strong>.
+                    </div>
+
+                    <div style="padding: 0.5rem 0.75rem; background: rgba(14, 165, 233, 0.06); border: 1px dashed rgba(14, 165, 233, 0.3); border-radius: 8px; margin-bottom: 0.75rem; font-size: 0.75rem; color: var(--foreground); display: flex; align-items: center; gap: 0.4rem;">
+                        <i class="fa-solid fa-ruler-combined" style="color: #0284c7;"></i>
+                        <span>Recommended: <strong>1920 × 500 px</strong> (Panoramic)</span>
+                    </div>
+
+                    <div style="position: relative; height: 110px; border-radius: 10px; overflow: hidden; background: #1a1a1a; border: 1px solid var(--border); margin-bottom: 0.75rem;">
+                        <img id="productBannerPreviewImg" src="{{ \App\Models\PageBanner::getImage('product-details') }}" alt="Breadcrumb Banner Preview" style="width: 100%; height: 100%; object-fit: cover;">
+                        <div style="position: absolute; inset: 0; background: rgba(239, 128, 28, 0.3); mix-blend-mode: multiply;"></div>
+                        <div style="position: absolute; bottom: 6px; right: 8px; background: rgba(0,0,0,0.6); color: #fff; font-size: 0.68rem; padding: 2px 6px; border-radius: 4px;">
+                            Hero Overlay Preview
+                        </div>
+                    </div>
+
+                    <label for="bannerImageInput" class="btn-syndron btn-syndron-secondary" style="width: 100%; justify-content: center; cursor: pointer;">
+                        <i class="fa-solid fa-cloud-arrow-up"></i>
+                        <span>Choose Custom Banner</span>
+                    </label>
+                    <input
+                        type="file"
+                        name="banner_image"
+                        id="bannerImageInput"
+                        accept="image/png,image/jpeg,image/webp,image/jpg,image/svg+xml"
+                        onchange="previewProductBanner(this)"
+                        style="display: none;"
+                    >
                 </div>
             </div>
 
@@ -739,9 +782,99 @@
         }
     }
 
+    /* Slug Input Group */
+    .input-slug-wrapper {
+        display: flex;
+        align-items: stretch;
+        border-radius: var(--radius-md, 8px);
+        overflow: hidden;
+        border: 1px solid var(--border-strong, var(--border));
+        background-color: var(--card);
+        transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+    .input-slug-wrapper:focus-within {
+        border-color: var(--accent);
+        box-shadow: 0 0 0 3px var(--accent-subtle, rgba(239, 128, 28, 0.15));
+    }
+    .slug-prefix {
+        display: inline-flex;
+        align-items: center;
+        padding: 8px 12px;
+        font-size: 0.8rem;
+        font-weight: 500;
+        color: var(--muted-foreground);
+        background-color: var(--secondary);
+        border-right: 1px solid var(--border-strong, var(--border));
+        white-space: nowrap;
+        user-select: none;
+        flex-shrink: 0;
+    }
+    .input-slug-wrapper .slug-input.form-control-admin {
+        flex: 1;
+        border: none !important;
+        border-radius: 0 !important;
+        background: transparent !important;
+        padding: 8px 13px !important;
+        box-shadow: none !important;
+        outline: none !important;
+        min-width: 140px;
+    }
+    @media (max-width: 540px) {
+        .input-slug-wrapper {
+            flex-direction: column;
+        }
+        .slug-prefix {
+            border-right: none;
+            border-bottom: 1px solid var(--border-strong, var(--border));
+            padding: 6px 10px;
+            font-size: 0.75rem;
+        }
+    }
+
+    /* Responsive Grid Utilities for Form Rows */
+    .form-row-2col {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+    }
+    .nutrition-macros-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1rem;
+    }
+    .nutrition-serving-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+        margin-top: 1rem;
+        padding-top: 1rem;
+        border-top: 1px solid var(--border);
+    }
+    .nutrition-breakdown-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1rem;
+    }
+    @media (max-width: 768px) {
+        .form-row-2col,
+        .nutrition-serving-grid {
+            grid-template-columns: 1fr;
+        }
+        .nutrition-macros-grid,
+        .nutrition-breakdown-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+    @media (max-width: 480px) {
+        .nutrition-macros-grid,
+        .nutrition-breakdown-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
     /* Google SERP Snippet Preview */
     .google-serp-box {
-        background: #f8fafc;
+        background: var(--secondary, #f8fafc);
         border: 1px solid var(--border, #e2e8f0);
         border-radius: var(--radius-lg, 12px);
         padding: 1.25rem;
@@ -968,14 +1101,14 @@
         tr.className = 'spec-row';
         tr.id = `spec_row_${specRowIndex}`;
         tr.style.borderBottom = '1px solid var(--border)';
-        tr.style.background = '#FFFFFF';
+        tr.style.background = 'var(--card)';
         tr.innerHTML = `
             <td style="padding: 8px 12px; text-align: center; color: var(--muted-foreground); font-weight: 700;" class="row-num">${rowNum}</td>
             <td style="padding: 8px 12px;">
-                <input type="text" name="specifications[${specRowIndex}][key]" class="form-control-admin" style="font-weight: 600;" value="${escapeHtml(key)}" placeholder="e.g. Moisture Content, Grain Origin..." required>
+                <input type="text" name="specifications[${specRowIndex}][key]" class="form-control-admin" style="font-weight: 600; width: 100%; box-sizing: border-box;" value="${escapeHtml(key)}" placeholder="e.g. Moisture Content, Grain Origin..." required>
             </td>
             <td style="padding: 8px 12px;">
-                <input type="text" name="specifications[${specRowIndex}][value]" class="form-control-admin" value="${escapeHtml(val)}" placeholder="e.g. < 12%, MP Sharbati..." required>
+                <input type="text" name="specifications[${specRowIndex}][value]" class="form-control-admin" style="width: 100%; box-sizing: border-box;" value="${escapeHtml(val)}" placeholder="e.g. < 12%, MP Sharbati..." required>
             </td>
             <td style="padding: 8px 12px; text-align: center;">
                 <button type="button" onclick="removeSpecRow(this)" title="Delete Row" style="background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.2); width: 32px; height: 32px; border-radius: 6px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; transition: all 0.2s ease;">
@@ -1024,6 +1157,17 @@
 
     function escapeHtml(str) {
         return String(str).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/'/g, '&#039;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+
+    function previewProductBanner(input) {
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = document.getElementById('productBannerPreviewImg');
+                if (img) img.src = e.target.result;
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
     }
 </script>
 @endpush

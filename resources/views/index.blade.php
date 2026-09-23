@@ -382,7 +382,7 @@
                             <!-- Why Choose Info Box Start -->
                             <div class="why-choose-info-box">
                                 <div class="icon-box">
-                                    <img src="{{ asset('images/icon-why-choose-us-info-box.svg') }}" alt="">
+                                    <img src="{{ asset('images/icon-why-choose-us-info-box.svg') }}?v={{ filemtime(public_path('images/icon-why-choose-us-info-box.svg')) }}" alt="Transparent & Traceable Produce">
                                 </div>
                                 <div class="why-choose-info-content">
                                     <h3>Transparent & Traceable Produce</h3>
@@ -393,7 +393,7 @@
                             <!-- Why Choose Image 2 Start -->
                             <div class="why-choose-image">
                                 <figure class="image-anime">
-                                    <img src="{{ asset('images/why-choose-image-2.jpg') }}" alt="">
+                                    <img src="{{ asset('images/why-choose-image-2.jpg') }}?v={{ filemtime(public_path('images/why-choose-image-2.jpg')) }}" alt="Pure Golden Wheat Grains">
                                 </figure>
                             </div>
                             <!-- Why Choose Image 2 End -->
@@ -532,13 +532,6 @@
                     </div>
                 @endforelse
 
-                <div class="col-lg-12">
-                    <!-- Section Footer Text Start -->
-                    <div class="section-footer-text wow fadeInUp" data-wow-delay="0.6s">
-                        <p>Quality Flour from Our Mill to Your Family - <a href="{{ route('products') }}">Browse All Our Products!</a></p>
-                    </div>
-                    <!-- Section Footer Text End -->
-                </div>
             </div>
         </div>
     </div>
@@ -661,29 +654,135 @@
                     <!-- How Work Step Box End -->
                 </div>
 
-                <div class="col-lg-12">
-                    <!-- Section Footer Text Start -->
-                    <div class="section-footer-text section-satisfy-img wow fadeInUp" data-wow-delay="0.4s">
-                        <!-- Satisfy Client Images Start -->
-                        <div class="satisfy-client-images">
-                            <div class="satisfy-client-image">
-                                <figure class="image-anime">
-                                    <img src="{{ asset('images/author-1.jpg') }}" alt="">
-                                </figure>
-                            </div>
-                            <div class="satisfy-client-image add-more">
-                                <i><img src="{{ asset('images/icon-phone-primary.svg') }}" alt=""></i>
-                            </div>
-                        </div>
-                        <!-- Satisfy Client Images End -->    
-                        <p>Let's make something great work together. <a href="{{ route('contact') }}">Get Free Quote</a></p>                         
-                    </div>
-                    <!-- Section Footer Text End -->
-                </div>
             </div>
         </div>
     </div>
     <!-- How It Work Section End -->
+
+    <!-- Door to Door Delivery Around Gujarat Section Start -->
+    <div class="gujarat-delivery-section" id="gujarat-delivery">
+        <div class="container">
+            <div class="guj-main-card">
+                <div class="row align-items-center">
+                    <!-- Left Column: Content, 2x2 Features & Actions -->
+                    <div class="col-xl-6 col-lg-6">
+                        <div class="guj-content-wrap">
+                            <!-- Top Pill Badge -->
+                            <div class="guj-badge wow fadeInUp">
+                                <span class="guj-badge-icon"><i class="fa-solid fa-truck-fast"></i></span>
+                                <span class="guj-badge-text">Doorstep Delivery Across Gujarat</span>
+                                <span class="guj-badge-tag">Direct to Home</span>
+                            </div>
+
+                            <!-- Main Heading -->
+                            <h2 class="guj-heading wow fadeInUp" data-wow-delay="0.1s">
+                                Fresh Chakki Atta, <span>Delivered</span> to Your Doorstep
+                            </h2>
+
+                            <!-- Description -->
+                            <p class="guj-lead wow fadeInUp" data-wow-delay="0.15s">
+                                From our hygienic chakki milling plant in Kadadara (Gandhinagar), we bring you 100% pure, stone-ground fresh flour — straight to your doorstep across <strong>Ahmedabad, Surat, Vadodara, Rajkot</strong> and all Gujarat.
+                            </p>
+
+                            <!-- 2x2 Feature Cards Grid -->
+                            <div class="guj-features-grid wow fadeInUp" data-wow-delay="0.2s">
+                                <!-- Feature 1 -->
+                                <div class="guj-feature-item">
+                                    <div class="guj-feature-icon-wrap">
+                                        <i class="fa-solid fa-wheat-awn"></i>
+                                    </div>
+                                    <div class="guj-feature-text">
+                                        <h4>Fresh Milling on Order</h4>
+                                        <p>Stone-ground fresh to preserve natural nutrients & aroma.</p>
+                                    </div>
+                                </div>
+
+                                <!-- Feature 2 -->
+                                <div class="guj-feature-item">
+                                    <div class="guj-feature-icon-wrap">
+                                        <i class="fa-solid fa-truck-fast"></i>
+                                    </div>
+                                    <div class="guj-feature-text">
+                                        <h4>24–48 Hours Dispatch</h4>
+                                        <p>Fast & reliable delivery across Gujarat cities & towns.</p>
+                                    </div>
+                                </div>
+
+                                <!-- Feature 3 -->
+                                <div class="guj-feature-item">
+                                    <div class="guj-feature-icon-wrap">
+                                        <i class="fa-solid fa-shield-halved"></i>
+                                    </div>
+                                    <div class="guj-feature-text">
+                                        <h4>Moisture-Lock Packing</h4>
+                                        <p>5kg, 10kg, 30kg & 50kg food-grade airtight bags.</p>
+                                    </div>
+                                </div>
+
+                                <!-- Feature 4 -->
+                                <div class="guj-feature-item">
+                                    <div class="guj-feature-icon-wrap">
+                                        <i class="fa-solid fa-house-chimney"></i>
+                                    </div>
+                                    <div class="guj-feature-text">
+                                        <h4>Home & Bulk Supply</h4>
+                                        <p>Direct supply for homes, caterers, hotels & grocers.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Action Buttons -->
+                            <div class="guj-actions-row wow fadeInUp" data-wow-delay="0.25s">
+                                <button
+                                    type="button"
+                                    class="btn-default btn-highlighted guj-order-btn"
+                                    onclick="openInquiryModal(this)"
+                                    data-product="Fresh Chakki Atta Doorstep Delivery - Gujarat Wide"
+                                    data-size="5kg, 10kg, 30kg & 50kg Packs"
+                                >
+                                    Order for Doorstep Delivery
+                                </button>
+
+                                <a href="tel:+919725427727" class="guj-phone-pill">
+                                    <div class="guj-phone-icon">
+                                        <i class="fa-solid fa-phone"></i>
+                                    </div>
+                                    <div class="guj-phone-text">
+                                        <small>Order Helpline</small>
+                                        <strong>+91 97254 27727</strong>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Column: Grand Visual Showcase Frame -->
+                    <div class="col-xl-6 col-lg-6">
+                        <div class="guj-showcase-box wow fadeIn" data-wow-delay="0.2s">
+                            <div class="guj-showcase-frame">
+                                <img
+                                    src="{{ asset('images/gujarat_delivery_showcase_hd.jpg') }}"
+                                    alt="Fresh Chakki Atta 5kg Doorstep Delivery Across Gujarat"
+                                    class="guj-showcase-img"
+                                >
+                                <!-- Floating Trust Badge -->
+                                <div class="guj-showcase-badge">
+                                    <div class="badge-icon">
+                                        <i class="fa-solid fa-award"></i>
+                                    </div>
+                                    <div class="badge-content">
+                                        <strong>100% Stone-Ground Fresh</strong>
+                                        <span>Kadadara, Gandhinagar Plant</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Door to Door Delivery Around Gujarat Section End -->
 
 
 
@@ -1005,25 +1104,6 @@
                     <!-- Testimonial Slider End -->
                 </div>
 
-                <div class="col-lg-12">
-                    <!-- Section Footer Text Start -->
-                    <div class="section-footer-text section-satisfy-img wow fadeInUp" data-wow-delay="0.2s">
-                        <p><span>Free</span> Where Experiences Speak Louder - <a href="{{ route('contact') }}">Discover Why Customers Love Us!</a></p>
-
-                        <ul>
-                            <li><span class="counter">4.9</span>/5</li>
-                            <li>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                            </li>
-                            <li>Our 4200 Reviews</li>
-                        </ul>
-                    </div>
-                    <!-- Section Footer Text End -->
-                </div>
             </div>
         </div>
     </div>

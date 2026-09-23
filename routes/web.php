@@ -41,6 +41,7 @@ use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Admin\LeadController as AdminLeadController;
 use App\Http\Controllers\Admin\GalleryController as AdminGalleryController;
 use App\Http\Controllers\Admin\PageBannerController as AdminPageBannerController;
+use App\Http\Controllers\Admin\PageSeoController as AdminPageSeoController;
 
 Route::prefix('admin')->name('admin.')->group(function () {
     // Guest Routes
@@ -81,6 +82,14 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('/banners/{banner}/update', [AdminPageBannerController::class, 'update'])->name('banners.update');
         Route::post('/banners/{banner}/reset', [AdminPageBannerController::class, 'reset'])->name('banners.reset');
         Route::post('/banners/quick-upload', [AdminPageBannerController::class, 'quickUpload'])->name('banners.quick-upload');
+
+        // Page SEO & Meta Tags Management
+        Route::get('/seo', [AdminPageSeoController::class, 'index'])->name('seo.index');
+        Route::get('/seo/{seo}/edit', [AdminPageSeoController::class, 'edit'])->name('seo.edit');
+        Route::post('/seo/{seo}/update', [AdminPageSeoController::class, 'update'])->name('seo.update');
+        Route::post('/seo/{seo}/remove-og-image', [AdminPageSeoController::class, 'removeOgImage'])->name('seo.remove-og-image');
+        Route::post('/seo/{seo}/toggle-robots', [AdminPageSeoController::class, 'toggleRobots'])->name('seo.toggle-robots');
+        Route::get('/seo/{seo}/auto-generate', [AdminPageSeoController::class, 'autoGenerate'])->name('seo.auto-generate');
 
         // Profile & Account Settings
         Route::get('/profile', [AdminProfileController::class, 'edit'])->name('profile.edit');

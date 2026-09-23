@@ -97,6 +97,13 @@
                             <span class="badge-tag" style="background: rgba(14, 165, 233, 0.15); color: #0284c7; font-weight: 700;">{{ \App\Models\PageBanner::count() }}</span>
                         </a>
                     </li>
+                    <li class="sidebar-item {{ request()->routeIs('admin.seo.*') ? 'active' : '' }}">
+                        <a href="{{ route('admin.seo.index') }}" class="sidebar-link">
+                            <i class="fa-solid fa-magnifying-glass-chart link-icon"></i>
+                            <span>Page SEO</span>
+                            <span class="badge-tag" style="background: rgba(16, 185, 129, 0.15); color: #059669; font-weight: 700;">{{ \App\Models\PageSeo::count() }}</span>
+                        </a>
+                    </li>
                 </ul>
 
                 <div class="sidebar-section-title">System & Settings</div>
@@ -118,9 +125,9 @@
 
             <!-- Sidebar User Profile Footer -->
             <a href="{{ route('admin.profile.edit') }}" class="sidebar-footer-profile" style="text-decoration: none;">
-                <div class="profile-avatar-sm">
+                <div class="profile-avatar-sm {{ auth()->user() && auth()->user()->getAvatarUrl() ? 'has-image' : '' }}">
                     @if(auth()->user() && auth()->user()->getAvatarUrl())
-                        <img src="{{ auth()->user()->getAvatarUrl() }}" alt="{{ auth()->user()->name }}" style="width: 100%; height: 100%; border-radius: inherit; object-fit: cover;">
+                        <img src="{{ auth()->user()->getAvatarUrl() }}" alt="{{ auth()->user()->name }}" style="max-width: 60%; max-height: 60%; width: auto; height: auto; object-fit: contain; margin: auto; display: block;">
                     @else
                         {{ strtoupper(substr(auth()->user()->name ?? 'A', 0, 1)) }}
                     @endif
@@ -205,9 +212,9 @@
                     <!-- User Dropdown Menu -->
                     <div class="syndron-user-menu">
                         <button type="button" class="user-trigger" id="userTrigger">
-                            <div class="user-avatar-circle">
+                            <div class="user-avatar-circle {{ auth()->user() && auth()->user()->getAvatarUrl() ? 'has-image' : '' }}">
                                 @if(auth()->user() && auth()->user()->getAvatarUrl())
-                                    <img src="{{ auth()->user()->getAvatarUrl() }}" alt="{{ auth()->user()->name }}" style="width: 100%; height: 100%; border-radius: inherit; object-fit: cover;">
+                                    <img src="{{ auth()->user()->getAvatarUrl() }}" alt="{{ auth()->user()->name }}" style="max-width: 60%; max-height: 60%; width: auto; height: auto; object-fit: contain; margin: auto; display: block;">
                                 @else
                                     {{ strtoupper(substr(auth()->user()->name ?? 'A', 0, 1)) }}
                                 @endif

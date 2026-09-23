@@ -80,7 +80,11 @@
                                 </a>
 
                                 <span class="video-duration-tag">
-                                    <i class="fa-brands fa-youtube"></i> HD Video
+                                    @if($video->is_uploaded_video)
+                                        <i class="fa-solid fa-circle-play"></i> HD Video
+                                    @else
+                                        <i class="fa-brands fa-youtube"></i> YouTube
+                                    @endif
                                 </span>
                             </div>
 
@@ -291,14 +295,36 @@
                 });
             });
 
-            // Initialize Magnific Popup Video
+            // Initialize Magnific Popup Video (Both YouTube and local HTML5 MP4/WebM)
             if (window.jQuery && jQuery().magnificPopup) {
-                jQuery('.popup-video').magnificPopup({
-                    type: 'iframe',
-                    mainClass: 'mfp-fade',
-                    removalDelay: 160,
-                    preloader: false,
-                    fixedContentPos: false
+                jQuery('.popup-video').each(function() {
+                    var href = jQuery(this).attr('href');
+                    if (href && href.match(/\.(mp4|webm|mov|ogg|mkv)($|\?)/i)) {
+                        jQuery(this).magnificPopup({
+                            type: 'iframe',
+                            iframe: {
+                                markup: '<div class="mfp-iframe-scaler">' +
+                                        '<div class="mfp-close"></div>' +
+                                        '<video class="mfp-iframe" controls autoplay playsinline style="background:#000; width:100%; height:100%; object-fit:contain;">' +
+                                        '<source src="' + href + '">' +
+                                        'Your browser does not support HTML5 video.' +
+                                        '</video>' +
+                                        '</div>'
+                            },
+                            mainClass: 'mfp-fade',
+                            removalDelay: 160,
+                            preloader: false,
+                            fixedContentPos: false
+                        });
+                    } else {
+                        jQuery(this).magnificPopup({
+                            type: 'iframe',
+                            mainClass: 'mfp-fade',
+                            removalDelay: 160,
+                            preloader: false,
+                            fixedContentPos: false
+                        });
+                    }
                 });
             }
         });

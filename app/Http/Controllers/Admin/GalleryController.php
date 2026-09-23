@@ -94,19 +94,38 @@ class GalleryController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
+        $rules = [
             'title' => 'required|string|max:255',
             'type' => 'required|in:image,video',
             'category' => 'nullable|string|max:100',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,webp,svg|max:5120',
-            'video_url' => 'nullable|url|max:500',
             'caption' => 'nullable|string|max:1000',
             'sort_order' => 'nullable|integer|min:0',
             'is_active' => 'nullable|boolean',
+        ];
+
+        if ($request->input('type') === 'image') {
+            $rules['image'] = 'required|image|mimes:jpeg,png,jpg,webp,svg|max:5120';
+        } else {
+            $rules['image'] = 'nullable|image|mimes:jpeg,png,jpg,webp,svg|max:5120';
+            $rules['video_file'] = 'nullable|file|mimes:mp4,webm,ogg,mov,mkv|max:40960';
+            $rules['video_url'] = 'nullable|string|max:500';
+        }
+
+        $validated = $request->validate($rules, [
+            'image.required' => 'Please select and upload a photo/image file. Photos cannot be saved without an image.',
+            'image.image' => 'The uploaded file must be a valid image file (JPG, PNG, WEBP, SVG).',
+            'image.max' => 'The photo file size must not exceed 5MB.',
         ]);
 
-        if ($validated['type'] === 'video' && empty($validated['video_url']) && !$request->hasFile('image')) {
-            return back()->withInput()->withErrors(['video_url' => 'Please provide a valid YouTube / Video URL for video gallery items.']);
+        $videoUrl = null;
+        if ($validated['type'] === 'video') {
+            if ($request->hasFile('video_file')) {
+                $videoUrl = $request->file('video_file')->store('gallery/videos', 'public');
+            } elseif (!empty($validated['video_url'])) {
+                $videoUrl = $validated['video_url'];
+            } else {
+                return back()->withInput()->withErrors(['video_file' => 'Please either upload a video file (MP4/WebM) or provide a valid YouTube URL.']);
+            }
         }
 
         $imagePath = null;
@@ -119,7 +138,7 @@ class GalleryController extends Controller
             'type' => $validated['type'],
             'category' => $validated['category'] ?? 'General',
             'image' => $imagePath,
-            'video_url' => $validated['video_url'] ?? null,
+            'video_url' => $videoUrl,
             'caption' => $validated['caption'] ?? null,
             'sort_order' => $validated['sort_order'] ?? 0,
             'is_active' => $request->boolean('is_active', true),
@@ -147,11 +166,16 @@ class GalleryController extends Controller
             'type' => 'required|in:image,video',
             'category' => 'nullable|string|max:100',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,webp,svg|max:5120',
-            'video_url' => 'nullable|url|max:500',
+            'video_file' => 'nullable|file|mimes:mp4,webm,ogg,mov,mkv|max:40960',
+            'video_url' => 'nullable|string|max:500',
             'caption' => 'nullable|string|max:1000',
             'sort_order' => 'nullable|integer|min:0',
             'is_active' => 'nullable|boolean',
         ]);
+
+        if ($validated['type'] === 'image' && empty($gallery->image) && !$request->hasFile('image')) {
+            return back()->withInput()->withErrors(['image' => 'Please upload a photo/image file. Photos cannot be saved without an image.']);
+        }
 
         $imagePath = $gallery->image;
         if ($request->hasFile('image')) {
@@ -162,12 +186,29 @@ class GalleryController extends Controller
             $imagePath = $request->file('image')->store('gallery', 'public');
         }
 
+        $videoUrl = $gallery->getRawOriginal('video_url');
+        if ($validated['type'] === 'video') {
+            if ($request->hasFile('video_file')) {
+                // Delete previous uploaded file if stored in storage
+                if (!empty($videoUrl) && Storage::disk('public')->exists($videoUrl)) {
+                    Storage::disk('public')->delete($videoUrl);
+                }
+                $videoUrl = $request->file('video_file')->store('gallery/videos', 'public');
+            } elseif ($request->filled('video_url')) {
+                // If user switched to an external URL, remove previous uploaded video file
+                if (!empty($videoUrl) && Storage::disk('public')->exists($videoUrl)) {
+                    Storage::disk('public')->delete($videoUrl);
+                }
+                $videoUrl = $request->input('video_url');
+            }
+        }
+
         $gallery->update([
             'title' => $validated['title'],
             'type' => $validated['type'],
             'category' => $validated['category'] ?? 'General',
             'image' => $imagePath,
-            'video_url' => $validated['video_url'] ?? null,
+            'video_url' => $videoUrl,
             'caption' => $validated['caption'] ?? null,
             'sort_order' => $validated['sort_order'] ?? 0,
             'is_active' => $request->boolean('is_active', true),
@@ -183,6 +224,11 @@ class GalleryController extends Controller
     {
         if (!empty($gallery->image) && Storage::disk('public')->exists($gallery->image)) {
             Storage::disk('public')->delete($gallery->image);
+        }
+
+        $rawVideo = $gallery->getRawOriginal('video_url');
+        if (!empty($rawVideo) && Storage::disk('public')->exists($rawVideo)) {
+            Storage::disk('public')->delete($rawVideo);
         }
 
         $gallery->delete();

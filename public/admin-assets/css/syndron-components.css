@@ -7,18 +7,15 @@
 /* --------------------------------------------------------------------------
    0. Global Layout Overrides for Popups & Dropdowns
    -------------------------------------------------------------------------- */
-/* Prevent parent cards or containers from clipping dropdown menus or datepickers */
-.card-syndron,
-.card-syndron-body,
-.card-syndron-header,
-.filter-card,
-.table-responsive-container {
+/* Prevent dropdown menus from being clipped only when an active dropdown is open */
+.card-syndron:has(.syndron-select-wrapper.is-open),
+.card-syndron-body:has(.syndron-select-wrapper.is-open),
+.filter-card:has(.syndron-select-wrapper.is-open) {
     overflow: visible !important;
 }
 
 .card-syndron.has-open-dropdown,
-.card-syndron:has(.syndron-select-wrapper.is-open),
-.card-syndron:focus-within {
+.card-syndron:has(.syndron-select-wrapper.is-open) {
     z-index: 500 !important;
     position: relative !important;
 }
@@ -627,4 +624,41 @@ html.dark .syndron-datepicker-btn {
 html.dark .syndron-datepicker-time-box {
     background: #121417;
     border-color: rgba(255, 255, 255, 0.08);
+}
+
+/* Fix product dynamic specifications table layout */
+tr.spec-row {
+    display: table-row !important;
+}
+tr.spec-row td {
+    display: table-cell !important;
+    vertical-align: middle !important;
+}
+tr.spec-row .form-control-admin {
+    width: 100% !important;
+    display: block !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
+}
+
+/* Site Settings Brand Logo & Favicon Previews */
+.logo-preview-box,
+.logo-preview-box-dark {
+    height: 120px !important;
+    max-height: 120px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
+}
+.logo-preview-box img,
+.logo-preview-box-dark img {
+    max-height: 75px !important;
+    max-width: 85% !important;
+    width: auto !important;
+    height: auto !important;
+    object-fit: contain !important;
+    display: block !important;
+    margin: 0 auto !important;
 }

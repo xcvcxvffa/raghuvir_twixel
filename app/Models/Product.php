@@ -22,6 +22,7 @@ class Product extends Model
         'detailed_description',
         'sizes',
         'image',
+        'banner_image',
         'image_alt',
         'gallery_images',
         'main_ingredient',
@@ -108,6 +109,20 @@ class Product extends Model
         }
 
         return asset('storage/' . ltrim($this->image, '/'));
+    }
+
+    /**
+     * Accessor for header breadcrumb hero banner image URL.
+     * If individual product has a custom banner_image, use it.
+     * Otherwise fallback to global PageBanner::getImage('product-details').
+     */
+    public function getBannerImageUrlAttribute(): string
+    {
+        if (!empty($this->banner_image) && \Illuminate\Support\Facades\Storage::disk('public')->exists($this->banner_image)) {
+            return asset('storage/' . $this->banner_image);
+        }
+
+        return \App\Models\PageBanner::getImage('product-details');
     }
 
     /**
@@ -221,6 +236,77 @@ class Product extends Model
     public function getImageAltTextAttribute(): string
     {
         return !empty($this->image_alt) ? $this->image_alt : "Raghuvir {$this->name}";
+    }
+
+    /**
+     * Compute fallback or custom SEO Title for dynamic product.
+     */
+    public function getSeoTitleAttribute(): string
+    {
+        return !empty($this->meta_title)
+            ? $this->meta_title
+            : "{$this->name} | 100% Pure Chakki Fresh Atta - Raghuvir Atta";
+    }
+
+    /**
+     * Compute fallback or custom SEO Description for dynamic product.
+     */
+    public function getSeoDescriptionAttribute(): string
+    {
+        if (!empty($this->meta_description)) {
+            return $this->meta_description;
+        }
+
+        if (!empty($this->short_description)) {
+            return Str::limit(strip_tags($this->short_description), 160);
+        }
+
+        return "Buy 100% pure stoneground {$this->name} online from Raghuvir Atta. High dietary fiber, hygienic chakki milling, zero preservatives, and naturally soft rotis.";
+    }
+
+    /**
+     * Compute fallback or custom SEO Keywords for dynamic product.
+     */
+    public function getSeoKeywordsAttribute(): string
+    {
+        if (!empty($this->meta_keywords)) {
+            return $this->meta_keywords;
+        }
+
+        $keywords = [$this->name, $this->category, 'raghuvir atta', 'chakki fresh', 'wheat flour', 'pure stoneground atta'];
+        return implode(', ', array_filter($keywords));
+    }
+
+    /**
+     * Generate Schema.org Product structured JSON-LD.
+     */
+    public function getSchemaJsonAttribute(): string
+    {
+        $schema = [
+            '@context' => 'https://schema.org',
+            '@type' => 'Product',
+            'name' => $this->name,
+            'image' => [$this->image_url],
+            'description' => $this->seo_description,
+            'sku' => 'RAGHUVIR-' . strtoupper(Str::slug($this->slug)),
+            'category' => $this->category,
+            'brand' => [
+                '@type' => 'Brand',
+                'name' => setting('site_title', 'Raghuvir Atta'),
+            ],
+            'offers' => [
+                '@type' => 'Offer',
+                'url' => route('product-details', ['product' => $this->slug]),
+                'priceCurrency' => 'INR',
+                'availability' => $this->is_active ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
+                'seller' => [
+                    '@type' => 'Organization',
+                    'name' => setting('site_title', 'Raghuvir Atta'),
+                ],
+            ],
+        ];
+
+        return json_encode($schema, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
     }
 
     /**

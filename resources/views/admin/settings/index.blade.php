@@ -239,9 +239,9 @@
                         </div>
 
                         <div class="card-syndron-body">
-                            <div class="grid-2-col" style="grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem;">
                                 <!-- 1. Header Logo (Light Mode) -->
-                                <div class="logo-upload-dropzone">
+                                <div class="logo-upload-dropzone" style="min-width: 0;">
                                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
                                         <span style="font-weight: 600; font-size: 0.85rem; color: var(--foreground);">Header Logo (Color / Light)</span>
                                         <span style="font-size: 0.7rem; color: var(--muted-foreground); background: var(--secondary); padding: 2px 6px; border-radius: 4px;">PNG, SVG, WEBP</span>
@@ -253,16 +253,20 @@
                                             alt="Header Logo"
                                         >
                                     </div>
+                                    <label for="header_logo" class="btn-syndron btn-syndron-secondary" style="margin-top: 0.75rem; width: 100%; justify-content: center; cursor: pointer; font-size: 0.82rem;">
+                                        <i class="fa-solid fa-cloud-arrow-up"></i>
+                                        <span>Choose New Header Logo</span>
+                                    </label>
                                     <input
                                         type="file"
                                         name="header_logo"
                                         id="header_logo"
-                                        class="custom-file-input"
                                         accept="image/png,image/jpeg,image/webp,image/svg+xml"
                                         onchange="previewImage(this, 'headerLogoPreview')"
+                                        style="display: none;"
                                     >
                                     @if(setting('header_logo'))
-                                        <label style="display: inline-flex; align-items: center; gap: 6px; font-size: 0.775rem; color: #ef4444; margin-top: 0.6rem; cursor: pointer;">
+                                        <label style="display: inline-flex; align-items: center; gap: 6px; font-size: 0.775rem; color: #ef4444; margin-top: 0.6rem; cursor: pointer; justify-content: center;">
                                             <input type="checkbox" name="remove_header_logo" value="1">
                                             <span>Reset to default logo</span>
                                         </label>
@@ -270,7 +274,7 @@
                                 </div>
 
                                 <!-- 2. Footer Logo (Dark / Contrast Mode) -->
-                                <div class="logo-upload-dropzone">
+                                <div class="logo-upload-dropzone" style="min-width: 0;">
                                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
                                         <span style="font-weight: 600; font-size: 0.85rem; color: var(--foreground);">Footer Logo (White / Dark)</span>
                                         <span style="font-size: 0.7rem; color: var(--muted-foreground); background: var(--secondary); padding: 2px 6px; border-radius: 4px;">For Dark Theme</span>
@@ -282,16 +286,20 @@
                                             alt="Footer Logo"
                                         >
                                     </div>
+                                    <label for="footer_logo" class="btn-syndron btn-syndron-secondary" style="margin-top: 0.75rem; width: 100%; justify-content: center; cursor: pointer; font-size: 0.82rem;">
+                                        <i class="fa-solid fa-cloud-arrow-up"></i>
+                                        <span>Choose New Footer Logo</span>
+                                    </label>
                                     <input
                                         type="file"
                                         name="footer_logo"
                                         id="footer_logo"
-                                        class="custom-file-input"
                                         accept="image/png,image/jpeg,image/webp,image/svg+xml"
                                         onchange="previewImage(this, 'footerLogoPreview')"
+                                        style="display: none;"
                                     >
                                     @if(setting('footer_logo'))
-                                        <label style="display: inline-flex; align-items: center; gap: 6px; font-size: 0.775rem; color: #ef4444; margin-top: 0.6rem; cursor: pointer;">
+                                        <label style="display: inline-flex; align-items: center; gap: 6px; font-size: 0.775rem; color: #ef4444; margin-top: 0.6rem; cursor: pointer; justify-content: center;">
                                             <input type="checkbox" name="remove_footer_logo" value="1">
                                             <span>Reset to default logo</span>
                                         </label>
@@ -305,32 +313,42 @@
                                     <span style="font-weight: 600; font-size: 0.85rem; color: var(--foreground);">Browser Tab Favicon</span>
                                     <span style="font-size: 0.7rem; color: var(--muted-foreground); background: var(--secondary); padding: 2px 6px; border-radius: 4px;">Square (1:1) PNG/ICO</span>
                                 </div>
-                                <div style="display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap;">
-                                    <div class="favicon-preview-mockup">
-                                        <img
-                                            id="faviconPreview"
-                                            src="{{ setting('site_favicon') ? asset(setting('site_favicon')) : asset('images/Raghuvir Favicon.png') }}"
-                                            alt="Favicon"
-                                            style="width: 18px; height: 18px; object-fit: contain;"
-                                        >
-                                        <span>Raghuvir Atta | Home</span>
+                                <div style="display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap;">
+                                    {{-- Browser Chrome Tab Mockup --}}
+                                    <div style="background: #e2e8f0; border: 1px solid var(--border); border-radius: 10px; padding: 6px 12px 0 12px; display: inline-flex; align-items: flex-end;">
+                                        <div style="background: #ffffff; border-radius: 8px 8px 0 0; padding: 7px 14px; display: inline-flex; align-items: center; gap: 8px; font-size: 0.78rem; font-weight: 600; color: #1e293b; box-shadow: 0 1px 3px rgba(0,0,0,0.06); border: 1px solid #cbd5e1; border-bottom: none;">
+                                            <img
+                                                id="faviconPreview"
+                                                src="{{ setting('site_favicon') ? asset(setting('site_favicon')) : (file_exists(public_path('images/favicon.png')) ? asset('images/favicon.png') : asset('images/Raghuvir Favicon.png')) }}"
+                                                alt="Favicon"
+                                                style="width: 18px; height: 18px; object-fit: contain; border-radius: 2px;"
+                                                onerror="this.src='{{ asset('images/favicon.png') }}'"
+                                            >
+                                            <span style="max-width: 160px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: #334155;">Raghuvir Atta | Home</span>
+                                            <i class="fa-solid fa-xmark" style="font-size: 0.65rem; color: #94a3b8; margin-left: 6px;"></i>
+                                        </div>
                                     </div>
-                                    <div style="flex: 1; min-width: 240px;">
+
+                                    <div style="display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; flex: 1; min-width: 240px; justify-content: flex-end;">
+                                        <label for="site_favicon" class="btn-syndron btn-syndron-secondary" style="cursor: pointer; font-size: 0.82rem; padding: 0.55rem 1rem;">
+                                            <i class="fa-solid fa-cloud-arrow-up"></i>
+                                            <span>Choose New Favicon</span>
+                                        </label>
                                         <input
                                             type="file"
                                             name="site_favicon"
                                             id="site_favicon"
-                                            class="custom-file-input"
                                             accept="image/png,image/x-icon,image/vnd.microsoft.icon,image/webp"
                                             onchange="previewImage(this, 'faviconPreview')"
+                                            style="display: none;"
                                         >
+                                        @if(setting('site_favicon'))
+                                            <label style="display: inline-flex; align-items: center; gap: 6px; font-size: 0.775rem; color: #ef4444; cursor: pointer;">
+                                                <input type="checkbox" name="remove_site_favicon" value="1">
+                                                <span>Reset favicon</span>
+                                            </label>
+                                        @endif
                                     </div>
-                                    @if(setting('site_favicon'))
-                                        <label style="display: inline-flex; align-items: center; gap: 6px; font-size: 0.775rem; color: #ef4444; cursor: pointer;">
-                                            <input type="checkbox" name="remove_site_favicon" value="1">
-                                            <span>Reset favicon</span>
-                                        </label>
-                                    @endif
                                 </div>
                             </div>
                         </div>

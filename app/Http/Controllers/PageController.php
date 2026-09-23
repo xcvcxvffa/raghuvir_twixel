@@ -241,6 +241,7 @@ class PageController extends Controller
 
         $data = [
             'productModel' => $productModel,
+            'product' => $productModel,
             'slug' => $productModel->slug,
             'title' => $productModel->name,
             'subtitle' => $productModel->subtitle,

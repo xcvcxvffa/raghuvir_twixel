@@ -441,7 +441,7 @@
 
                 <div class="card-syndron-body" style="padding: 1.25rem;">
                     <!-- Image Preview Dropzone -->
-                    <div class="thumbnail-dropzone" id="thumbnailDropzone" style="text-align: center;">
+                    <div id="thumbnailDropzone" style="text-align: center; display: flex; flex-direction: column; gap: 0.5rem;">
                         <div style="width: 100%; height: 155px; border-radius: 8px; overflow: hidden; background: var(--secondary, #f8fafc); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; position: relative;">
                             <img
                                 id="featuredImagePreview"

@@ -1108,18 +1108,24 @@
         letter-spacing: 0.02em;
     }
     .thumbnail-dropzone {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 0.65rem !important;
         text-align: center;
         border-radius: var(--radius-md, 8px);
         transition: all 0.2s ease;
+        border: none !important;
+        aspect-ratio: auto !important;
+        overflow: visible !important;
+        background: transparent !important;
     }
-    .thumbnail-dropzone.dragover {
-        border: 2px dashed var(--accent);
-        background: rgba(239, 128, 28, 0.05);
-        padding: 0.5rem;
+    .thumbnail-dropzone.dragover .thumbnail-preview-frame {
+        border-color: var(--accent) !important;
+        box-shadow: 0 0 0 3px rgba(239, 128, 28, 0.2) !important;
     }
     .thumbnail-preview-frame {
         width: 100%;
-        height: 155px;
+        height: 180px;
         border-radius: var(--radius-md, 8px);
         overflow: hidden;
         background: var(--secondary, #f8fafc);
@@ -1129,12 +1135,14 @@
         justify-content: center;
         box-shadow: var(--shadow-xs);
         position: relative;
+        aspect-ratio: auto !important;
     }
     .thumbnail-img {
         width: 100%;
         height: 100%;
         object-fit: cover;
         transition: transform 0.35s ease;
+        display: block;
     }
     .thumbnail-preview-frame:hover .thumbnail-img {
         transform: scale(1.04);
@@ -1171,13 +1179,25 @@
         transform: scale(1.05);
     }
     .remove-image-checkbox {
-        display: inline-flex;
+        display: inline-flex !important;
         align-items: center;
-        gap: 6px;
+        justify-content: center;
+        gap: 8px;
         font-size: 0.775rem;
         color: #ef4444;
-        margin-top: 0.75rem;
+        margin-top: 0.25rem;
         cursor: pointer;
+        padding: 5px 10px;
+        border-radius: 6px;
+        transition: background 0.15s ease;
+    }
+    .remove-image-checkbox:hover {
+        background: rgba(239, 68, 68, 0.08);
+    }
+    .remove-image-checkbox input {
+        accent-color: #ef4444;
+        cursor: pointer;
+        margin: 0;
     }
 
     /* Publish Switch Box */

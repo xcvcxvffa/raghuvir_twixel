@@ -90,11 +90,11 @@
                         <input type="radio" name="type" value="video" {{ old('type', $gallery->type) === 'video' ? 'checked' : '' }} onchange="updateTypeFields()">
                         <div class="type-card-inner">
                             <div class="type-icon-box video">
-                                <i class="fa-brands fa-youtube"></i>
+                                <i class="fa-solid fa-play"></i>
                             </div>
                             <div>
-                                <div class="type-title">YouTube Video Embed</div>
-                                <div class="type-subtitle">Milling walkthroughs, recipe guides, plant tour reels</div>
+                                <div class="type-title">Video Asset (Upload or YouTube)</div>
+                                <div class="type-subtitle">Upload MP4 video files directly or embed YouTube links</div>
                             </div>
                             <div class="type-radio-indicator">
                                 <i class="fa-solid fa-circle-check"></i>
@@ -142,35 +142,106 @@
                 </div>
             </div>
 
-            <!-- 3. Video URL Field (Shown for Video Type) -->
+            <!-- 3. Video Asset Selector & Upload Group (Shown for Video Type) -->
+            @php
+                $isUploadedVideo = $gallery->is_uploaded_video;
+                $defaultSource = old('video_source', $isUploadedVideo ? 'upload' : 'url');
+            @endphp
             <div id="videoUrlGroup" class="form-group-wrap" style="display: none;">
-                <label for="video_url" class="form-field-label">
-                    <span>YouTube Video URL</span>
-                    <span style="color: #ef4444;">*</span>
+                <label class="form-field-label">
+                    <span>Video Media Source</span> <span style="color: #ef4444;">*</span>
                 </label>
-                <div style="position: relative;">
-                    <i class="fa-brands fa-youtube" style="position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: #ef4444; font-size: 1.15rem; pointer-events: none;"></i>
-                    <input
-                        type="url"
-                        name="video_url"
-                        id="video_url"
-                        class="gallery-form-input"
-                        style="padding-left: 2.6rem;"
-                        placeholder="https://www.youtube.com/watch?v=... or https://youtu.be/..."
-                        value="{{ old('video_url', $gallery->video_url) }}"
-                        oninput="previewYouTubeVideo()"
-                    >
-                </div>
-                <div class="field-hint">Accepts standard YouTube links, shorts, or youtu.be short URLs.</div>
 
-                <!-- Live YouTube Thumbnail Card -->
-                <div id="ytPreviewBox" class="yt-preview-card" style="display: none; margin-top: 0.85rem;">
-                    <img id="ytPreviewThumb" src="" alt="Video Preview" class="yt-preview-img">
-                    <div>
-                        <div style="font-weight: 700; font-size: 0.875rem; color: var(--foreground); margin-bottom: 2px;">
-                            <i class="fa-solid fa-circle-check" style="color: #10b981; margin-right: 4px;"></i> Valid YouTube Video Detected
+                <!-- Video Source Switcher Tabs -->
+                <div class="video-source-pill-nav" style="display: flex; gap: 8px; margin-bottom: 0.85rem; flex-wrap: wrap;">
+                    <button
+                        type="button"
+                        class="video-source-btn {{ $defaultSource === 'upload' ? 'active' : '' }}"
+                        id="btnSourceUpload"
+                        onclick="switchVideoSource('upload')"
+                    >
+                        <i class="fa-solid fa-cloud-arrow-up"></i>
+                        <span>Upload Video File (MP4, WebM)</span>
+                    </button>
+                    <button
+                        type="button"
+                        class="video-source-btn {{ $defaultSource === 'url' ? 'active' : '' }}"
+                        id="btnSourceUrl"
+                        onclick="switchVideoSource('url')"
+                    >
+                        <i class="fa-brands fa-youtube"></i>
+                        <span>YouTube Video URL</span>
+                    </button>
+                    <input type="hidden" name="video_source" id="video_source" value="{{ $defaultSource }}">
+                </div>
+
+                <!-- Option A: Direct Video File Upload -->
+                <div id="videoUploadSubGroup" style="display: {{ $defaultSource === 'upload' ? 'block' : 'none' }};">
+                    @if($isUploadedVideo && $gallery->video_url)
+                        <!-- Currently active uploaded video -->
+                        <div style="margin-bottom: 0.85rem; background: var(--secondary); border: 1px solid var(--border); border-radius: var(--radius-lg, 12px); padding: 12px 16px;">
+                            <div style="font-size: 0.82rem; font-weight: 700; color: var(--foreground); margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
+                                <i class="fa-solid fa-circle-check" style="color: #10b981;"></i> Current Active Uploaded Video:
+                            </div>
+                            <video src="{{ $gallery->video_url }}" controls playsinline style="width: 100%; max-height: 220px; border-radius: 8px; background: #000; box-shadow: 0 4px 14px rgba(0,0,0,0.1);"></video>
                         </div>
-                        <div id="ytPreviewIdText" style="font-size: 0.8rem; color: var(--muted-foreground);"></div>
+                    @endif
+
+                    <div class="dropzone-area" id="videoDropzoneArea" onclick="document.getElementById('video_file').click()">
+                        <input
+                            type="file"
+                            name="video_file"
+                            id="video_file"
+                            accept="video/mp4,video/webm,video/ogg,video/quicktime"
+                            style="display: none;"
+                            onchange="previewUploadVideoFile(this)"
+                        >
+                        <div id="videoDropzonePlaceholder">
+                            <div class="dropzone-icon" style="color: #EF801C;">
+                                <i class="fa-solid fa-file-video"></i>
+                            </div>
+                            <div class="dropzone-title">{{ $isUploadedVideo ? 'Upload replacement video file' : 'Click to upload video file or drag & drop here' }}</div>
+                            <div class="dropzone-subtitle">Supported formats: MP4, WEBM, MOV, OGG (Max 40MB)</div>
+                        </div>
+                        <div id="videoDropzonePreviewWrap" style="display: none; width: 100%; max-width: 480px; margin: 0 auto;">
+                            <video id="uploadPreviewVideo" controls playsinline style="width: 100%; max-height: 240px; border-radius: 10px; background: #000; box-shadow: 0 4px 14px rgba(0,0,0,0.15);"></video>
+                            <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 8px;">
+                                <span id="videoFileNameBadge" style="font-size: 0.78rem; font-weight: 700; color: var(--foreground); overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"></span>
+                                <button type="button" class="gallery-btn gallery-btn-outline" style="padding: 3px 10px; font-size: 0.75rem;" onclick="event.stopPropagation(); resetUploadVideoFile();">
+                                    <i class="fa-solid fa-trash-can" style="color: #ef4444;"></i> Remove
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field-hint">Upload high quality MP4 videos of facility tours, cooking demonstrations, and production processes.</div>
+                </div>
+
+                <!-- Option B: YouTube URL Embed -->
+                <div id="videoUrlSubGroup" style="display: {{ $defaultSource === 'url' ? 'block' : 'none' }};">
+                    <div style="position: relative;">
+                        <i class="fa-brands fa-youtube" style="position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: #ef4444; font-size: 1.15rem; pointer-events: none;"></i>
+                        <input
+                            type="url"
+                            name="video_url"
+                            id="video_url"
+                            class="gallery-form-input"
+                            style="padding-left: 2.6rem;"
+                            placeholder="https://www.youtube.com/watch?v=... or https://youtu.be/..."
+                            value="{{ old('video_url', !$isUploadedVideo ? $gallery->video_url : '') }}"
+                            oninput="previewYouTubeVideo()"
+                        >
+                    </div>
+                    <div class="field-hint">Accepts standard YouTube links, shorts, or youtu.be short URLs.</div>
+
+                    <!-- Live YouTube Thumbnail Card -->
+                    <div id="ytPreviewBox" class="yt-preview-card" style="display: none; margin-top: 0.85rem;">
+                        <img id="ytPreviewThumb" src="" alt="Video Preview" class="yt-preview-img">
+                        <div>
+                            <div style="font-weight: 700; font-size: 0.875rem; color: var(--foreground); margin-bottom: 2px;">
+                                <i class="fa-solid fa-circle-check" style="color: #10b981; margin-right: 4px;"></i> Valid YouTube Video Detected
+                            </div>
+                            <div id="ytPreviewIdText" style="font-size: 0.8rem; color: var(--muted-foreground);"></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -490,6 +561,7 @@
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: 1rem;
+        width: 100%;
     }
     @media (max-width: 640px) {
         .media-type-switch-grid { grid-template-columns: 1fr; }
@@ -498,64 +570,105 @@
     .media-type-option {
         cursor: pointer;
         position: relative;
+        display: block !important;
+        border: none !important;
+        padding: 0 !important;
+        background: none !important;
+        text-align: left !important;
     }
     .media-type-option input[type="radio"] {
         position: absolute;
         opacity: 0;
         pointer-events: none;
+        width: 0;
+        height: 0;
     }
     .type-card-inner {
-        border: 2px solid var(--border);
-        border-radius: 12px;
-        padding: 1.15rem 1.25rem;
-        background: var(--background);
-        display: flex;
-        align-items: center;
-        gap: 14px;
+        border: 2px solid var(--border) !important;
+        border-radius: var(--radius-xl, 14px) !important;
+        padding: 1.15rem 1.35rem !important;
+        background: var(--card) !important;
+        display: flex !important;
+        align-items: center !important;
+        gap: 14px !important;
         position: relative;
-        transition: all 0.2s ease;
+        transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+        width: 100% !important;
+        height: auto !important;
+        box-sizing: border-box !important;
+    }
+    .media-type-option:hover .type-card-inner {
+        border-color: var(--border-strong) !important;
+        background: var(--secondary) !important;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
     }
     .media-type-option input[type="radio"]:checked + .type-card-inner {
-        border-color: #8b5cf6;
-        background: rgba(139, 92, 246, 0.05);
-        box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.15);
+        border-color: #8b5cf6 !important;
+        background: rgba(139, 92, 246, 0.05) !important;
+        box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.15) !important;
+    }
+    html.dark .media-type-option input[type="radio"]:checked + .type-card-inner {
+        border-color: #a78bfa !important;
+        background: rgba(139, 92, 246, 0.12) !important;
     }
     .type-icon-box {
-        width: 46px;
-        height: 46px;
-        border-radius: 12px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.35rem;
-        flex-shrink: 0;
+        width: 48px !important;
+        height: 48px !important;
+        border-radius: var(--radius-lg, 12px) !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        font-size: 1.35rem !important;
+        flex-shrink: 0 !important;
     }
     .type-icon-box.photo {
-        background: rgba(59, 130, 246, 0.12);
-        color: #3b82f6;
+        background: rgba(59, 130, 246, 0.12) !important;
+        color: #3b82f6 !important;
+    }
+    html.dark .type-icon-box.photo {
+        background: rgba(59, 130, 246, 0.22) !important;
+        color: #60a5fa !important;
     }
     .type-icon-box.video {
-        background: rgba(239, 68, 68, 0.12);
-        color: #ef4444;
+        background: rgba(239, 68, 68, 0.12) !important;
+        color: #ef4444 !important;
+    }
+    html.dark .type-icon-box.video {
+        background: rgba(239, 68, 68, 0.22) !important;
+        color: #f87171 !important;
     }
     .type-title {
-        font-weight: 800;
-        font-size: 0.95rem;
-        color: var(--foreground);
+        font-weight: 800 !important;
+        font-size: 0.95rem !important;
+        color: var(--foreground) !important;
+        line-height: 1.3 !important;
     }
     .type-subtitle {
-        font-size: 0.75rem;
-        color: var(--muted-foreground);
-        margin-top: 2px;
+        font-size: 0.76rem !important;
+        color: var(--muted-foreground) !important;
+        margin-top: 2px !important;
+        line-height: 1.4 !important;
     }
     .type-radio-indicator {
-        margin-left: auto;
-        font-size: 1.15rem;
-        color: var(--border);
+        margin-left: auto !important;
+        width: auto !important;
+        height: auto !important;
+        border: none !important;
+        border-radius: 0 !important;
+        font-size: 1.25rem !important;
+        color: var(--border-strong) !important;
         transition: all 0.2s ease;
+        flex-shrink: 0 !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
     }
     .media-type-option input[type="radio"]:checked + .type-card-inner .type-radio-indicator {
-        color: #8b5cf6;
+        color: #8b5cf6 !important;
+    }
+    html.dark .media-type-option input[type="radio"]:checked + .type-card-inner .type-radio-indicator {
+        color: #a78bfa !important;
     }
 
     /* Current Media Card */
@@ -597,10 +710,22 @@
         text-align: center;
         cursor: pointer;
         transition: all 0.2s ease;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
     }
     .dropzone-area:hover {
         border-color: #8b5cf6;
         background: rgba(139, 92, 246, 0.03);
+    }
+    #dropzonePlaceholder {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        width: 100%;
     }
     .dropzone-icon {
         font-size: 2.25rem;
@@ -689,6 +814,41 @@
         font-weight: 600;
         color: var(--foreground);
     }
+    /* Video Source Segmented Buttons */
+    .video-source-pill-nav {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+    }
+    .video-source-btn {
+        padding: 8px 16px;
+        border-radius: var(--radius-lg, 10px);
+        border: 1px solid var(--border);
+        background: var(--secondary);
+        color: var(--muted-foreground);
+        font-size: 0.82rem;
+        font-weight: 700;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        transition: all 0.2s ease;
+    }
+    .video-source-btn:hover {
+        color: var(--foreground);
+        border-color: var(--border-strong);
+    }
+    .video-source-btn.active {
+        background: linear-gradient(135deg, rgba(239, 128, 28, 0.14) 0%, rgba(217, 119, 6, 0.08) 100%);
+        border-color: rgba(239, 128, 28, 0.35);
+        color: #d97706;
+        box-shadow: 0 2px 8px rgba(239, 128, 28, 0.1);
+    }
+    html.dark .video-source-btn.active {
+        color: #fbbf24;
+        background: rgba(239, 128, 28, 0.2);
+        border-color: rgba(239, 128, 28, 0.4);
+    }
 </style>
 @endpush
 
@@ -701,13 +861,71 @@
 
         if (isVideo) {
             videoUrlGroup.style.display = 'block';
-            imageLabel.innerHTML = 'Custom Thumbnail <span style="font-weight: 400; color: var(--muted-foreground); font-size: 0.775rem;">(Optional — will auto-fetch high-res from YouTube)</span>';
-            previewYouTubeVideo();
+            imageLabel.innerHTML = 'Custom Video Thumbnail <span style="font-weight: 400; color: var(--muted-foreground); font-size: 0.775rem;">(Optional — for YouTube it auto-fetches, or upload custom cover image)</span>';
+            const currentSource = document.getElementById('video_source').value || 'upload';
+            switchVideoSource(currentSource);
         } else {
             videoUrlGroup.style.display = 'none';
             imageLabel.innerHTML = 'High-Resolution Photo File';
             document.getElementById('ytPreviewBox').style.display = 'none';
         }
+    }
+
+    function switchVideoSource(source) {
+        document.getElementById('video_source').value = source;
+        const btnUpload = document.getElementById('btnSourceUpload');
+        const btnUrl = document.getElementById('btnSourceUrl');
+        const uploadSubGroup = document.getElementById('videoUploadSubGroup');
+        const urlSubGroup = document.getElementById('videoUrlSubGroup');
+
+        if (source === 'upload') {
+            btnUpload.classList.add('active');
+            btnUrl.classList.remove('active');
+            uploadSubGroup.style.display = 'block';
+            urlSubGroup.style.display = 'none';
+        } else {
+            btnUrl.classList.add('active');
+            btnUpload.classList.remove('active');
+            urlSubGroup.style.display = 'block';
+            uploadSubGroup.style.display = 'none';
+            previewYouTubeVideo();
+        }
+    }
+
+    function previewUploadVideoFile(input) {
+        if (input.files && input.files[0]) {
+            const file = input.files[0];
+            const videoPreview = document.getElementById('uploadPreviewVideo');
+            const fileNameBadge = document.getElementById('videoFileNameBadge');
+            
+            const fileURL = URL.createObjectURL(file);
+            videoPreview.src = fileURL;
+            videoPreview.load();
+
+            const fileSizeMB = (file.size / (1024 * 1024)).toFixed(1);
+            fileNameBadge.textContent = `${file.name} (${fileSizeMB} MB)`;
+
+            document.getElementById('videoDropzonePlaceholder').style.display = 'none';
+            document.getElementById('videoDropzonePreviewWrap').style.display = 'block';
+
+            // Clear any error state
+            const videoDropzone = document.getElementById('videoDropzoneArea');
+            videoDropzone.style.borderColor = 'var(--border)';
+            videoDropzone.style.background = 'var(--secondary)';
+            const vAlert = document.getElementById('videoRequiredWarning');
+            if (vAlert) vAlert.remove();
+        }
+    }
+
+    function resetUploadVideoFile() {
+        document.getElementById('video_file').value = '';
+        const videoPreview = document.getElementById('uploadPreviewVideo');
+        videoPreview.pause();
+        videoPreview.removeAttribute('src');
+        videoPreview.load();
+
+        document.getElementById('videoDropzonePlaceholder').style.display = 'block';
+        document.getElementById('videoDropzonePreviewWrap').style.display = 'none';
     }
 
     function extractYouTubeId(url) {
@@ -728,6 +946,7 @@
             ytThumb.src = `https://img.youtube.com/vi/${ytId}/hqdefault.jpg`;
             ytText.textContent = `YouTube Video ID: ${ytId}`;
             ytBox.style.display = 'flex';
+            urlInput.style.borderColor = 'var(--border)';
         } else {
             ytBox.style.display = 'none';
         }
@@ -740,6 +959,13 @@
                 document.getElementById('uploadPreviewImg').src = e.target.result;
                 document.getElementById('dropzonePlaceholder').style.display = 'none';
                 document.getElementById('dropzonePreviewWrap').style.display = 'block';
+
+                // Clear any error state
+                const dropzone = document.getElementById('dropzoneArea');
+                dropzone.style.borderColor = 'var(--border)';
+                dropzone.style.background = 'var(--secondary)';
+                const alertBox = document.getElementById('imageRequiredWarning');
+                if (alertBox) alertBox.remove();
             };
             reader.readAsDataURL(input.files[0]);
         }
@@ -775,6 +1001,66 @@
         if (files.length) {
             document.getElementById('image').files = files;
             previewUploadImage(document.getElementById('image'));
+        }
+    });
+
+    const hasExistingImage = {{ !empty($gallery->image) ? 'true' : 'false' }};
+    const hasExistingVideo = {{ ($gallery->is_uploaded_video && $gallery->video_url) ? 'true' : 'false' }};
+
+    // Form Submit Validation
+    document.getElementById('editMediaForm').addEventListener('submit', function(e) {
+        const type = document.querySelector('input[name="type"]:checked')?.value || 'image';
+
+        if (type === 'image') {
+            const imageInput = document.getElementById('image');
+            if (!hasExistingImage && (!imageInput.files || imageInput.files.length === 0)) {
+                e.preventDefault();
+                const dropzone = document.getElementById('dropzoneArea');
+                dropzone.style.borderColor = '#ef4444';
+                dropzone.style.background = 'rgba(239, 68, 68, 0.06)';
+
+                let alertBox = document.getElementById('imageRequiredWarning');
+                if (!alertBox) {
+                    alertBox = document.createElement('div');
+                    alertBox.id = 'imageRequiredWarning';
+                    alertBox.style.cssText = 'color: #ef4444; font-size: 0.82rem; font-weight: 700; margin-top: 8px; display: flex; align-items: center; gap: 6px;';
+                    alertBox.innerHTML = '<i class="fa-solid fa-circle-exclamation"></i> Photo asset requires a file. Please click the box above to upload an image.';
+                    dropzone.parentNode.appendChild(alertBox);
+                }
+                dropzone.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                return false;
+            }
+        } else if (type === 'video') {
+            const source = document.getElementById('video_source')?.value || 'upload';
+            if (source === 'upload') {
+                const videoInput = document.getElementById('video_file');
+                if (!hasExistingVideo && (!videoInput.files || videoInput.files.length === 0)) {
+                    e.preventDefault();
+                    const videoDropzone = document.getElementById('videoDropzoneArea');
+                    videoDropzone.style.borderColor = '#ef4444';
+                    videoDropzone.style.background = 'rgba(239, 68, 68, 0.06)';
+
+                    let vAlert = document.getElementById('videoRequiredWarning');
+                    if (!vAlert) {
+                        vAlert = document.createElement('div');
+                        vAlert.id = 'videoRequiredWarning';
+                        vAlert.style.cssText = 'color: #ef4444; font-size: 0.82rem; font-weight: 700; margin-top: 8px; display: flex; align-items: center; gap: 6px;';
+                        vAlert.innerHTML = '<i class="fa-solid fa-circle-exclamation"></i> Please select and upload an MP4/WebM video file, or switch to the YouTube URL tab.';
+                        videoDropzone.parentNode.appendChild(vAlert);
+                    }
+                    videoDropzone.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    return false;
+                }
+            } else if (source === 'url') {
+                const videoUrl = document.getElementById('video_url').value.trim();
+                if (!videoUrl) {
+                    e.preventDefault();
+                    const urlInput = document.getElementById('video_url');
+                    urlInput.style.borderColor = '#ef4444';
+                    urlInput.focus();
+                    return false;
+                }
+            }
         }
     });
 

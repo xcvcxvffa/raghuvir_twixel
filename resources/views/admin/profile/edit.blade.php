@@ -40,21 +40,6 @@
     </div>
 </div>
 
-<!-- Alerts for Success or Validation -->
-@if(session('success'))
-    <div class="syndron-alert syndron-alert-success">
-        <i class="fa-solid fa-circle-check" style="font-size: 1.1rem;"></i>
-        <span>{{ session('success') }}</span>
-    </div>
-@endif
-
-@if(session('info'))
-    <div class="syndron-alert" style="background: rgba(59, 130, 246, 0.1); color: #3b82f6; border: 1px solid rgba(59, 130, 246, 0.25);">
-        <i class="fa-solid fa-circle-info" style="font-size: 1.1rem;"></i>
-        <span>{{ session('info') }}</span>
-    </div>
-@endif
-
 @if($errors->any())
     <div class="syndron-alert syndron-alert-danger">
         <i class="fa-solid fa-triangle-exclamation" style="font-size: 1.1rem;"></i>
@@ -82,9 +67,9 @@
                 
                 <!-- Avatar Display with Camera Trigger -->
                 <div class="profile-avatar-container">
-                    <div class="profile-avatar-frame" id="avatarPreviewFrame">
+                    <div class="profile-avatar-frame {{ $user->getAvatarUrl() ? 'has-image' : '' }}" id="avatarPreviewFrame">
                         @if($user->getAvatarUrl())
-                            <img src="{{ $user->getAvatarUrl() }}" alt="{{ $user->name }}" id="avatarImgPreview">
+                            <img src="{{ $user->getAvatarUrl() }}" alt="{{ $user->name }}" id="avatarImgPreview" style="max-width: 58%; max-height: 58%; width: auto; height: auto; object-fit: contain; display: block; margin: auto;">
                         @else
                             <span id="avatarInitialPreview">{{ strtoupper(substr($user->name, 0, 1)) }}</span>
                         @endif
@@ -110,24 +95,30 @@
                 <p style="font-size: 0.825rem; color: var(--muted-foreground); margin-bottom: 0.85rem;">{{ $user->email }}</p>
 
                 <!-- Role Pill -->
-                <div style="margin-bottom: 1.25rem;">
+                <div style="margin-bottom: 1rem;">
                     <span class="profile-verified-badge">
                         <i class="fa-solid fa-shield-halved"></i>
                         <span>{{ ucfirst($user->role ?? 'Super Administrator') }}</span>
                     </span>
                 </div>
 
-                <!-- Remove Photo Option if avatar exists -->
-                @if($user->avatar)
-                    <form action="{{ route('admin.profile.avatar.remove') }}" method="POST" style="margin-bottom: 1.25rem;">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="action-icon-btn delete" style="width: auto; height: auto; padding: 5px 12px; font-size: 0.775rem; border-radius: var(--radius-sm); gap: 6px; display: inline-flex;" onclick="return confirm('Are you sure you want to remove your profile photo?');">
-                            <i class="fa-solid fa-trash-can"></i>
-                            <span>Remove Photo</span>
-                        </button>
-                    </form>
-                @endif
+                <!-- Avatar Actions: Change Photo & Remove Photo -->
+                <div style="display: flex; gap: 8px; justify-content: center; align-items: center; margin-bottom: 1.25rem; flex-wrap: wrap;">
+                    <label for="avatarInput" class="btn-syndron btn-syndron-secondary" style="padding: 5px 12px; font-size: 0.775rem; cursor: pointer; border-radius: var(--radius-sm); gap: 6px; display: inline-flex; align-items: center;">
+                        <i class="fa-solid fa-camera"></i>
+                        <span>Change Photo</span>
+                    </label>
+                    @if($user->avatar)
+                        <form action="{{ route('admin.profile.avatar.remove') }}" method="POST" style="margin: 0;">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="action-icon-btn delete" style="width: auto; height: auto; padding: 5px 12px; font-size: 0.775rem; border-radius: var(--radius-sm); gap: 6px; display: inline-flex;" onclick="return confirm('Are you sure you want to remove your profile photo?');">
+                                <i class="fa-solid fa-trash-can"></i>
+                                <span>Remove</span>
+                            </button>
+                        </form>
+                    @endif
+                </div>
 
                 <!-- Profile Meta List -->
                 <div class="profile-meta-list">
@@ -467,7 +458,9 @@
             reader.onload = function (e) {
                 const previewFrame = document.getElementById('avatarPreviewFrame');
                 if (previewFrame) {
-                    previewFrame.innerHTML = '<img src="' + e.target.result + '" alt="Avatar Preview" style="width: 100%; height: 100%; object-fit: cover;">';
+                    previewFrame.classList.add('has-image');
+                    previewFrame.style.backgroundColor = '#ffffff';
+                    previewFrame.innerHTML = '<img src="' + e.target.result + '" alt="Avatar Preview" style="max-width: 58%; max-height: 58%; width: auto; height: auto; object-fit: contain; display: block; margin: auto;">';
                 }
             };
             reader.readAsDataURL(file);
@@ -570,4 +563,50 @@
         }
     }
 </script>
+@endpush
+
+@push('styles')
+<style>
+    .profile-avatar-container {
+        width: 120px !important;
+        height: 120px !important;
+        margin: 0 auto 16px !important;
+    }
+    .profile-avatar-frame {
+        width: 100% !important;
+        height: 100% !important;
+        border-radius: 50% !important;
+        border: 3px solid var(--border) !important;
+        background-color: var(--accent);
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        overflow: hidden !important;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08) !important;
+    }
+    .profile-avatar-frame.has-image,
+    .profile-avatar-frame:has(img) {
+        background-color: #ffffff !important;
+        border-color: var(--border-strong, var(--border)) !important;
+    }
+    .profile-avatar-frame img {
+        max-width: 58% !important;
+        max-height: 58% !important;
+        width: auto !important;
+        height: auto !important;
+        object-fit: contain !important;
+        display: block !important;
+        margin: auto !important;
+        border-radius: 0 !important;
+        background-color: transparent !important;
+    }
+    .profile-camera-trigger {
+        bottom: 2px !important;
+        right: 2px !important;
+        width: 34px !important;
+        height: 34px !important;
+        border: 2.5px solid var(--card, #ffffff) !important;
+        z-index: 5 !important;
+    }
+</style>
 @endpush

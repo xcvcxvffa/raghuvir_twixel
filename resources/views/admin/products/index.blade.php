@@ -128,30 +128,29 @@
 
 <!-- Search & Filter Bar Card -->
 <div class="card-syndron" style="margin-bottom: 1.5rem;">
-    <div class="card-syndron-body" style="padding: 1rem 1.25rem;">
-        <form action="{{ route('admin.products.index') }}" method="GET" style="display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; justify-content: space-between;">
+    <div class="card-syndron-body" style="padding: 14px 18px;">
+        <form action="{{ route('admin.products.index') }}" method="GET" class="product-filter-bar">
             <!-- Left Controls: Search & Category -->
-            <div style="display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; flex: 1; min-width: 280px;">
+            <div class="product-filter-left">
                 <!-- Search Input -->
-                <div class="input-with-icon" style="min-width: 240px; flex: 1; max-width: 360px;">
+                <div class="input-with-icon" style="min-width: 220px; flex: 1; max-width: 320px;">
                     <input
                         type="text"
                         name="search"
                         value="{{ request('search') }}"
                         class="form-control-admin"
-                        placeholder="Search products by name, slug, specs..."
-                        style="padding-top: 0.55rem; padding-bottom: 0.55rem; font-size: 0.825rem;"
+                        placeholder="Search products by name, slug..."
                     >
-                    <i class="fa-solid fa-magnifying-glass input-icon" style="font-size: 0.85rem;"></i>
+                    <i class="fa-solid fa-magnifying-glass input-icon"></i>
                 </div>
 
                 <!-- Category Filter -->
-                <div style="min-width: 190px;">
+                <div style="min-width: 170px;">
                     <select
                         name="category"
                         class="form-control-admin"
                         onchange="this.form.submit()"
-                        style="padding-top: 0.55rem; padding-bottom: 0.55rem; font-size: 0.825rem; cursor: pointer;"
+                        style="cursor: pointer;"
                     >
                         <option value="all">All Categories</option>
                         @foreach($categories as $cat)
@@ -192,7 +191,7 @@
             </div>
 
             <!-- Right Buttons: Apply & Clear Filters -->
-            <div style="display: flex; gap: 0.5rem; align-items: center;">
+            <div class="product-filter-right">
                 @if(request()->filled('search') || (request()->filled('category') && request('category') !== 'all') || request()->filled('status'))
                     <a href="{{ route('admin.products.index') }}" class="btn-syndron btn-syndron-secondary btn-syndron-sm" title="Clear all search and filters" style="color: #64748b;">
                         <i class="fa-solid fa-rotate-left"></i>

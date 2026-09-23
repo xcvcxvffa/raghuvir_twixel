@@ -98,6 +98,7 @@ class ProductController extends Controller
             'detailed_description' => 'nullable|string',
             'sizes' => 'nullable|string',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,webp,svg|max:5120',
+            'banner_image' => 'nullable|image|mimes:jpeg,png,jpg,webp,svg|max:5120',
             'image_alt' => 'nullable|string|max:255',
             'gallery_images.*' => 'nullable|image|mimes:jpeg,png,jpg,webp,svg|max:5120',
             'main_ingredient' => 'nullable|string|max:255',
@@ -163,6 +164,11 @@ class ProductController extends Controller
             $validated['image'] = $this->processAndStoreImage($request->file('image'));
         }
 
+        // Custom Breadcrumb Hero Banner upload
+        if ($request->hasFile('banner_image')) {
+            $validated['banner_image'] = $request->file('banner_image')->store('products/banners', 'public');
+        }
+
         // Multiple Gallery Images upload
         if ($request->hasFile('gallery_images')) {
             $galleryPaths = [];
@@ -211,8 +217,10 @@ class ProductController extends Controller
             'detailed_description' => 'nullable|string',
             'sizes' => 'nullable|string',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,webp,svg|max:5120',
+            'banner_image' => 'nullable|image|mimes:jpeg,png,jpg,webp,svg|max:5120',
             'image_alt' => 'nullable|string|max:255',
             'remove_image' => 'nullable|boolean',
+            'remove_banner_image' => 'nullable|boolean',
             'gallery_images.*' => 'nullable|image|mimes:jpeg,png,jpg,webp,svg|max:5120',
             'main_ingredient' => 'nullable|string|max:255',
             'processing' => 'nullable|string|max:255',
@@ -270,6 +278,22 @@ class ProductController extends Controller
             $validated['image'] = $this->processAndStoreImage($request->file('image'));
         }
 
+        // Handle Breadcrumb Banner Image Deletion
+        if ($request->boolean('remove_banner_image')) {
+            if ($product->banner_image && Storage::disk('public')->exists($product->banner_image)) {
+                Storage::disk('public')->delete($product->banner_image);
+            }
+            $validated['banner_image'] = null;
+        }
+
+        // Handle New Breadcrumb Banner Image Upload
+        if ($request->hasFile('banner_image')) {
+            if ($product->banner_image && Storage::disk('public')->exists($product->banner_image)) {
+                Storage::disk('public')->delete($product->banner_image);
+            }
+            $validated['banner_image'] = $request->file('banner_image')->store('products/banners', 'public');
+        }
+
         // Handle New Gallery Images
         if ($request->hasFile('gallery_images')) {
             $galleryPaths = is_array($product->gallery_images) ? $product->gallery_images : [];
@@ -307,6 +331,10 @@ class ProductController extends Controller
     {
         if ($product->image && !Str::startsWith($product->image, 'images/')) {
             Storage::disk('public')->delete($product->image);
+        }
+
+        if ($product->banner_image && Storage::disk('public')->exists($product->banner_image)) {
+            Storage::disk('public')->delete($product->banner_image);
         }
 
         if (is_array($product->gallery_images)) {

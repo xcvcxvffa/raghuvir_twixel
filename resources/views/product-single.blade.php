@@ -596,8 +596,14 @@
 @section('content')
 <!-- Header End -->
 
+    @php
+        $currentProduct = (isset($product) && $product instanceof \App\Models\Product)
+            ? $product
+            : ((isset($productModel) && $productModel instanceof \App\Models\Product) ? $productModel : null);
+        $productBannerUrl = $currentProduct ? $currentProduct->banner_image_url : \App\Models\PageBanner::getImage('product-details');
+    @endphp
     <!-- Page Header Section Start -->
-    <div class="page-header bg-section dark-section parallaxie" data-image="{{ \App\Models\PageBanner::getImage('product-details') }}" style="background-image: url('{{ \App\Models\PageBanner::getImage('product-details') }}') !important;">
+    <div class="page-header bg-section dark-section parallaxie" data-image="{{ $productBannerUrl }}" style="background-image: url('{{ $productBannerUrl }}') !important;">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">

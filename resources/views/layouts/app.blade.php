@@ -5,11 +5,77 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
-	<meta name="description" content="@yield('meta_description', setting('meta_description', 'Experience pure, traditional stone-ground chakki fresh atta from Raghuvir.'))">
-	<meta name="keywords" content="@yield('meta_keywords', setting('meta_keywords', 'raghuvir atta, whole wheat flour'))">
+@php
+    // Check if on a dynamic Product Details page or Blog Single page
+    $currentProduct = $productModel ?? ($product ?? null);
+    $currentBlog = $blog ?? null;
+
+    if ($currentProduct instanceof \App\Models\Product) {
+        $seoTitle = $currentProduct->seo_title;
+        $seoDescription = $currentProduct->seo_description;
+        $seoKeywords = $currentProduct->seo_keywords;
+        $seoRobots = $currentProduct->is_active ? 'index, follow' : 'noindex, nofollow';
+        $seoCanonical = route('product-details', ['product' => $currentProduct->slug]);
+        $ogType = 'product';
+        $ogTitle = $seoTitle;
+        $ogDescription = $seoDescription;
+        $ogImage = $currentProduct->image_url;
+        $schemaJson = $currentProduct->schema_json;
+    } elseif ($currentBlog instanceof \App\Models\Blog) {
+        $seoTitle = $currentBlog->seo_title;
+        $seoDescription = $currentBlog->seo_description;
+        $seoKeywords = $currentBlog->seo_keywords;
+        $seoRobots = $currentBlog->is_published ? 'index, follow' : 'noindex, nofollow';
+        $seoCanonical = route('blog.single', ['slug' => $currentBlog->slug]);
+        $ogType = 'article';
+        $ogTitle = $seoTitle;
+        $ogDescription = $seoDescription;
+        $ogImage = $currentBlog->image_url;
+        $schemaJson = $currentBlog->schema_json;
+    } else {
+        $pageSeo = \App\Models\PageSeo::forCurrentRoute();
+        $seoTitle = $pageSeo?->meta_title ?: setting('site_title', 'Raghuvir Atta - 100% Pure Sharbati Whole Wheat Flour');
+        $seoDescription = $pageSeo?->meta_description ?: setting('meta_description', 'Experience pure, traditional stone-ground chakki fresh atta from Raghuvir.');
+        $seoKeywords = $pageSeo?->meta_keywords ?: setting('meta_keywords', 'raghuvir atta, chakki fresh atta, pure wheat flour');
+        $seoRobots = $pageSeo?->robots ?: 'index, follow';
+        $seoCanonical = $pageSeo?->canonical_url ?: url()->current();
+        $ogType = 'website';
+        $ogTitle = $pageSeo?->og_title ?: $seoTitle;
+        $ogDescription = $pageSeo?->og_description ?: $seoDescription;
+        $ogImage = $pageSeo ? $pageSeo->og_image_url : asset(setting('header_logo', 'images/Raghuvir Logo.png'));
+        $schemaJson = $pageSeo?->generated_schema_json;
+    }
+@endphp
+	<meta name="description" content="@yield('meta_description', $seoDescription)">
+	<meta name="keywords" content="@yield('meta_keywords', $seoKeywords)">
+	<meta name="robots" content="{{ $seoRobots }}">
 	<meta name="author" content="{{ setting('site_title', 'Raghuvir Atta') }}">
+	<link rel="canonical" href="{{ $seoCanonical }}">
+
+	<!-- Open Graph / Facebook / WhatsApp -->
+	<meta property="og:type" content="{{ $ogType ?? 'website' }}">
+	<meta property="og:site_name" content="{{ setting('site_title', 'Raghuvir Atta') }}">
+	<meta property="og:url" content="{{ $seoCanonical }}">
+	<meta property="og:title" content="@yield('og_title', $ogTitle)">
+	<meta property="og:description" content="@yield('og_description', $ogDescription)">
+	<meta property="og:image" content="@yield('og_image', $ogImage)">
+
+	<!-- Twitter Cards -->
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:url" content="{{ $seoCanonical }}">
+	<meta name="twitter:title" content="@yield('twitter_title', $ogTitle)">
+	<meta name="twitter:description" content="@yield('twitter_description', $ogDescription)">
+	<meta name="twitter:image" content="@yield('twitter_image', $ogImage)">
+
+@if(!empty($schemaJson))
+	<!-- JSON-LD Structured Data Schema -->
+	<script type="application/ld+json">
+	{!! $schemaJson !!}
+	</script>
+@endif
+
 	<!-- Page Title -->
-    <title>@yield('title', setting('site_title', 'Raghuvir Atta - 100% Pure Sharbati Whole Wheat Flour'))</title>
+    <title>@yield('title', $seoTitle)</title>
 	<!-- Favicon Icon -->
 	<link rel="shortcut icon" type="image/x-icon" href="{{ setting_asset('site_favicon', 'images/Raghuvir Favicon.png') }}">
 	<!-- Google Fonts Css-->
@@ -433,6 +499,11 @@
         // Restore hidden fields after reset
         document.getElementById('inq-product').value = product;
         document.getElementById('inq-size').value    = size;
+        // Auto-fill message with product + size
+        const msgEl = document.getElementById('inq-message');
+        if (msgEl && product) {
+            msgEl.value = 'Hello Raghuvir Atta, I am interested in inquiring about ' + product + (size ? ' (' + size + ')' : '') + '. Please provide more details.';
+        }
         modal.classList.add('inq-open');
         document.body.style.overflow = 'hidden';
         setTimeout(function() { document.getElementById('inq-name').focus(); }, 300);

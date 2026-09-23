@@ -190,6 +190,79 @@ class Blog extends Model
     }
 
     /**
+     * Compute fallback or custom SEO Title for dynamic blog article.
+     */
+    public function getSeoTitleAttribute(): string
+    {
+        return !empty($this->meta_title)
+            ? $this->meta_title
+            : "{$this->title} | Healthy Recipes & Nutrition - Raghuvir Atta";
+    }
+
+    /**
+     * Compute fallback or custom SEO Description for dynamic blog article.
+     */
+    public function getSeoDescriptionAttribute(): string
+    {
+        if (!empty($this->meta_description)) {
+            return $this->meta_description;
+        }
+
+        if (!empty($this->excerpt)) {
+            return Str::limit(strip_tags($this->excerpt), 160);
+        }
+
+        return Str::limit(strip_tags($this->content ?? ''), 160) ?: "Read insightful cooking guides, stoneground flour benefits, and nutrition tips from Raghuvir Atta.";
+    }
+
+    /**
+     * Compute fallback or custom SEO Keywords for dynamic blog article.
+     */
+    public function getSeoKeywordsAttribute(): string
+    {
+        if (!empty($this->meta_keywords)) {
+            return $this->meta_keywords;
+        }
+
+        $keywords = [$this->category, $this->tags, 'raghuvir atta', 'healthy recipes', 'flour nutrition'];
+        return implode(', ', array_filter($keywords));
+    }
+
+    /**
+     * Generate Schema.org BlogPosting structured JSON-LD.
+     */
+    public function getSchemaJsonAttribute(): string
+    {
+        $schema = [
+            '@context' => 'https://schema.org',
+            '@type' => 'BlogPosting',
+            'headline' => $this->seo_title,
+            'description' => $this->seo_description,
+            'image' => [$this->image_url],
+            'datePublished' => ($this->published_at ?? $this->created_at)?->toIso8601String(),
+            'dateModified' => $this->updated_at?->toIso8601String(),
+            'author' => [
+                '@type' => 'Person',
+                'name' => $this->author_name ?: 'Raghuvir Atta Culinary Expert',
+            ],
+            'publisher' => [
+                '@type' => 'Organization',
+                'name' => setting('site_title', 'Raghuvir Atta'),
+                'logo' => [
+                    '@type' => 'ImageObject',
+                    'url' => asset('images/Raghuvir Logo.png'),
+                ],
+            ],
+            'mainEntityOfPage' => [
+                '@type' => 'WebPage',
+                '@id' => route('blog.single', ['slug' => $this->slug]),
+            ],
+        ];
+
+        return json_encode($schema, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
+    }
+
+    /**
      * Compute real-time SEO health score (0-100).
      */
     public function getSeoScoreAttribute(): int

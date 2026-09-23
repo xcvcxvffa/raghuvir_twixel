@@ -1685,7 +1685,7 @@
                             <div class="footer-links-gold">
                                 <h3>Quick Links</h3>
                                 <ul>
-                                    <li><a href="{{ route('home-v2') }}">Homepage</a></li>
+                                    <li><a href="{{ route('home-v2') }}">Home</a></li>
                                     <li><a href="{{ route('about') }}">About Us</a></li>
                                     <li><a href="{{ route('products') }}">Our Products</a></li>
                                     <li><a href="{{ route('contact') }}">Contact Us</a></li>

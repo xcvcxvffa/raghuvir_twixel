@@ -475,7 +475,7 @@
                             <!-- Why Choose Info Box Start -->
                             <div class="why-choose-info-box">
                                 <div class="icon-box">
-                                    <img src="{{ asset('images/icon-why-choose-us-info-box.svg') }}" alt="">
+                                    <img src="{{ asset('images/icon-why-choose-us-info-box.svg') }}?v={{ filemtime(public_path('images/icon-why-choose-us-info-box.svg')) }}" alt="">
                                 </div>
                                 <div class="why-choose-info-content">
                                     <h3>Transparent & Traceable Produce</h3>
@@ -486,7 +486,7 @@
                             <!-- Why Choose Image 2 Start -->
                             <div class="why-choose-image">
                                 <figure class="image-anime">
-                                    <img src="{{ asset('images/why-choose-image-2.jpg') }}" alt="">
+                                    <img src="{{ asset('images/why-choose-image-2.jpg') }}?v={{ filemtime(public_path('images/why-choose-image-2.jpg')) }}" alt="Pure Golden Wheat Grains">
                                 </figure>
                             </div>
                             <!-- Why Choose Image 2 End -->

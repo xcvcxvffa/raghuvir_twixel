@@ -76,7 +76,7 @@
                 Recommended Banner Image Dimensions &amp; Upload Specifications
             </h3>
             <span style="font-size: 0.78rem; color: var(--muted-foreground);">
-                અહીં આપેલી સાઇઝ પ્રમાણે ઇમેજ અપલોડ કરશો જેથી તમામ સ્ક્રીન પર બેનર એકદમ ક્લિયર અને પ્રોફેશનલ દેખાશે.
+                Follow these recommended dimensions to ensure banners look sharp, properly framed, and professional on all screen sizes.
             </span>
         </div>
     </div>
@@ -222,6 +222,16 @@
                             </div>
                             <a href="{{ route('admin.blogs.index') }}" style="color: #0284c7; font-weight: 700; text-decoration: none; white-space: nowrap; font-size: 0.72rem; display: flex; align-items: center; gap: 3px;">
                                 <span>Per Article</span> <i class="fa-solid fa-arrow-right" style="font-size: 0.65rem;"></i>
+                            </a>
+                        </div>
+                    @elseif($banner->page_key === 'product-details')
+                        <div style="margin-top: 0.5rem; margin-bottom: 0.5rem; padding: 0.45rem 0.7rem; background: rgba(14, 165, 233, 0.08); border: 1px dashed rgba(14, 165, 233, 0.25); border-radius: 8px; font-size: 0.74rem; color: var(--foreground); display: flex; align-items: center; justify-content: space-between; gap: 0.4rem;">
+                            <div>
+                                <i class="fa-solid fa-circle-info" style="color: #0284c7; margin-right: 3px;"></i>
+                                <span>Master banner for product pages.</span>
+                            </div>
+                            <a href="{{ route('admin.products.index') }}" style="color: #0284c7; font-weight: 700; text-decoration: none; white-space: nowrap; font-size: 0.72rem; display: flex; align-items: center; gap: 3px;">
+                                <span>Per Product</span> <i class="fa-solid fa-arrow-right" style="font-size: 0.65rem;"></i>
                             </a>
                         </div>
                     @elseif($banner->page_key === 'blog')
