@@ -3564,6 +3564,13 @@ header.main-header .header-sticky.active {
 	overflow: hidden;
 }
 
+.page-header.product-single-hero {
+	background-position: center bottom !important;
+	background-attachment: scroll !important;
+	background-size: cover !important;
+	padding: 275px 0 140px;
+}
+
 .page-header:before {
 	content: '';
 	position: absolute;

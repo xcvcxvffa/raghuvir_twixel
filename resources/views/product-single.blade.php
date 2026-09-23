@@ -603,7 +603,7 @@
         $productBannerUrl = $currentProduct ? $currentProduct->banner_image_url : \App\Models\PageBanner::getImage('product-details');
     @endphp
     <!-- Page Header Section Start -->
-    <div class="page-header bg-section dark-section parallaxie" data-image="{{ $productBannerUrl }}" style="background-image: url('{{ $productBannerUrl }}') !important;">
+    <div class="page-header bg-section dark-section product-single-hero" style="background-image: url('{{ $productBannerUrl }}') !important;">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
