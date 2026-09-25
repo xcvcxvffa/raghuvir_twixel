@@ -135,7 +135,7 @@
                 </div>
 
                 <!-- Avatar Actions: Change Photo & Remove Photo -->
-                <div style="display: flex; gap: 8px; justify-content: center; align-items: center; margin-bottom: 1.25rem; flex-wrap: wrap;">
+                <div style="display: flex; gap: 8px; justify-content: center; align-items: center; margin-bottom: 0.6rem; flex-wrap: wrap;">
                     <label for="avatarInput" class="btn-syndron btn-syndron-secondary" style="padding: 5px 12px; font-size: 0.775rem; cursor: pointer; border-radius: var(--radius-sm); gap: 6px; display: inline-flex; align-items: center;">
                         <i class="fa-solid fa-camera"></i>
                         <span>Change Photo</span>
@@ -151,6 +151,22 @@
                         </form>
                     @endif
                 </div>
+
+                @if($user->avatar)
+                <!-- Display Mode Toggle: Fit (Logo) vs Fill (Photo) -->
+                <div style="display: flex; justify-content: center; margin-bottom: 1.25rem;">
+                    <div style="display: inline-flex; background: rgba(0, 0, 0, 0.04); padding: 3px; border-radius: 20px; border: 1px solid var(--border); gap: 2px;">
+                        <button type="button" id="avatarFitBtn" class="avatar-mode-pill active" onclick="setAvatarMode('fit')" title="Show entire logo centered with clean margin">
+                            <i class="fa-solid fa-compress" style="font-size: 0.7rem;"></i>
+                            <span>Fit Logo</span>
+                        </button>
+                        <button type="button" id="avatarFillBtn" class="avatar-mode-pill" onclick="setAvatarMode('fill')" title="Fill entire circle edge-to-edge">
+                            <i class="fa-solid fa-expand" style="font-size: 0.7rem;"></i>
+                            <span>Fill Photo</span>
+                        </button>
+                    </div>
+                </div>
+                @endif
 
                 <!-- Profile Meta List -->
                 <div class="profile-meta-list">
@@ -527,6 +543,34 @@
         }
     }
 
+    // Interactive Avatar Display Mode Switcher (Fit Logo vs Fill Photo)
+    function setAvatarMode(mode) {
+        const frame = document.getElementById('avatarPreviewFrame');
+        const fitBtn = document.getElementById('avatarFitBtn');
+        const fillBtn = document.getElementById('avatarFillBtn');
+
+        if (mode === 'fill') {
+            if (frame) frame.classList.add('mode-fill');
+            if (fillBtn) fillBtn.classList.add('active');
+            if (fitBtn) fitBtn.classList.remove('active');
+            try { localStorage.setItem('admin_avatar_mode', 'fill'); } catch(e) {}
+        } else {
+            if (frame) frame.classList.remove('mode-fill');
+            if (fitBtn) fitBtn.classList.add('active');
+            if (fillBtn) fillBtn.classList.remove('active');
+            try { localStorage.setItem('admin_avatar_mode', 'fit'); } catch(e) {}
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        try {
+            const saved = localStorage.getItem('admin_avatar_mode') || 'fit';
+            setAvatarMode(saved);
+        } catch(e) {
+            setAvatarMode('fit');
+        }
+    });
+
     // Realtime Password Strength Evaluator
     function evaluatePasswordStrength(password) {
         const seg1 = document.getElementById('seg1');
@@ -627,43 +671,74 @@
     .profile-avatar-container {
         width: 130px !important;
         height: 130px !important;
-        margin: 0 auto 18px !important;
+        margin: 0 auto 16px !important;
         position: relative !important;
     }
     .profile-avatar-frame {
         width: 100% !important;
         height: 100% !important;
         border-radius: 50% !important;
-        border: 4px solid var(--card, #ffffff) !important;
-        outline: 2.5px solid var(--accent, #EF801C) !important;
+        border: 3px solid #e2e8f0 !important;
         background-color: #ffffff !important;
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
         overflow: hidden !important;
-        box-shadow: 0 8px 24px rgba(239, 128, 28, 0.18) !important;
+        box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08) !important;
         position: relative !important;
-        transition: transform 0.25s ease, box-shadow 0.25s ease !important;
+        transition: all 0.25s ease !important;
     }
     .profile-avatar-frame:hover {
-        transform: scale(1.02);
-        box-shadow: 0 10px 28px rgba(239, 128, 28, 0.28) !important;
+        border-color: #EF801C !important;
+        box-shadow: 0 6px 24px rgba(239, 128, 28, 0.22) !important;
     }
     .profile-avatar-frame.has-image {
         background-color: #ffffff !important;
     }
+    /* Mode 1 (Default): Fit - perfectly proportioned with 15px padding for logos */
     .profile-avatar-frame img {
+        width: 76% !important;
+        height: 76% !important;
+        max-width: 76% !important;
+        max-height: 76% !important;
+        object-fit: contain !important;
+        object-position: center !important;
+        display: block !important;
+        margin: auto !important;
+        border-radius: 0 !important;
+        background-color: transparent !important;
+        transition: all 0.25s ease !important;
+    }
+    /* Mode 2: Fill - edge-to-edge for user face photos */
+    .profile-avatar-frame.mode-fill img {
         width: 100% !important;
         height: 100% !important;
         max-width: 100% !important;
         max-height: 100% !important;
         object-fit: cover !important;
-        object-position: center !important;
-        display: block !important;
-        margin: 0 !important;
-        padding: 0 !important;
         border-radius: 50% !important;
-        background-color: #ffffff !important;
+    }
+    .avatar-mode-pill {
+        border: none;
+        background: transparent;
+        padding: 4px 11px;
+        font-size: 0.72rem;
+        font-weight: 600;
+        color: var(--muted-foreground);
+        border-radius: 16px;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        transition: all 0.2s ease;
+    }
+    .avatar-mode-pill:hover {
+        color: var(--foreground);
+    }
+    .avatar-mode-pill.active {
+        background: #ffffff;
+        color: #EF801C;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
     }
     .profile-avatar-frame #avatarInitialPreview {
         width: 100% !important;
@@ -677,15 +752,16 @@
         user-select: none !important;
     }
     .profile-camera-trigger {
-        bottom: 3px !important;
-        right: 3px !important;
-        width: 38px !important;
-        height: 38px !important;
-        border: 3px solid #ffffff !important;
+        position: absolute !important;
+        bottom: 2px !important;
+        right: 2px !important;
+        width: 36px !important;
+        height: 36px !important;
+        border: 2.5px solid #ffffff !important;
         background: #EF801C !important;
         color: #ffffff !important;
         border-radius: 50% !important;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2) !important;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.18) !important;
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
@@ -694,7 +770,7 @@
         transition: transform 0.2s ease, background-color 0.2s ease !important;
     }
     .profile-camera-trigger:hover {
-        transform: scale(1.12) !important;
+        transform: scale(1.1) !important;
         background-color: #e07212 !important;
     }
 </style>
