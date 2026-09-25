@@ -20,6 +20,31 @@ if (!function_exists('setting')) {
     }
 }
 
+if (!function_exists('storage_asset')) {
+    /**
+     * Get a universally accessible asset URL for files stored in storage/app/public.
+     * Uses the /media/ route so that servers with symlink blocks (like Hostinger 403)
+     * work seamlessly and without errors.
+     */
+    function storage_asset(?string $path): string
+    {
+        if (empty($path)) {
+            return '';
+        }
+
+        if (str_starts_with($path, 'http://') || str_starts_with($path, 'https://')) {
+            return $path;
+        }
+
+        if (str_starts_with($path, 'images/')) {
+            return asset($path);
+        }
+
+        $clean = ltrim(preg_replace('#^/?(storage|media)/#', '', str_replace('\\', '/', $path)), '/');
+        return asset('media/' . $clean);
+    }
+}
+
 if (!function_exists('setting_asset')) {
     /**
      * Get the asset URL for an uploaded setting image, or return fallback asset.
@@ -32,11 +57,7 @@ if (!function_exists('setting_asset')) {
     {
         $val = setting($key);
         if ($val) {
-            // Check if it's stored in storage/
-            if (str_starts_with($val, 'storage/') || str_starts_with($val, 'images/')) {
-                return asset($val);
-            }
-            return asset('storage/' . ltrim($val, '/'));
+            return storage_asset($val);
         }
 
         return asset($fallbackAsset);

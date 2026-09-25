@@ -55,9 +55,11 @@ class User extends Authenticatable
         $cleanPath = preg_replace('#^/?storage/#', '', $cleanPath);
         $cleanPath = ltrim($cleanPath, '/');
 
-        // Check file on public disk or public/storage
-        if (\Illuminate\Support\Facades\Storage::disk('public')->exists($cleanPath) || file_exists(public_path('storage/' . $cleanPath))) {
-            return asset('storage/' . $cleanPath);
+        // Check file on public disk, storage_path, or public/storage
+        if (\Illuminate\Support\Facades\Storage::disk('public')->exists($cleanPath) 
+            || file_exists(storage_path('app/public/' . $cleanPath))
+            || file_exists(public_path('storage/' . $cleanPath))) {
+            return asset('media/' . $cleanPath);
         }
 
         return null;

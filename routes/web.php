@@ -128,12 +128,42 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('/notifications/{notification}/read', [AdminNotificationController::class, 'markAsRead'])->name('notifications.read');
         Route::delete('/notifications/clear', [AdminNotificationController::class, 'clearAll'])->name('notifications.clear');
 
-        // Database Migrations & Optimization Runner (Protected by auth and admin middleware)
+        // Database Migrations & Storage Optimization Runner (Protected by auth and admin middleware)
         Route::match(['get', 'post'], '/migrate', function (\Illuminate\Http\Request $request) {
-
             try {
+                $output = '';
+
+                // 1. Repair or Create Storage Symlink & Permissions
+                $publicStorage = public_path('storage');
+                $targetStorage = storage_path('app/public');
+
+                if (!file_exists($targetStorage)) {
+                    @mkdir($targetStorage, 0755, true);
+                }
+
+                if (is_link($publicStorage) && !file_exists($publicStorage)) {
+                    @unlink($publicStorage);
+                    $output .= "Removed stale broken symlink.\n";
+                }
+
+                if (!file_exists($publicStorage)) {
+                    try {
+                        \Illuminate\Support\Facades\Artisan::call('storage:link');
+                        $output .= \Illuminate\Support\Facades\Artisan::output() . "\n";
+                    } catch (\Throwable $e) {
+                        @symlink($targetStorage, $publicStorage);
+                        $output .= "Symlink fallback executed.\n";
+                    }
+                }
+
+                @chmod($targetStorage, 0755);
+                if (file_exists($publicStorage)) {
+                    @chmod($publicStorage, 0755);
+                }
+
+                // 2. Run Database Migrations
                 \Illuminate\Support\Facades\Artisan::call('migrate', ['--force' => true]);
-                $output = \Illuminate\Support\Facades\Artisan::output();
+                $output .= \Illuminate\Support\Facades\Artisan::output();
 
                 if (class_exists(\Database\Seeders\PageSeoSeeder::class)) {
                     \Illuminate\Support\Facades\Artisan::call('db:seed', ['--class' => 'PageSeoSeeder', '--force' => true]);
@@ -143,10 +173,54 @@ Route::prefix('admin')->name('admin.')->group(function () {
                 \Illuminate\Support\Facades\Artisan::call('optimize:clear');
                 $output .= "\n" . \Illuminate\Support\Facades\Artisan::output();
 
-                return response("<html><body style='background:#0f172a;color:#10b981;font-family:sans-serif;padding:30px;line-height:1.6;'><div style='max-width:800px;margin:0 auto;'><h2 style='color:#10b981;'>✅ Migrations & Tables Updated Successfully!</h2><pre style='background:#1e293b;padding:20px;border-radius:8px;color:#94a3b8;font-family:monospace;white-space:pre-wrap;'>" . htmlspecialchars($output) . "</pre><div style='margin-top:20px;'><a href='/admin/seo' style='display:inline-block;padding:12px 24px;background:#ef801c;color:#fff;text-decoration:none;border-radius:6px;font-weight:bold;'>Go to Page SEO</a> <a href='/admin/dashboard' style='display:inline-block;padding:12px 24px;background:#334155;color:#fff;text-decoration:none;border-radius:6px;font-weight:bold;margin-left:10px;'>Back to Dashboard</a></div></div></body></html>");
+                return response("<html><body style='background:#0f172a;color:#10b981;font-family:sans-serif;padding:30px;line-height:1.6;'><div style='max-width:800px;margin:0 auto;'><h2 style='color:#10b981;'>✅ Migrations & Storage Updated Successfully!</h2><pre style='background:#1e293b;padding:20px;border-radius:8px;color:#94a3b8;font-family:monospace;white-space:pre-wrap;'>" . htmlspecialchars($output) . "</pre><div style='margin-top:20px;'><a href='/admin/profile' style='display:inline-block;padding:12px 24px;background:#ef801c;color:#fff;text-decoration:none;border-radius:6px;font-weight:bold;'>Go to Profile</a> <a href='/admin/banners' style='display:inline-block;padding:12px 24px;background:#10b981;color:#fff;text-decoration:none;border-radius:6px;font-weight:bold;margin-left:10px;'>Go to Banners</a> <a href='/admin/dashboard' style='display:inline-block;padding:12px 24px;background:#334155;color:#fff;text-decoration:none;border-radius:6px;font-weight:bold;margin-left:10px;'>Dashboard</a></div></div></body></html>");
             } catch (\Throwable $e) {
-                return response("<html><body style='background:#0f172a;color:#ef4444;font-family:sans-serif;padding:30px;'><div style='max-width:800px;margin:0 auto;'><h2 style='color:#ef4444;'>❌ Migration Error</h2><pre style='background:#1e293b;padding:20px;border-radius:8px;color:#f87171;font-family:monospace;white-space:pre-wrap;'>" . htmlspecialchars($e->getMessage()) . "</pre></div></body></html>", 500);
+                return response("<html><body style='background:#0f172a;color:#ef4444;font-family:sans-serif;padding:30px;'><div style='max-width:800px;margin:0 auto;'><h2 style='color:#ef4444;'>❌ Migration / Storage Error</h2><pre style='background:#1e293b;padding:20px;border-radius:8px;color:#f87171;font-family:monospace;white-space:pre-wrap;'>" . htmlspecialchars($e->getMessage()) . "</pre></div></body></html>", 500);
             }
         })->name('migrate');
     });
 });
+
+/*
+|--------------------------------------------------------------------------
+| Universal Media & Storage Asset Stream Routes
+|--------------------------------------------------------------------------
+| Bypasses web server symlink limitations (e.g. Hostinger LiteSpeed 403 Forbidden)
+| by safely streaming files directly from storage/app/public with caching headers.
+*/
+Route::get('/media/{path}', function (string $path) {
+    if (str_contains($path, '..')) {
+        abort(400, 'Invalid path');
+    }
+
+    $cleanPath = ltrim(str_replace('\\', '/', $path), '/');
+    $fullPath = storage_path('app/public/' . $cleanPath);
+
+    if (!file_exists($fullPath) || is_dir($fullPath)) {
+        abort(404);
+    }
+
+    return response()->file($fullPath, [
+        'Cache-Control' => 'public, max-age=31536000, immutable',
+        'X-Content-Type-Options' => 'nosniff',
+    ]);
+})->where('path', '.*')->name('media.serve');
+
+Route::get('/storage/{path}', function (string $path) {
+    if (str_contains($path, '..')) {
+        abort(400, 'Invalid path');
+    }
+
+    $cleanPath = ltrim(str_replace('\\', '/', $path), '/');
+    $fullPath = storage_path('app/public/' . $cleanPath);
+
+    if (!file_exists($fullPath) || is_dir($fullPath)) {
+        abort(404);
+    }
+
+    return response()->file($fullPath, [
+        'Cache-Control' => 'public, max-age=31536000, immutable',
+        'X-Content-Type-Options' => 'nosniff',
+    ]);
+})->where('path', '.*')->name('storage.serve');
+

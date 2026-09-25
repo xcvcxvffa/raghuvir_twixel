@@ -109,7 +109,7 @@ class Product extends Model
             return asset($this->image);
         }
 
-        return asset('storage/' . ltrim($this->image, '/'));
+        return storage_asset($this->image);
     }
 
     /**
@@ -119,8 +119,8 @@ class Product extends Model
      */
     public function getBannerImageUrlAttribute(): string
     {
-        if (!empty($this->banner_image) && \Illuminate\Support\Facades\Storage::disk('public')->exists($this->banner_image)) {
-            return asset('storage/' . $this->banner_image);
+        if (!empty($this->banner_image) && (\Illuminate\Support\Facades\Storage::disk('public')->exists($this->banner_image) || file_exists(storage_path('app/public/' . $this->banner_image)))) {
+            return storage_asset($this->banner_image);
         }
 
         return \App\Models\PageBanner::getImage('product-details');
@@ -149,7 +149,7 @@ class Product extends Model
 
                 $url = Str::startsWith($img, ['http://', 'https://'])
                     ? $img
-                    : (Str::startsWith($img, 'images/') ? asset($img) : asset('storage/' . ltrim($img, '/')));
+                    : (Str::startsWith($img, 'images/') ? asset($img) : storage_asset($img));
 
                 // Prevent cross-product image leak (e.g. whole wheat atta images in wheat bran or bati atta)
                 if (!Str::contains($this->slug, 'whole-wheat') && Str::contains($img, ['product_atta_white', 'product_atta_transparent', 'product_atta.jpg'])) {

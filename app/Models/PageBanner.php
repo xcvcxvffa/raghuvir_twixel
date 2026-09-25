@@ -82,7 +82,7 @@ class PageBanner extends Model
     public function getImageUrl(): string
     {
         if ($this->hasCustomImage()) {
-            return asset('storage/' . $this->banner_image);
+            return storage_asset($this->banner_image);
         }
 
         return asset(self::DEFAULT_IMAGE);
@@ -100,7 +100,7 @@ class PageBanner extends Model
         $all = static::getAllCached();
 
         if (isset($all[$pageKey]) && !empty($all[$pageKey]['banner_image'])) {
-            return asset('storage/' . $all[$pageKey]['banner_image']);
+            return storage_asset($all[$pageKey]['banner_image']);
         }
 
         return $fallback ?? asset(self::DEFAULT_IMAGE);

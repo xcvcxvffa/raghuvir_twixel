@@ -92,7 +92,7 @@ class Blog extends Model
             return asset($this->image);
         }
 
-        return asset('storage/' . ltrim($this->image, '/'));
+        return storage_asset($this->image);
     }
 
     /**
@@ -102,8 +102,8 @@ class Blog extends Model
      */
     public function getBannerImageUrlAttribute(): string
     {
-        if (!empty($this->banner_image) && \Illuminate\Support\Facades\Storage::disk('public')->exists($this->banner_image)) {
-            return asset('storage/' . $this->banner_image);
+        if (!empty($this->banner_image) && (\Illuminate\Support\Facades\Storage::disk('public')->exists($this->banner_image) || file_exists(storage_path('app/public/' . $this->banner_image)))) {
+            return storage_asset($this->banner_image);
         }
 
         return \App\Models\PageBanner::getImage('blog-single');

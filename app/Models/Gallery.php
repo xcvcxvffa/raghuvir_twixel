@@ -84,8 +84,8 @@ class Gallery extends Model
         }
 
         // Check if image path is stored in storage
-        if (Storage::disk('public')->exists($this->image)) {
-            return asset('storage/' . $this->image);
+        if (Storage::disk('public')->exists($this->image) || file_exists(storage_path('app/public/' . $this->image))) {
+            return storage_asset($this->image);
         }
 
         // Check if it's already a relative public path (e.g., 'images/gallery-1.jpg')
@@ -147,8 +147,8 @@ class Gallery extends Model
             return null;
         }
 
-        if (Storage::disk('public')->exists($value)) {
-            return asset('storage/' . $value);
+        if (Storage::disk('public')->exists($value) || file_exists(storage_path('app/public/' . $value))) {
+            return storage_asset($value);
         }
 
         if (file_exists(public_path($value))) {
