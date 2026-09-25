@@ -40,19 +40,6 @@
     </div>
 </div>
 
-@if(session('success'))
-    <div class="syndron-alert syndron-alert-success" style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); color: #10b981; padding: 12px 18px; border-radius: var(--radius-md, 8px); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 12px; font-weight: 500;">
-        <i class="fa-solid fa-circle-check" style="font-size: 1.25rem;"></i>
-        <div>{{ session('success') }}</div>
-    </div>
-@endif
-
-@if(session('info'))
-    <div class="syndron-alert syndron-alert-info" style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); color: #3b82f6; padding: 12px 18px; border-radius: var(--radius-md, 8px); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 12px; font-weight: 500;">
-        <i class="fa-solid fa-circle-info" style="font-size: 1.25rem;"></i>
-        <div>{{ session('info') }}</div>
-    </div>
-@endif
 
 @if($errors->any())
     <div class="syndron-alert syndron-alert-danger">
