@@ -427,7 +427,7 @@
             <header class="syndron-topbar">
                 <div class="topbar-left">
                     <button type="button" class="toggle-sidebar-btn" id="toggleSidebarBtn" title="Toggle Sidebar">
-                        <i class="fa-solid fa-bars-staggered"></i>
+                        <i class="fa-solid fa-bars"></i>
                     </button>
 
                     <!-- Search Input with Live Dropdown & Shortcut -->
