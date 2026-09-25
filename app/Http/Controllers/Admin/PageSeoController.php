@@ -60,6 +60,10 @@ class PageSeoController extends Controller
             }
         }
 
+        if ($request->input('tab') === 'analytics') {
+            return redirect()->route('admin.webmaster.index');
+        }
+
         $activeTab = $request->input('tab', 'pages');
 
         $allRecords = PageSeo::all();
@@ -116,6 +120,27 @@ class PageSeoController extends Controller
         
         $averageScore = round(($pageAvg * 0.4) + ($prodAvg * 0.3) + ($blogAvg * 0.3));
 
+        // Robots.txt content
+        $robotsPath = public_path('robots.txt');
+        $robotsContent = file_exists($robotsPath) ? file_get_contents($robotsPath) : "User-agent: *\nDisallow: /admin/\nAllow: /\n\nSitemap: " . url('/sitemap.xml');
+
+        // Analytics & Webmaster Settings
+        $analyticsSettings = [
+            'google_search_console_code' => (string) setting('google_search_console_code', ''),
+            'ga4_measurement_id'         => (string) setting('ga4_measurement_id', ''),
+            'ga4_enabled'                => (bool) setting('ga4_enabled', true),
+            'ga4_anonymize_ip'           => (bool) setting('ga4_anonymize_ip', false),
+            'gtm_container_id'           => (string) setting('gtm_container_id', ''),
+            'gtm_enabled'                => (bool) setting('gtm_enabled', true),
+            'bing_webmaster_code'        => (string) setting('bing_webmaster_code', ''),
+            'meta_pixel_id'              => (string) setting('meta_pixel_id', ''),
+            'meta_pixel_enabled'         => (bool) setting('meta_pixel_enabled', true),
+            'pinterest_verify_code'      => (string) setting('pinterest_verify_code', ''),
+            'yandex_verify_code'         => (string) setting('yandex_verify_code', ''),
+            'custom_header_scripts'      => (string) setting('custom_header_scripts', ''),
+            'custom_footer_scripts'      => (string) setting('custom_footer_scripts', ''),
+        ];
+
         return view('admin.seo.index', compact(
             'seos',
             'products',
@@ -131,7 +156,9 @@ class PageSeoController extends Controller
             'goodScoreCount',
             'needsWorkCount',
             'averageScore',
-            'activeTab'
+            'activeTab',
+            'robotsContent',
+            'analyticsSettings'
         ));
     }
 
@@ -274,4 +301,98 @@ class PageSeoController extends Controller
         return redirect()->back()
             ->with('success', "Social share image for \"{$seo->page_name}\" has been reset to the default website logo.");
     }
+
+    /**
+     * Update Webmaster Tools, Google Search Console, Google Analytics & Meta Pixel Integrations.
+     */
+    public function updateAnalytics(Request $request): RedirectResponse
+    {
+        $validated = $request->validate([
+            'google_search_console_code' => 'nullable|string|max:500',
+            'ga4_measurement_id'         => 'nullable|string|max:60',
+            'gtm_container_id'           => 'nullable|string|max:60',
+            'bing_webmaster_code'        => 'nullable|string|max:500',
+            'meta_pixel_id'              => 'nullable|string|max:60',
+            'pinterest_verify_code'      => 'nullable|string|max:500',
+            'yandex_verify_code'         => 'nullable|string|max:500',
+            'custom_header_scripts'      => 'nullable|string',
+            'custom_footer_scripts'      => 'nullable|string',
+        ]);
+
+        // 1. Google Search Console: Clean up if user pasted entire HTML meta tag
+        $gsc = trim($validated['google_search_console_code'] ?? '');
+        if (preg_match('/content=["\']([^"\']+)["\']/i', $gsc, $matches)) {
+            $gsc = $matches[1];
+        }
+        \App\Models\Setting::set('google_search_console_code', $gsc, 'seo', 'text', 'Google Search Console Verification');
+
+        // 2. Bing Webmaster Tools
+        $bing = trim($validated['bing_webmaster_code'] ?? '');
+        if (preg_match('/content=["\']([^"\']+)["\']/i', $bing, $matches)) {
+            $bing = $matches[1];
+        }
+        \App\Models\Setting::set('bing_webmaster_code', $bing, 'seo', 'text', 'Bing Webmaster Tools Verification');
+
+        // 3. Google Analytics 4 (GA4)
+        $ga4Id = strtoupper(trim($validated['ga4_measurement_id'] ?? ''));
+        \App\Models\Setting::set('ga4_measurement_id', $ga4Id, 'seo', 'text', 'Google Analytics 4 Measurement ID');
+        \App\Models\Setting::set('ga4_enabled', $request->boolean('ga4_enabled') ? '1' : '0', 'seo', 'boolean', 'Enable Google Analytics');
+        \App\Models\Setting::set('ga4_anonymize_ip', $request->boolean('ga4_anonymize_ip') ? '1' : '0', 'seo', 'boolean', 'GA4 Anonymize IP');
+
+        // 4. Google Tag Manager (GTM)
+        $gtmId = strtoupper(trim($validated['gtm_container_id'] ?? ''));
+        \App\Models\Setting::set('gtm_container_id', $gtmId, 'seo', 'text', 'Google Tag Manager Container ID');
+        \App\Models\Setting::set('gtm_enabled', $request->boolean('gtm_enabled') ? '1' : '0', 'seo', 'boolean', 'Enable Google Tag Manager');
+
+        // 5. Meta / Facebook Pixel
+        $pixelId = trim($validated['meta_pixel_id'] ?? '');
+        \App\Models\Setting::set('meta_pixel_id', $pixelId, 'seo', 'text', 'Meta Pixel ID');
+        \App\Models\Setting::set('meta_pixel_enabled', $request->boolean('meta_pixel_enabled') ? '1' : '0', 'seo', 'boolean', 'Enable Meta Pixel');
+
+        // 6. Pinterest & Yandex
+        $pinterest = trim($validated['pinterest_verify_code'] ?? '');
+        if (preg_match('/content=["\']([^"\']+)["\']/i', $pinterest, $matches)) {
+            $pinterest = $matches[1];
+        }
+        \App\Models\Setting::set('pinterest_verify_code', $pinterest, 'seo', 'text', 'Pinterest Domain Verification');
+
+        $yandex = trim($validated['yandex_verify_code'] ?? '');
+        if (preg_match('/content=["\']([^"\']+)["\']/i', $yandex, $matches)) {
+            $yandex = $matches[1];
+        }
+        \App\Models\Setting::set('yandex_verify_code', $yandex, 'seo', 'text', 'Yandex Verification Token');
+
+        // 7. Custom Scripts
+        \App\Models\Setting::set('custom_header_scripts', $validated['custom_header_scripts'] ?? '', 'seo', 'textarea', 'Custom Head Scripts');
+        \App\Models\Setting::set('custom_footer_scripts', $validated['custom_footer_scripts'] ?? '', 'seo', 'textarea', 'Custom Footer Scripts');
+
+        \Illuminate\Support\Facades\Cache::forget(\App\Models\Setting::CACHE_KEY);
+
+        return redirect()->route('admin.seo.index', ['tab' => 'analytics'])
+            ->with('success', 'Google Analytics, Google Search Console, and Webmaster tracking tags have been updated successfully!');
+    }
+
+    /**
+     * Update robots.txt file directly from the SEO Hub.
+     */
+    public function updateRobotsTxt(Request $request): RedirectResponse
+    {
+        $validated = $request->validate([
+            'robots_content' => 'required|string|max:20000',
+        ]);
+
+        $content = $validated['robots_content'];
+
+        // Ensure Sitemap reference is present if not already in content
+        $sitemapLine = 'Sitemap: ' . url('/sitemap.xml');
+        if (!str_contains($content, 'sitemap.xml')) {
+            $content = rtrim($content) . "\n\n" . $sitemapLine . "\n";
+        }
+
+        file_put_contents(public_path('robots.txt'), $content);
+
+        return redirect()->route('admin.seo.index', ['tab' => 'analytics'])
+            ->with('success', 'robots.txt file was saved successfully! Google and search crawlers will now follow these directives.');
+    }
 }
+

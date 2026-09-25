@@ -123,7 +123,7 @@ class PageSeo extends Model
             '404'            => '404',
         ];
 
-        $pageKey = $map[$routeName] ?? null;
+        $pageKey = ($routeName !== null && isset($map[$routeName])) ? $map[$routeName] : null;
 
         if ($pageKey) {
             return static::getForPage($pageKey);

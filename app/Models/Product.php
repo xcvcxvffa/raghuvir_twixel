@@ -23,6 +23,7 @@ class Product extends Model
         'sizes',
         'image',
         'banner_image',
+        'banner_position',
         'image_alt',
         'gallery_images',
         'main_ingredient',
@@ -210,19 +211,125 @@ class Product extends Model
     }
 
     /**
-     * Accessor for ideal for dishes list.
+     * Accessor for ideal for dishes list (array of strings).
      */
     public function getIdealForListAttribute(): array
     {
-        if (is_array($this->ideal_for)) {
-            return array_values(array_filter($this->ideal_for));
-        }
-
-        if (is_string($this->ideal_for) && !empty($this->ideal_for)) {
-            return array_map('trim', explode(',', $this->ideal_for));
+        $gallery = $this->ideal_for_gallery;
+        if (!empty($gallery)) {
+            return array_column($gallery, 'title');
         }
 
         return ['Roti / Chapati', 'Paratha', 'Puri', 'Thepla', 'Everyday Cooking'];
+    }
+
+    /**
+     * Accessor for rich ideal for gallery items (each with title, image, and image_url).
+     */
+    public function getIdealForGalleryAttribute(): array
+    {
+        $raw = $this->ideal_for;
+
+        // If string (comma-separated), split into array
+        if (is_string($raw) && !empty(trim($raw))) {
+            $raw = array_map('trim', explode(',', $raw));
+        }
+
+        if (empty($raw) || !is_array($raw)) {
+            // Default presets based on product slug
+            $raw = match ($this->slug) {
+                'bati', 'bati-atta' => [
+                    ['title' => 'Dal Bati', 'image' => 'images/ideal_dal_bati.jpg'],
+                    ['title' => 'Churma', 'image' => 'images/ideal_churma.jpg'],
+                    ['title' => 'Bafla', 'image' => 'images/ideal_bafla.jpg'],
+                    ['title' => 'Traditional Breads', 'image' => 'images/ideal_baking.jpg'],
+                ],
+                'wheat', 'wheat-bran' => [
+                    ['title' => 'Commercial Kitchens', 'image' => 'images/ideal_commercial.jpg'],
+                    ['title' => 'Bulk Catering', 'image' => 'images/ideal_commercial.jpg'],
+                    ['title' => 'High-Fiber Baking', 'image' => 'images/ideal_baking.jpg'],
+                    ['title' => 'Traditional Breads', 'image' => 'images/ideal_baking.jpg'],
+                ],
+                default => [
+                    ['title' => 'Roti / Chapati', 'image' => 'images/ideal_roti.jpg'],
+                    ['title' => 'Paratha', 'image' => 'images/ideal_paratha.jpg'],
+                    ['title' => 'Puri', 'image' => 'images/ideal_puri.jpg'],
+                    ['title' => 'Thepla', 'image' => 'images/ideal_thepla.jpg'],
+                    ['title' => 'Everyday Cooking', 'image' => 'images/ideal_cooking.jpg'],
+                ],
+            };
+        }
+
+        $items = [];
+        $presetsMap = [
+            'dal bati'            => 'images/ideal_dal_bati.jpg',
+            'bati'                => 'images/ideal_dal_bati.jpg',
+            'churma'              => 'images/ideal_churma.jpg',
+            'bafla'               => 'images/ideal_bafla.jpg',
+            'roti / chapati'      => 'images/ideal_roti.jpg',
+            'roti'                => 'images/ideal_roti.jpg',
+            'chapati'             => 'images/ideal_roti.jpg',
+            'paratha'             => 'images/ideal_paratha.jpg',
+            'puri'                => 'images/ideal_puri.jpg',
+            'thepla'              => 'images/ideal_thepla.jpg',
+            'everyday cooking'    => 'images/ideal_cooking.jpg',
+            'cooking'             => 'images/ideal_cooking.jpg',
+            'traditional breads'  => 'images/ideal_baking.jpg',
+            'baking'              => 'images/ideal_baking.jpg',
+            'breads'              => 'images/ideal_baking.jpg',
+            'commercial kitchens' => 'images/ideal_commercial.jpg',
+            'bulk catering'       => 'images/ideal_commercial.jpg',
+            'catering'            => 'images/ideal_commercial.jpg',
+        ];
+
+        foreach ($raw as $idx => $entry) {
+            $title = '';
+            $image = '';
+
+            if (is_array($entry)) {
+                $title = trim($entry['title'] ?? '');
+                $image = trim($entry['image'] ?? '');
+            } elseif (is_string($entry)) {
+                $title = trim($entry);
+            }
+
+            if (empty($title)) {
+                continue;
+            }
+
+            // If no image specified, look up preset or fallback
+            if (empty($image)) {
+                $lowerTitle = strtolower($title);
+                foreach ($presetsMap as $needle => $presetPath) {
+                    if (str_contains($lowerTitle, $needle)) {
+                        $image = $presetPath;
+                        break;
+                    }
+                }
+                if (empty($image)) {
+                    $fallbacks = ['images/ideal_roti.jpg', 'images/ideal_paratha.jpg', 'images/ideal_puri.jpg', 'images/ideal_thepla.jpg', 'images/ideal_cooking.jpg'];
+                    $image = $fallbacks[$idx % count($fallbacks)];
+                }
+            }
+
+            // Resolve full display URL
+            $imageUrl = '';
+            if (str_starts_with($image, 'http://') || str_starts_with($image, 'https://')) {
+                $imageUrl = $image;
+            } elseif (str_starts_with($image, 'images/')) {
+                $imageUrl = asset($image);
+            } else {
+                $imageUrl = asset('storage/' . $image);
+            }
+
+            $items[] = [
+                'title'     => $title,
+                'image'     => $image,
+                'image_url' => $imageUrl,
+            ];
+        }
+
+        return $items;
     }
 
     /**

@@ -6,7 +6,7 @@
 <!-- Header End -->
 
     <!-- Page Header Section Start -->
-    <div class="page-header bg-section dark-section parallaxie" data-image="{{ \App\Models\PageBanner::getImage('team') }}" style="background-image: url('{{ \App\Models\PageBanner::getImage('team') }}') !important;">
+    <div class="page-header bg-section dark-section parallaxie" data-image="{{ \App\Models\PageBanner::getImage('team') }}" style="background-image: url('{{ \App\Models\PageBanner::getImage('team') }}') !important; background-position: {{ \App\Models\PageBanner::getPosition('team') }} !important;">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">

@@ -5,7 +5,7 @@
 
 @section('content')
     <!-- Page Header Section Start -->
-    <div class="page-header bg-section dark-section parallaxie" data-image="{{ \App\Models\PageBanner::getImage('video-gallery') }}" style="background-image: url('{{ \App\Models\PageBanner::getImage('video-gallery') }}') !important;">
+    <div class="page-header bg-section dark-section parallaxie" data-image="{{ \App\Models\PageBanner::getImage('video-gallery') }}" style="background-image: url('{{ \App\Models\PageBanner::getImage('video-gallery') }}') !important; background-position: {{ \App\Models\PageBanner::getPosition('video-gallery') }} !important;">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">

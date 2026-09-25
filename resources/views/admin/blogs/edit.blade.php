@@ -331,6 +331,68 @@
                 </div>
             </div>
 
+            <!-- Header Breadcrumb Banner & Live Studio (Full Widescreen View) -->
+            <div class="card-syndron" style="margin-bottom: 0;">
+                <div class="card-syndron-header" style="padding: 1.25rem 1.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+                    <div>
+                        <h3 class="card-syndron-title" style="font-size: 1.05rem;">
+                            <div class="card-icon-pill" style="background: rgba(2, 132, 199, 0.12); color: #0284c7;">
+                                <i class="fa-solid fa-panorama"></i>
+                            </div>
+                            <span>Breadcrumb Hero Banner &amp; Live Studio</span>
+                        </h3>
+                        <p class="card-syndron-desc">Configure the panoramic header image displayed at the top of this article's page.</p>
+                    </div>
+                    @if(!empty($blog->banner_image))
+                        <span style="font-size: 0.72rem; font-weight: 700; color: #10b981; background: rgba(16, 185, 129, 0.12); padding: 4px 12px; border-radius: 9999px;">
+                            <i class="fa-solid fa-check"></i> Custom Banner Active
+                        </span>
+                    @else
+                        <span style="font-size: 0.72rem; font-weight: 700; color: #0284c7; background: rgba(14, 165, 233, 0.12); padding: 4px 12px; border-radius: 9999px;">
+                            <i class="fa-solid fa-wand-magic-sparkles"></i> Default Master Banner
+                        </span>
+                    @endif
+                </div>
+
+                <div class="card-syndron-body" style="padding: 1.5rem;">
+                    @include('admin.partials.banner-adjuster', [
+                        'idPrefix' => 'blog_banner',
+                        'currentImageUrl' => $blog->banner_image_url,
+                        'currentPosition' => old('banner_position', $blog->banner_position ?? 'center center'),
+                        'fileInputName' => 'banner_image',
+                        'positionInputName' => 'banner_position',
+                        'titleSimulation' => $blog->title,
+                        'routeSimulation' => 'Blog / ' . Str::limit($blog->title, 25),
+                        'previewHeight' => '360px',
+                    ])
+
+                    <div style="display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border);">
+                        <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+                            <label for="bannerImageInput" class="btn-syndron btn-syndron-secondary" style="cursor: pointer; display: inline-flex; align-items: center; gap: 8px;">
+                                <i class="fa-solid fa-cloud-arrow-up"></i>
+                                <span>{{ !empty($blog->banner_image) ? 'Change Custom Banner' : 'Upload Custom Banner' }}</span>
+                            </label>
+                            <span style="font-size: 0.75rem; color: var(--muted-foreground);">Recommended: <strong>1920 × 500 px</strong> (WebP / JPG / PNG up to 5MB)</span>
+                        </div>
+
+                        @if(!empty($blog->banner_image))
+                            <label class="remove-image-checkbox" style="display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.8rem; color: #ef4444; cursor: pointer;">
+                                <input type="checkbox" name="remove_banner_image" value="1" onchange="handleBannerRemovalToggle(this)">
+                                <span>Revert to master Single Blog banner</span>
+                            </label>
+                        @endif
+                    </div>
+                    <input
+                        type="file"
+                        name="banner_image"
+                        id="bannerImageInput"
+                        accept="image/png,image/jpeg,image/webp,image/jpg,image/svg+xml"
+                        onchange="previewBlogBannerImage(this)"
+                        style="display: none;"
+                    >
+                </div>
+            </div>
+
             <!-- Danger Zone Card -->
             <div class="card-syndron danger-zone-card">
                 <div class="card-syndron-header" style="padding: 1.15rem 1.5rem;">
@@ -595,60 +657,6 @@
                         >
                         <div class="form-hint">Descriptive keywords for Google Image search & accessibility.</div>
                     </div>
-                </div>
-            </div>
-
-            <!-- 3b. Header Breadcrumb Banner (Optional) -->
-            <div class="card-syndron" style="margin-bottom: 0;">
-                <div class="card-syndron-header" style="padding: 1.15rem 1.25rem; display: flex; justify-content: space-between; align-items: center;">
-                    <h3 class="card-syndron-title" style="font-size: 0.95rem;">
-                        <i class="fa-solid fa-panorama" style="color: #0284c7;"></i>
-                        <span>Breadcrumb Hero Banner</span>
-                    </h3>
-                    @if(!empty($blog->banner_image))
-                        <span style="font-size: 0.7rem; font-weight: 700; color: #10b981; background: rgba(16, 185, 129, 0.12); padding: 2px 8px; border-radius: 9999px;">Custom Active</span>
-                    @else
-                        <span style="font-size: 0.7rem; font-weight: 700; color: #0284c7; background: rgba(14, 165, 233, 0.12); padding: 2px 8px; border-radius: 9999px;">Master Banner</span>
-                    @endif
-                </div>
-
-                <div class="card-syndron-body" style="padding: 1.15rem 1.25rem;">
-                    <div style="font-size: 0.78rem; color: var(--muted-foreground); margin-bottom: 0.75rem; line-height: 1.4;">
-                        Custom background banner for this article's top header. If none is uploaded, it automatically displays the default master banner from <strong>Page Banners</strong>.
-                    </div>
-
-                    <div style="padding: 0.5rem 0.75rem; background: rgba(14, 165, 233, 0.06); border: 1px dashed rgba(14, 165, 233, 0.3); border-radius: 8px; margin-bottom: 0.75rem; font-size: 0.75rem; color: var(--foreground); display: flex; align-items: center; gap: 0.4rem;">
-                        <i class="fa-solid fa-ruler-combined" style="color: #0284c7;"></i>
-                        <span>Recommended: <strong>1920 × 500 px</strong> (Panoramic)</span>
-                    </div>
-
-                    <div style="position: relative; height: 110px; border-radius: 10px; overflow: hidden; background: #1a1a1a; border: 1px solid var(--border); margin-bottom: 0.75rem;">
-                        <img id="bannerPreviewImg" src="{{ $blog->banner_image_url }}" alt="Breadcrumb Banner Preview" style="width: 100%; height: 100%; object-fit: cover;">
-                        <div style="position: absolute; inset: 0; background: rgba(239, 128, 28, 0.3); mix-blend-mode: multiply;"></div>
-                        <div style="position: absolute; bottom: 6px; right: 8px; background: rgba(0,0,0,0.6); color: #fff; font-size: 0.68rem; padding: 2px 6px; border-radius: 4px;">
-                            Hero Overlay Preview
-                        </div>
-                    </div>
-
-                    <label for="bannerImageInput" class="btn-syndron btn-syndron-secondary" style="width: 100%; justify-content: center; cursor: pointer;">
-                        <i class="fa-solid fa-cloud-arrow-up"></i>
-                        <span>{{ !empty($blog->banner_image) ? 'Change Custom Banner' : 'Upload Custom Banner' }}</span>
-                    </label>
-                    <input
-                        type="file"
-                        name="banner_image"
-                        id="bannerImageInput"
-                        accept="image/png,image/jpeg,image/webp,image/jpg,image/svg+xml"
-                        onchange="previewBlogBannerImage(this)"
-                        style="display: none;"
-                    >
-
-                    @if(!empty($blog->banner_image))
-                        <label class="remove-image-checkbox" style="margin-top: 0.75rem; display: flex; align-items: center; gap: 0.5rem; font-size: 0.8rem; color: #ef4444; cursor: pointer;">
-                            <input type="checkbox" name="remove_banner_image" value="1" onchange="handleBannerRemovalToggle(this)">
-                            <span>Revert to master Single Blog banner</span>
-                        </label>
-                    @endif
                 </div>
             </div>
 
@@ -2040,25 +2048,22 @@
 
     function previewBlogBannerImage(input) {
         if (input.files && input.files[0]) {
-            const reader = new FileReader();
-            reader.onload = function (e) {
-                const img = document.getElementById('bannerPreviewImg');
-                if (img) {
-                    img.src = e.target.result;
-                }
-            };
-            reader.readAsDataURL(input.files[0]);
+            if (typeof window.blog_banner_updateImage === 'function') {
+                window.blog_banner_updateImage(input.files[0]);
+            }
         }
     }
 
     function handleBannerRemovalToggle(checkbox) {
-        const preview = document.getElementById('bannerPreviewImg');
-        if (checkbox.checked) {
-            preview.style.opacity = '0.4';
-            preview.style.filter = 'grayscale(100%)';
-        } else {
-            preview.style.opacity = '1';
-            preview.style.filter = 'none';
+        const preview = document.getElementById('blog_banner_preview_box');
+        if (preview) {
+            if (checkbox.checked) {
+                preview.style.opacity = '0.35';
+                preview.style.filter = 'grayscale(100%)';
+            } else {
+                preview.style.opacity = '1';
+                preview.style.filter = 'none';
+            }
         }
     }
 </script>

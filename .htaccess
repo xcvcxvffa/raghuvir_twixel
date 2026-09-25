@@ -1,12 +1,32 @@
+# Disable directory browsing
+Options -Indexes
+
+# Block sensitive directories from direct web access
 <IfModule mod_rewrite.c>
     RewriteEngine On
 
-    # Redirect all requests to the public directory
+    # Prevent direct access to hidden files and directories (like .env, .git)
+    RewriteCond %{REQUEST_URI} (^|/)\. [NC]
+    RewriteRule ^ - [F,L]
+
+    # Prevent direct access to internal Laravel directories
+    RewriteRule ^(app|bootstrap|config|database|resources|routes|storage|tests|vendor)(/.*)?$ - [F,L,NC]
+
+    # Prevent direct access to sensitive root-level files
+    RewriteRule ^(artisan|composer\.(json|lock)|package(-lock)?\.json|vite\.config\.js|phpunit\.xml|AGENTS\.md|GEMINI\.md)(\..*)?$ - [F,L,NC]
+
+    # Route all legitimate public requests through the public/ folder
+    RewriteCond %{REQUEST_URI} !^/public/
     RewriteRule ^(.*)$ public/$1 [L]
 </IfModule>
 
-# Block access to sensitive Laravel files
-<FilesMatch "^\.env|composer\.json|package\.json|artisan|composer\.lock">
-    Order allow,deny
-    Deny from all
+# Fallback FilesMatch protection for Apache
+<FilesMatch "(^\..*|composer\.(json|lock)|package(-lock)?\.json|artisan|phpunit\.xml|\.env.*|\.log)$">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Deny from all
+    </IfModule>
 </FilesMatch>

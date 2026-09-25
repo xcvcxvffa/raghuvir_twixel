@@ -101,6 +101,7 @@ class PageBannerController extends Controller
     {
         $validated = $request->validate([
             'image' => 'nullable|image|mimes:jpeg,png,jpg,webp,svg|max:5120',
+            'banner_position' => 'nullable|string|max:50',
             'title' => 'nullable|string|max:255',
             'subtitle' => 'nullable|string|max:500',
             'is_active' => 'nullable|boolean',
@@ -114,6 +115,10 @@ class PageBannerController extends Controller
 
             $path = $request->file('image')->store('banners', 'public');
             $banner->banner_image = $path;
+        }
+
+        if ($request->filled('banner_position')) {
+            $banner->banner_position = $request->input('banner_position');
         }
 
         $banner->title = $validated['title'] ?? $banner->title;
@@ -133,6 +138,7 @@ class PageBannerController extends Controller
         $validated = $request->validate([
             'banner_id' => 'required|exists:page_banners,id',
             'banner_image' => 'required|image|mimes:jpeg,png,jpg,webp,svg|max:5120',
+            'banner_position' => 'nullable|string|max:50',
         ]);
 
         $banner = PageBanner::findOrFail($validated['banner_id']);
@@ -143,6 +149,11 @@ class PageBannerController extends Controller
 
         $path = $request->file('banner_image')->store('banners', 'public');
         $banner->banner_image = $path;
+
+        if ($request->filled('banner_position')) {
+            $banner->banner_position = $request->input('banner_position');
+        }
+
         $banner->save();
 
         return redirect()->route('admin.banners.index')

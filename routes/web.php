@@ -25,7 +25,9 @@ Route::get('/video-gallery', [PageController::class, 'videoGallery'])->name('vid
 Route::get('/faqs', [PageController::class, 'faqs'])->name('faqs');
 Route::get('/404', [PageController::class, 'pageNotFound'])->name('404');
 Route::get('/contact/{product?}/{size?}', [PageController::class, 'contact'])->name('contact');
-Route::post('/inquiry/submit', [PageController::class, 'submitInquiry'])->name('inquiry.submit');
+Route::post('/contact/submit', [PageController::class, 'submitContact'])->name('contact.submit')->middleware('throttle:10,1');
+Route::post('/inquiry/submit', [PageController::class, 'submitInquiry'])->name('inquiry.submit')->middleware('throttle:10,1');
+Route::get('/sitemap.xml', [\App\Http\Controllers\SitemapController::class, 'index'])->name('sitemap');
 
 /*
 |--------------------------------------------------------------------------
@@ -36,18 +38,21 @@ use App\Http\Controllers\Admin\AuthController as AdminAuthController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\ProfileController as AdminProfileController;
 use App\Http\Controllers\Admin\SettingController as AdminSettingController;
+use App\Http\Controllers\Admin\EmailSettingController as AdminEmailSettingController;
 use App\Http\Controllers\Admin\BlogController as AdminBlogController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Admin\LeadController as AdminLeadController;
 use App\Http\Controllers\Admin\GalleryController as AdminGalleryController;
 use App\Http\Controllers\Admin\PageBannerController as AdminPageBannerController;
 use App\Http\Controllers\Admin\PageSeoController as AdminPageSeoController;
+use App\Http\Controllers\Admin\WebmasterController as AdminWebmasterController;
+use App\Http\Controllers\Admin\NotificationController as AdminNotificationController;
 
 Route::prefix('admin')->name('admin.')->group(function () {
     // Guest Routes
     Route::middleware('guest')->group(function () {
         Route::get('/login', [AdminAuthController::class, 'showLoginForm'])->name('login');
-        Route::post('/login', [AdminAuthController::class, 'login'])->name('login.submit');
+        Route::post('/login', [AdminAuthController::class, 'login'])->name('login.submit')->middleware('throttle:10,1');
     });
 
     // Authenticated Admin Routes
@@ -58,6 +63,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
         // Customer Inquiries & Leads Management
         Route::get('/leads', [AdminLeadController::class, 'index'])->name('leads.index');
+        Route::get('/leads/export', [AdminLeadController::class, 'exportCsv'])->name('leads.export');
+        Route::post('/leads/bulk-action', [AdminLeadController::class, 'bulkAction'])->name('leads.bulk-action');
         Route::post('/leads/{lead}/status', [AdminLeadController::class, 'updateStatus'])->name('leads.status');
         Route::post('/leads/{lead}/notes', [AdminLeadController::class, 'updateNotes'])->name('leads.notes');
         Route::delete('/leads/{lead}', [AdminLeadController::class, 'destroy'])->name('leads.destroy');
@@ -85,11 +92,18 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
         // Page SEO & Meta Tags Management
         Route::get('/seo', [AdminPageSeoController::class, 'index'])->name('seo.index');
+        Route::post('/seo/analytics', [AdminPageSeoController::class, 'updateAnalytics'])->name('seo.analytics.update');
+        Route::post('/seo/robots-txt', [AdminPageSeoController::class, 'updateRobotsTxt'])->name('seo.robots.update');
         Route::get('/seo/{seo}/edit', [AdminPageSeoController::class, 'edit'])->name('seo.edit');
         Route::post('/seo/{seo}/update', [AdminPageSeoController::class, 'update'])->name('seo.update');
         Route::post('/seo/{seo}/remove-og-image', [AdminPageSeoController::class, 'removeOgImage'])->name('seo.remove-og-image');
         Route::post('/seo/{seo}/toggle-robots', [AdminPageSeoController::class, 'toggleRobots'])->name('seo.toggle-robots');
         Route::get('/seo/{seo}/auto-generate', [AdminPageSeoController::class, 'autoGenerate'])->name('seo.auto-generate');
+
+        // Webmaster Tools & Analytics Hub (Standalone Module)
+        Route::get('/webmaster', [AdminWebmasterController::class, 'index'])->name('webmaster.index');
+        Route::post('/webmaster', [AdminWebmasterController::class, 'update'])->name('webmaster.update');
+        Route::post('/webmaster/robots-txt', [AdminWebmasterController::class, 'updateRobots'])->name('webmaster.robots');
 
         // Profile & Account Settings
         Route::get('/profile', [AdminProfileController::class, 'edit'])->name('profile.edit');
@@ -103,8 +117,23 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('/settings', [AdminSettingController::class, 'update'])->name('settings.update');
         Route::post('/settings/resolve-map', [AdminSettingController::class, 'resolveMap'])->name('settings.resolve-map');
 
-        // Database Migrations & Optimization Runner
-        Route::get('/migrate', function () {
+        // Email & SMTP Configuration
+        Route::get('/settings/email', [AdminEmailSettingController::class, 'index'])->name('settings.email');
+        Route::post('/settings/email', [AdminEmailSettingController::class, 'update'])->name('settings.email.update');
+        Route::post('/settings/email/test', [AdminEmailSettingController::class, 'sendTestEmail'])->name('settings.email.test');
+
+        // Real-Time Notifications Hub
+        Route::get('/notifications', [AdminNotificationController::class, 'getLatest'])->name('notifications.latest');
+        Route::post('/notifications/mark-all-read', [AdminNotificationController::class, 'markAllAsRead'])->name('notifications.mark-all-read');
+        Route::post('/notifications/{notification}/read', [AdminNotificationController::class, 'markAsRead'])->name('notifications.read');
+        Route::delete('/notifications/clear', [AdminNotificationController::class, 'clearAll'])->name('notifications.clear');
+
+        // Database Migrations & Optimization Runner (Protected)
+        Route::match(['get', 'post'], '/migrate', function (\Illuminate\Http\Request $request) {
+            if (!app()->isLocal() && !$request->isMethod('post')) {
+                abort(403, 'Direct GET execution of database migrations is disabled for security. Please run migrations via Artisan CLI or authenticated POST.');
+            }
+
             try {
                 \Illuminate\Support\Facades\Artisan::call('migrate', ['--force' => true]);
                 $output = \Illuminate\Support\Facades\Artisan::output();

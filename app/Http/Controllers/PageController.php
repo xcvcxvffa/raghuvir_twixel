@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Blog;
 use App\Models\Lead;
+use App\Services\DynamicMailService;
 use Illuminate\Http\Request;
 
 class PageController extends Controller
@@ -332,32 +333,114 @@ class PageController extends Controller
      */
     public function submitInquiry(Request $request)
     {
+        // 1. Honeypot bot protection (reject automated bots filling hidden trap fields)
+        if (!empty($request->input('website')) || !empty($request->input('b_title')) || !empty($request->input('address_hp'))) {
+            return $request->expectsJson() || $request->ajax()
+                ? response()->json(['success' => true, 'message' => 'Thank you! Your inquiry has been submitted. We will contact you shortly.'])
+                : back()->with('success', 'Thank you! Your inquiry has been submitted.');
+        }
+
         $validated = $request->validate([
             'name'             => ['required', 'string', 'max:120'],
-            'phone'            => ['required', 'string', 'max:30'],
+            'phone'            => ['required', 'string', 'regex:/^[0-9+\-\s()]{7,25}$/'],
             'email'            => ['nullable', 'email', 'max:191'],
             'product_interest' => ['nullable', 'string', 'max:255'],
             'quantity'         => ['nullable', 'string', 'max:100'],
             'message'          => ['nullable', 'string', 'max:1000'],
+        ], [
+            'phone.regex'      => 'Please provide a valid contact phone number.',
         ]);
 
-        Lead::create([
-            'name'             => $validated['name'],
-            'phone'            => $validated['phone'],
-            'email'            => $validated['email'] ?? null,
-            'product_interest' => $validated['product_interest'] ?? null,
-            'quantity'         => $validated['quantity'] ?? null,
-            'message'          => $validated['message'] ?? null,
+        // 2. Strict Input Sanitization to prevent Stored XSS
+        $sanitizedName            = strip_tags(trim($validated['name']));
+        $sanitizedPhone           = strip_tags(trim($validated['phone']));
+        $sanitizedEmail           = !empty($validated['email']) ? filter_var(trim($validated['email']), FILTER_SANITIZE_EMAIL) : null;
+        $sanitizedProductInterest = !empty($validated['product_interest']) ? strip_tags(trim($validated['product_interest'])) : null;
+        $sanitizedQuantity        = !empty($validated['quantity']) ? strip_tags(trim($validated['quantity'])) : null;
+        $sanitizedMessage         = !empty($validated['message']) ? strip_tags(trim($validated['message'])) : null;
+
+        $lead = Lead::create([
+            'name'             => $sanitizedName,
+            'phone'            => $sanitizedPhone,
+            'email'            => $sanitizedEmail,
+            'product_interest' => $sanitizedProductInterest,
+            'quantity'         => $sanitizedQuantity,
+            'message'          => $sanitizedMessage,
             'source'           => 'product_inquiry_popup',
             'status'           => 'new',
             'ip_address'       => $request->ip(),
-            'user_agent'       => $request->userAgent(),
+            'user_agent'       => substr($request->userAgent() ?? '', 0, 255),
         ]);
 
-        if ($request->expectsJson()) {
+        // Safely send admin notification and customer auto-reply without failing lead creation
+        DynamicMailService::sendSafely($lead);
+
+        if ($request->expectsJson() || $request->ajax()) {
             return response()->json(['success' => true, 'message' => 'Thank you! Your inquiry has been submitted. We will contact you shortly.']);
         }
 
         return back()->with('success', 'Thank you! Your inquiry has been submitted.');
+    }
+
+    /**
+     * Handle Contact Us page form submission.
+     */
+    public function submitContact(Request $request)
+    {
+        // 1. Honeypot bot protection
+        if (!empty($request->input('website')) || !empty($request->input('b_title')) || !empty($request->input('address_hp'))) {
+            return $request->expectsJson() || $request->ajax()
+                ? response()->json(['success' => true, 'message' => 'Thank you! Your message has been sent successfully. We will get back to you shortly.'])
+                : back()->with('success', 'Thank you! Your message has been sent successfully. We will get back to you shortly.');
+        }
+
+        $validated = $request->validate([
+            'fname'            => ['nullable', 'string', 'max:60'],
+            'lname'            => ['nullable', 'string', 'max:60'],
+            'name'             => ['nullable', 'string', 'max:120'],
+            'email'            => ['required', 'email', 'max:191'],
+            'phone'            => ['required', 'string', 'regex:/^[0-9+\-\s()]{7,25}$/'],
+            'product_interest' => ['nullable', 'string', 'max:255'],
+            'message'          => ['nullable', 'string', 'max:2000'],
+        ], [
+            'phone.regex'      => 'Please provide a valid contact phone number.',
+        ]);
+
+        $fullName = trim(($request->input('fname', '') . ' ' . $request->input('lname', '')));
+        if (empty($fullName)) {
+            $fullName = $request->input('name') ?: 'Website Visitor';
+        }
+
+        // 2. Strict Input Sanitization
+        $sanitizedName            = strip_tags(trim($fullName));
+        $sanitizedPhone           = strip_tags(trim($validated['phone']));
+        $sanitizedEmail           = filter_var(trim($validated['email']), FILTER_SANITIZE_EMAIL);
+        $sanitizedProductInterest = !empty($validated['product_interest']) ? strip_tags(trim($validated['product_interest'])) : 'General Contact Inquiry';
+        $sanitizedMessage         = !empty($validated['message']) ? strip_tags(trim($validated['message'])) : null;
+
+        $lead = Lead::create([
+            'name'             => $sanitizedName,
+            'phone'            => $sanitizedPhone,
+            'email'            => $sanitizedEmail,
+            'product_interest' => $sanitizedProductInterest,
+            'quantity'         => null,
+            'message'          => $sanitizedMessage,
+            'source'           => 'contact_page',
+            'status'           => 'new',
+            'ip_address'       => $request->ip(),
+            'user_agent'       => substr($request->userAgent() ?? '', 0, 255),
+        ]);
+
+        // Safely send admin notification and customer auto-reply without failing lead creation
+        DynamicMailService::sendSafely($lead);
+
+        if ($request->expectsJson() || $request->ajax()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Thank you! Your message has been sent successfully. We will get back to you shortly.',
+            ]);
+        }
+
+        return back()->with('success', 'Thank you! Your message has been sent successfully. We will get back to you shortly.');
     }
 }

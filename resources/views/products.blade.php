@@ -90,7 +90,7 @@
 <!-- Header End -->
 
     <!-- Page Header Section Start -->
-    <div class="page-header bg-section dark-section parallaxie" data-image="{{ \App\Models\PageBanner::getImage('products') }}" style="background-image: url('{{ \App\Models\PageBanner::getImage('products') }}') !important;">
+    <div class="page-header bg-section dark-section parallaxie" data-image="{{ \App\Models\PageBanner::getImage('products') }}" style="background-image: url('{{ \App\Models\PageBanner::getImage('products') }}') !important; background-position: {{ \App\Models\PageBanner::getPosition('products') }} !important;">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
@@ -228,7 +228,8 @@
                             <button type="button" class="btn-default btn-inquiry"
                                 onclick="openInquiryModal(this)"
                                 data-product="{{ $product['title'] }}"
-                                data-size="{{ $defaultSize }}">
+                                data-size="{{ $defaultSize }}"
+                                data-sizes="{{ implode(',', $sizes) }}">
                                 Request Inquiry <i class="fa-solid fa-paper-plane" style="margin-left: 8px;"></i>
                             </button>
                             
@@ -285,21 +286,6 @@
                 inquiryBtn.setAttribute('data-product', productTitle);
                 inquiryBtn.setAttribute('data-size', selectedSize);
             }
-        }
-
-        function openInquiryModal(btn) {
-            const product = btn.getAttribute('data-product') || '';
-            const size    = btn.getAttribute('data-size')    || '';
-            document.getElementById('inq-product').value = product;
-            document.getElementById('inq-size').value    = size;
-            document.getElementById('inq-product-label').textContent = product ? `${product}${size ? ' — ' + size : ''}` : '';
-            document.getElementById('inquiryModal').classList.add('inq-open');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeInquiryModal() {
-            document.getElementById('inquiryModal').classList.remove('inq-open');
-            document.body.style.overflow = '';
         }
     </script>
 @endsection

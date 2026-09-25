@@ -6,7 +6,7 @@
 <!-- Header End -->
 
     <!-- Page Header Section Start -->
-    <div class="page-header bg-section dark-section parallaxie" data-image="{{ \App\Models\PageBanner::getImage('contact') }}" style="background-image: url('{{ \App\Models\PageBanner::getImage('contact') }}') !important;">
+    <div class="page-header bg-section dark-section parallaxie" data-image="{{ \App\Models\PageBanner::getImage('contact') }}" style="background-image: url('{{ \App\Models\PageBanner::getImage('contact') }}') !important; background-position: {{ \App\Models\PageBanner::getPosition('contact') }} !important;">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
@@ -96,38 +96,62 @@
 
                         <!-- Contact Form Start -->
                         <div class="contact-form">
-                            <form id="contactForm" action="#" method="POST" data-toggle="validator" class="wow fadeInUp" data-wow-delay="0.2s">
-    @csrf
+                            @if(session('success'))
+                                <div class="alert alert-success" style="background-color: #ecfdf5; border-left: 4px solid #10b981; color: #065f46; padding: 14px 18px; border-radius: 8px; margin-bottom: 20px; font-weight: 500;">
+                                    <i class="fa-solid fa-circle-check" style="margin-right: 8px; color: #10b981;"></i>
+                                    {{ session('success') }}
+                                </div>
+                            @endif
+
+                            @if(isset($errors) && $errors->any())
+                                <div class="alert alert-danger" style="background-color: #fef2f2; border-left: 4px solid #ef4444; color: #991b1b; padding: 14px 18px; border-radius: 8px; margin-bottom: 20px;">
+                                    <ul style="margin: 0; padding-left: 18px;">
+                                        @foreach($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
+
+                            <form id="contactForm" action="{{ route('contact.submit') }}" method="POST" data-toggle="validator" class="wow fadeInUp" data-wow-delay="0.2s">
+                                @csrf
+                                {{-- Anti-Spam Bot Honeypot --}}
+                                <div style="display:none !important; visibility:hidden !important; opacity:0 !important; position:absolute !important; left:-9999px !important;" aria-hidden="true">
+                                    <input type="text" name="website" tabindex="-1" autocomplete="off" value="">
+                                </div>
+                                @if($product)
+                                    <input type="hidden" name="product_interest" value="{{ $product }}{{ $size ? ' (' . $size . ')' : '' }}">
+                                @endif
                                 <div class="row">
                                     <div class="form-group col-md-6 mb-4">
-                                        <input type="text" name="fname" class="form-control" id="fname" placeholder="First Name *" required>
+                                        <input type="text" name="fname" class="form-control" id="fname" placeholder="First Name *" value="{{ old('fname') }}" required>
                                         <div class="help-block with-errors"></div>
                                     </div>
             
                                     <div class="form-group col-md-6 mb-4">
-                                        <input type="text" name="lname" class="form-control" id="lname" placeholder="Last Name *" required>
+                                        <input type="text" name="lname" class="form-control" id="lname" placeholder="Last Name *" value="{{ old('lname') }}" required>
                                         <div class="help-block with-errors"></div>
                                     </div>
                                     
                                     <div class="form-group col-md-6 mb-4">
-                                        <input type="email" name ="email" class="form-control" id="email" placeholder="Email Address *" required>
+                                        <input type="email" name="email" class="form-control" id="email" placeholder="Email Address *" value="{{ old('email') }}" required>
                                         <div class="help-block with-errors"></div>
                                     </div>
 
                                     <div class="form-group col-md-6 mb-4">
-                                        <input type="text" name="phone" class="form-control" id="phone" placeholder="Phone Number *" required>
+                                        <input type="text" name="phone" class="form-control" id="phone" placeholder="Phone Number *" value="{{ old('phone') }}" required>
                                         <div class="help-block with-errors"></div>
                                     </div>
             
                                     <div class="form-group col-md-12 mb-5">
-                                        <textarea name="message" class="form-control" id="message" rows="6" placeholder="Any Additional Message...">@if($product && $size)Hello Raghuvir Atta, I am interested in inquiring about {{ $product }} ({{ $size }}). Please provide more details.@endif</textarea>
+                                        <textarea name="message" class="form-control" id="message" rows="6" placeholder="Any Additional Message...">{{ old('message', ($product && $size) ? "Hello Raghuvir Atta, I am interested in inquiring about {$product} ({$size}). Please provide more details." : '') }}</textarea>
                                         <div class="help-block with-errors"></div>
                                     </div>
             
                                     <div class="col-lg-12">
                                         <div class="contact-form-btn">
                                             <button type="submit" class="btn-default"><span>Send Message</span></button>
-                                            <div id="msgSubmit" class="h3 hidden"></div>
+                                            <div id="msgSubmit" class="h3 hidden" style="margin-top: 15px;"></div>
                                         </div>
                                     </div>
                                 </div>

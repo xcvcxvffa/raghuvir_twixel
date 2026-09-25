@@ -19,6 +19,7 @@ class Blog extends Model
         'content',
         'image',
         'banner_image',
+        'banner_position',
         'image_alt',
         'category',
         'tags',

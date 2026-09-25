@@ -95,6 +95,7 @@ class BlogController extends Controller
             'author_name' => 'nullable|string|max:100',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,webp,svg|max:5120',
             'banner_image' => 'nullable|image|mimes:jpeg,png,jpg,webp,svg|max:5120',
+            'banner_position' => 'nullable|string|max:50',
             'image_alt' => 'nullable|string|max:255',
             'is_published' => 'nullable|boolean',
             'published_at' => 'nullable|date',
@@ -166,6 +167,7 @@ class BlogController extends Controller
             'author_name' => 'nullable|string|max:100',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,webp,svg|max:5120',
             'banner_image' => 'nullable|image|mimes:jpeg,png,jpg,webp,svg|max:5120',
+            'banner_position' => 'nullable|string|max:50',
             'image_alt' => 'nullable|string|max:255',
             'remove_image' => 'nullable|boolean',
             'remove_banner_image' => 'nullable|boolean',
@@ -201,6 +203,7 @@ class BlogController extends Controller
                 Storage::disk('public')->delete($blog->banner_image);
             }
             $validated['banner_image'] = null;
+            $validated['banner_position'] = null;
         }
 
         // Handle New Breadcrumb Banner Image Upload

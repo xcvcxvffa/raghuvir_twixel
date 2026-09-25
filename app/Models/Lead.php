@@ -27,6 +27,20 @@ class Lead extends Model
     ];
 
     /**
+     * The "booted" method of the model.
+     */
+    protected static function booted(): void
+    {
+        static::created(function (Lead $lead) {
+            try {
+                \App\Models\AdminNotification::recordLead($lead);
+            } catch (\Throwable $e) {
+                // Silently continue
+            }
+        });
+    }
+
+    /**
      * Scope a query to only include new leads.
      */
     public function scopeNew(Builder $query): Builder

@@ -28,6 +28,7 @@ class PageBanner extends Model
         'page_name',
         'page_route',
         'banner_image',
+        'banner_position',
         'title',
         'subtitle',
         'is_active',
@@ -103,6 +104,24 @@ class PageBanner extends Model
         }
 
         return $fallback ?? asset(self::DEFAULT_IMAGE);
+    }
+
+    /**
+     * Retrieve the banner background-position for a given page key with caching.
+     *
+     * @param string $pageKey
+     * @param string $default
+     * @return string
+     */
+    public static function getPosition(string $pageKey, string $default = 'center center'): string
+    {
+        $all = static::getAllCached();
+
+        if (isset($all[$pageKey]) && !empty($all[$pageKey]['banner_position'])) {
+            return $all[$pageKey]['banner_position'];
+        }
+
+        return $default;
     }
 
     /**

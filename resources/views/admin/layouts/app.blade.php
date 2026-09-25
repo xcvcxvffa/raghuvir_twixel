@@ -25,6 +25,46 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
     @stack('styles')
+    <style>
+        .notification-badge-dot {
+            position: absolute;
+            top: 7px;
+            right: 7px;
+            width: 8px;
+            height: 8px;
+            background: #ef4444;
+            border-radius: 50%;
+            border: 2px solid var(--card, #fff);
+            box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.25);
+            display: inline-block;
+            animation: pulseNotificationDot 2s infinite;
+        }
+        @keyframes pulseNotificationDot {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+            70% { transform: scale(1.1); box-shadow: 0 0 0 5px rgba(239, 68, 68, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+        }
+        .notification-item.unread {
+            background-color: rgba(239, 128, 28, 0.04);
+            border-left: 3px solid var(--accent, #EF801C);
+        }
+        html.dark .notification-item.unread {
+            background-color: rgba(239, 128, 28, 0.08);
+        }
+        .notification-unread-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--accent, #EF801C);
+            margin-left: auto;
+            margin-top: 5px;
+            flex-shrink: 0;
+            display: inline-block;
+        }
+        .notification-item:hover {
+            background-color: var(--secondary);
+        }
+    </style>
 </head>
 <body>
     <div class="syndron-wrapper">
@@ -105,6 +145,13 @@
                             <span class="badge-tag" style="background: rgba(16, 185, 129, 0.15); color: #059669; font-weight: 700;">{{ rescue(fn () => \App\Models\PageSeo::count(), 0, false) }}</span>
                         </a>
                     </li>
+                    <li class="sidebar-item {{ request()->routeIs('admin.webmaster.*') ? 'active' : '' }}">
+                        <a href="{{ route('admin.webmaster.index') }}" class="sidebar-link">
+                            <i class="fa-solid fa-chart-line link-icon"></i>
+                            <span>Webmaster &amp; Analytics</span>
+                            <span class="badge-tag" style="background: rgba(99, 102, 241, 0.15); color: #6366f1; font-weight: 700;">Live</span>
+                        </a>
+                    </li>
                 </ul>
 
                 <div class="sidebar-section-title">System & Settings</div>
@@ -115,10 +162,16 @@
                             <span>Profile Settings</span>
                         </a>
                     </li>
-                    <li class="sidebar-item {{ request()->routeIs('admin.settings.*') ? 'active' : '' }}">
+                    <li class="sidebar-item {{ request()->routeIs('admin.settings.index') ? 'active' : '' }}">
                         <a href="{{ route('admin.settings.index') }}" class="sidebar-link">
                             <i class="fa-solid fa-gear link-icon"></i>
                             <span>Site Settings</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item {{ request()->routeIs('admin.settings.email*') ? 'active' : '' }}">
+                        <a href="{{ route('admin.settings.email') }}" class="sidebar-link">
+                            <i class="fa-solid fa-envelope-circle-check link-icon"></i>
+                            <span>Email Configuration</span>
                         </a>
                     </li>
                 </ul>
@@ -170,42 +223,75 @@
                         <i class="fa-solid fa-moon" id="themeIcon"></i>
                     </button>
 
+                    @php
+                        $adminNotifications = rescue(fn () => \App\Models\AdminNotification::unread()->latest()->take(10)->get(), collect(), false);
+                        $unreadNotificationsCount = rescue(fn () => \App\Models\AdminNotification::unread()->count(), 0, false);
+                    @endphp
                     <!-- Notifications Popover -->
                     <div class="syndron-user-menu" style="position: relative;">
-                        <button type="button" class="icon-btn-action" id="notificationsTrigger" title="Notifications">
+                        <button type="button" class="icon-btn-action" id="notificationsTrigger" title="Notifications" aria-label="Notifications">
                             <i class="fa-regular fa-bell"></i>
-                            <span class="notification-badge-dot"></span>
+                            <span class="notification-badge-dot" id="notificationsBadgeDot" style="{{ $unreadNotificationsCount > 0 ? '' : 'display: none;' }}"></span>
                         </button>
                         <div class="user-dropdown-popover notifications-popover" id="notificationsDropdown">
                             <div class="popover-header" style="display: flex; justify-content: space-between; align-items: center;">
-                                <div class="title">Notifications</div>
-                                <span class="badge-tag" style="font-size: 0.7rem;">3 New</span>
+                                <div class="title" style="display: flex; align-items: center; gap: 6px;">
+                                    <i class="fa-solid fa-bell" style="font-size: 0.85rem; color: var(--accent);"></i>
+                                    <span>Notifications</span>
+                                </div>
+                                <span class="badge-tag" id="notificationsHeaderBadge" style="font-size: 0.7rem; font-weight: 700; {{ $unreadNotificationsCount > 0 ? 'background: rgba(239, 68, 68, 0.15); color: #dc2626;' : 'background: var(--secondary); color: var(--muted-foreground);' }}">
+                                    {{ $unreadNotificationsCount > 0 ? $unreadNotificationsCount . ' New' : 'Caught Up' }}
+                                </span>
                             </div>
-                            <div style="max-height: 280px; overflow-y: auto;">
-                                <a href="{{ route('admin.dashboard') }}" class="notification-item">
-                                    <div class="notification-icon orange"><i class="fa-solid fa-wheat-awn"></i></div>
-                                    <div class="notification-text">
-                                        <div class="notification-title">New Lead: Whole Wheat Atta</div>
-                                        <div class="notification-time">12 mins ago &bull; Rajesh Patel</div>
+                            <div id="notificationsItemsContainer" style="max-height: 290px; overflow-y: auto;">
+                                @forelse($adminNotifications as $notification)
+                                    <a
+                                        href="{{ $notification->url ?: route('admin.dashboard') }}"
+                                        class="notification-item {{ !$notification->is_read ? 'unread' : '' }}"
+                                        data-id="{{ $notification->id }}"
+                                        onclick="handleNotificationClick(event, {{ $notification->id }}, '{{ addslashes($notification->url ?: route('admin.dashboard')) }}')"
+                                    >
+                                        <div class="notification-icon {{ $notification->icon_color ?: 'orange' }}">
+                                            <i class="{{ $notification->icon ?: 'fa-solid fa-bell' }}"></i>
+                                        </div>
+                                        <div class="notification-text" style="flex: 1; min-width: 0;">
+                                            <div class="notification-title" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                                                {{ $notification->title }}
+                                            </div>
+                                            <div class="notification-time">
+                                                {{ $notification->created_at ? $notification->created_at->diffForHumans() : 'Recently' }}
+                                                @if($notification->message)
+                                                    &bull; {{ Str::limit($notification->message, 30) }}
+                                                @endif
+                                            </div>
+                                        </div>
+                                        @if(!$notification->is_read)
+                                            <span class="notification-unread-dot" title="Unread"></span>
+                                        @endif
+                                    </a>
+                                @empty
+                                    <div class="notifications-empty-box" style="padding: 2rem 1rem; text-align: center; color: var(--muted-foreground);">
+                                        <i class="fa-regular fa-bell-slash" style="font-size: 1.8rem; margin-bottom: 0.5rem; opacity: 0.4;"></i>
+                                        <div style="font-size: 0.825rem; font-weight: 600;">All caught up!</div>
+                                        <div style="font-size: 0.75rem;">No new notifications right now.</div>
                                     </div>
-                                </a>
-                                <a href="{{ route('admin.settings.index') }}" class="notification-item">
-                                    <div class="notification-icon green"><i class="fa-solid fa-gear"></i></div>
-                                    <div class="notification-text">
-                                        <div class="notification-title">Site Settings Synchronized</div>
-                                        <div class="notification-time">1 hour ago &bull; System Cache</div>
-                                    </div>
-                                </a>
-                                <a href="{{ route('admin.dashboard') }}" class="notification-item">
-                                    <div class="notification-icon blue"><i class="fa-solid fa-chart-line"></i></div>
-                                    <div class="notification-text">
-                                        <div class="notification-title">Traffic Spike (+21.3%)</div>
-                                        <div class="notification-time">3 hours ago &bull; Organic Search</div>
-                                    </div>
-                                </a>
+                                @endforelse
                             </div>
-                            <div style="padding: 0.5rem; text-align: center; border-top: 1px solid var(--border);">
-                                <a href="javascript:void(0)" style="font-size: 0.75rem; font-weight: 600; color: var(--accent); text-decoration: none;">Mark all as read</a>
+                            <div style="padding: 0.6rem 1rem; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border); background: var(--card);">
+                                <a
+                                    href="javascript:void(0)"
+                                    id="markAllReadBtn"
+                                    onclick="markAllNotificationsAsRead(event)"
+                                    style="font-size: 0.76rem; font-weight: 700; color: var(--accent); text-decoration: none; display: inline-flex; align-items: center; gap: 5px;"
+                                >
+                                    <i class="fa-solid fa-check-double"></i> <span>Mark all as read</span>
+                                </a>
+                                <a
+                                    href="{{ route('admin.leads.index') }}"
+                                    style="font-size: 0.74rem; font-weight: 600; color: var(--muted-foreground); text-decoration: none;"
+                                >
+                                    View Leads &rarr;
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -374,6 +460,14 @@
                 <!-- Group 3: System & Profile -->
                 <div class="command-group" data-group="system">
                     <div class="command-group-title">System &amp; Settings</div>
+                    <a href="{{ route('admin.webmaster.index') }}" class="command-item" data-keywords="webmaster analytics google search console gsc ga4 gtm meta pixel robots sitemap verification">
+                        <div class="command-item-icon" style="color: #6366f1;"><i class="fa-solid fa-chart-line"></i></div>
+                        <div class="command-item-content">
+                            <div class="command-item-title">Webmaster &amp; Analytics Hub</div>
+                            <div class="command-item-desc">Google Search Console, GA4, Meta Pixel, Sitemap &amp; Robots.txt</div>
+                        </div>
+                        <span class="command-item-shortcut"><i class="fa-solid fa-arrow-right"></i></span>
+                    </a>
                     <a href="{{ route('admin.settings.index') }}" class="command-item" data-keywords="settings configuration brand logo contact seo social footer general">
                         <div class="command-item-icon"><i class="fa-solid fa-gear"></i></div>
                         <div class="command-item-content">
@@ -462,6 +556,195 @@
                 });
             @endif
         });
+    </script>
+
+    <!-- Real-Time Notifications Script -->
+    <script>
+        const NOTIFICATION_CONFIG = {
+            latestUrl: "{{ route('admin.notifications.latest') }}",
+            markAllUrl: "{{ route('admin.notifications.mark-all-read') }}",
+            csrfToken: "{{ csrf_token() }}"
+        };
+
+        function handleNotificationClick(event, id, targetUrl) {
+            // Smoothly remove clicked notification from the list immediately
+            const item = document.querySelector(`.notification-item[data-id="${id}"]`);
+            if (item) {
+                item.style.transition = 'all 0.2s ease';
+                item.style.opacity = '0';
+                item.style.transform = 'translateX(10px)';
+                setTimeout(() => {
+                    item.remove();
+                    const container = document.getElementById('notificationsItemsContainer');
+                    if (container && container.querySelectorAll('.notification-item').length === 0) {
+                        renderNotificationsEmptyState(container);
+                        const dot = document.getElementById('notificationsBadgeDot');
+                        if (dot) dot.style.display = 'none';
+                        const badge = document.getElementById('notificationsHeaderBadge');
+                        if (badge) {
+                            badge.textContent = 'Caught Up';
+                            badge.style.background = 'var(--secondary)';
+                            badge.style.color = 'var(--muted-foreground)';
+                        }
+                    }
+                }, 180);
+            }
+
+            // Track notification read on server without blocking instant navigation
+            try {
+                fetch(`/admin/notifications/${id}/read`, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': NOTIFICATION_CONFIG.csrfToken,
+                        'Accept': 'application/json'
+                    }
+                }).catch(() => {});
+            } catch (e) {}
+        }
+
+        function renderNotificationsEmptyState(container) {
+            if (!container) return;
+            container.innerHTML = `
+                <div class="notifications-empty-box" style="padding: 2.25rem 1rem; text-align: center; color: var(--muted-foreground); animation: fadeIn 0.25s ease;">
+                    <i class="fa-regular fa-bell-slash" style="font-size: 1.8rem; margin-bottom: 0.5rem; opacity: 0.4;"></i>
+                    <div style="font-size: 0.85rem; font-weight: 700; color: var(--foreground);">All caught up!</div>
+                    <div style="font-size: 0.75rem; margin-top: 2px;">No new notifications right now.</div>
+                </div>
+            `;
+        }
+
+        function markAllNotificationsAsRead(event) {
+            if (event) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+
+            const btn = document.getElementById('markAllReadBtn');
+            const originalHtml = btn ? btn.innerHTML : '';
+            if (btn) btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> <span>Clearing...</span>';
+
+            fetch(NOTIFICATION_CONFIG.markAllUrl, {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': NOTIFICATION_CONFIG.csrfToken,
+                    'Accept': 'application/json'
+                }
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    // Hide red badge dot
+                    const dot = document.getElementById('notificationsBadgeDot');
+                    if (dot) dot.style.display = 'none';
+
+                    // Update header status badge
+                    const badge = document.getElementById('notificationsHeaderBadge');
+                    if (badge) {
+                        badge.textContent = 'Caught Up';
+                        badge.style.background = 'var(--secondary)';
+                        badge.style.color = 'var(--muted-foreground)';
+                    }
+
+                    // Clear all items from the list container and display clean empty state!
+                    const container = document.getElementById('notificationsItemsContainer');
+                    if (container) {
+                        const items = container.querySelectorAll('.notification-item');
+                        if (items.length > 0) {
+                            items.forEach(el => {
+                                el.style.transition = 'all 0.2s ease';
+                                el.style.opacity = '0';
+                                el.style.transform = 'translateX(10px)';
+                            });
+                            setTimeout(() => {
+                                renderNotificationsEmptyState(container);
+                            }, 200);
+                        } else {
+                            renderNotificationsEmptyState(container);
+                        }
+                    }
+
+                    if (btn) btn.innerHTML = '<i class="fa-solid fa-check"></i> <span>Cleared</span>';
+                    setTimeout(() => {
+                        if (btn) btn.innerHTML = originalHtml;
+                    }, 2500);
+
+                    if (window.showSonnerToast) {
+                        window.showSonnerToast({
+                            message: 'All notifications cleared',
+                            type: 'success'
+                        });
+                    }
+                }
+            })
+            .catch(err => {
+                if (btn) btn.innerHTML = originalHtml;
+                console.error('Error clearing notifications:', err);
+            });
+        }
+
+        // Live polling every 30 seconds
+        setInterval(function () {
+            fetch(NOTIFICATION_CONFIG.latestUrl, {
+                headers: { 'Accept': 'application/json' }
+            })
+            .then(r => r.json())
+            .then(data => {
+                if (!data.success) return;
+                const unread = data.unread_count || 0;
+                const dot = document.getElementById('notificationsBadgeDot');
+                const badge = document.getElementById('notificationsHeaderBadge');
+                const container = document.getElementById('notificationsItemsContainer');
+
+                if (unread > 0) {
+                    if (dot) dot.style.display = 'inline-block';
+                    if (badge) {
+                        badge.textContent = unread + ' New';
+                        badge.style.background = 'rgba(239, 68, 68, 0.15)';
+                        badge.style.color = '#dc2626';
+                    }
+
+                    // Dynamically update container if new unread notifications exist
+                    if (container && data.notifications && data.notifications.length > 0) {
+                        let html = '';
+                        data.notifications.forEach(n => {
+                            html += `
+                                <a
+                                    href="${n.url}"
+                                    class="notification-item unread"
+                                    data-id="${n.id}"
+                                    onclick="handleNotificationClick(event, ${n.id}, '${n.url}')"
+                                >
+                                    <div class="notification-icon ${n.icon_color || 'orange'}">
+                                        <i class="${n.icon || 'fa-solid fa-bell'}"></i>
+                                    </div>
+                                    <div class="notification-text" style="flex: 1; min-width: 0;">
+                                        <div class="notification-title" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                                            ${n.title}
+                                        </div>
+                                        <div class="notification-time">
+                                            ${n.time_ago} ${n.message ? '&bull; ' + n.message : ''}
+                                        </div>
+                                    </div>
+                                    <span class="notification-unread-dot" title="Unread"></span>
+                                </a>
+                            `;
+                        });
+                        container.innerHTML = html;
+                    }
+                } else {
+                    if (dot) dot.style.display = 'none';
+                    if (badge) {
+                        badge.textContent = 'Caught Up';
+                        badge.style.background = 'var(--secondary)';
+                        badge.style.color = 'var(--muted-foreground)';
+                    }
+                    if (container && container.querySelectorAll('.notification-item').length > 0) {
+                        renderNotificationsEmptyState(container);
+                    }
+                }
+            })
+            .catch(() => {});
+        }, 30000);
     </script>
     @stack('scripts')
 </body>

@@ -39,37 +39,23 @@
     </div>
 </div>
 
-<div style="display: grid; grid-template-columns: 1fr 340px; gap: 1.5rem; align-items: start;">
+<div class="banner-edit-grid" style="display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 1.5rem; align-items: start;">
     {{-- Main Form Card --}}
-    <div style="background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 1.5rem;">
+    <div style="background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 1.5rem; min-width: 0; overflow: hidden;">
         <form action="{{ route('admin.banners.update', $banner) }}" method="POST" enctype="multipart/form-data">
             @csrf
 
-            {{-- Current / Live Banner Preview --}}
-            <div style="margin-bottom: 1.5rem;">
-                <label style="display: block; font-size: 0.82rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted-foreground); margin-bottom: 0.5rem;">
-                    Banner Preview
-                </label>
-                <div style="position: relative; height: 220px; border-radius: 14px; overflow: hidden; background: #111; border: 1px solid var(--border);">
-                    <img id="bannerLivePreview" src="{{ $banner->getImageUrl() }}" alt="{{ $banner->page_name }}" style="width: 100%; height: 100%; object-fit: cover;">
-                    <div style="position: absolute; inset: 0; background: rgba(239, 128, 28, 0.3); mix-blend-mode: multiply;"></div>
-                    <div style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 60%);"></div>
-
-                    {{-- Title simulation --}}
-                    <div style="position: absolute; bottom: 20px; left: 24px; right: 24px; z-index: 2;">
-                        <h2 id="liveTitleText" style="color: #fff; font-size: 1.6rem; font-weight: 800; margin: 0 0 4px 0; text-shadow: 0 2px 5px rgba(0,0,0,0.7);">
-                            {{ $banner->title ?? $banner->page_name }}
-                        </h2>
-                        <span style="color: rgba(255,255,255,0.85); font-size: 0.8rem;">
-                            Home &nbsp;/&nbsp; {{ $banner->page_name }}
-                        </span>
-                    </div>
-
-                    <div style="position: absolute; top: 12px; right: 12px; background: rgba(0,0,0,0.65); backdrop-filter: blur(4px); color: #fff; font-size: 0.75rem; padding: 3px 10px; border-radius: 6px; z-index: 2;">
-                        Website Preview Simulation
-                    </div>
-                </div>
-            </div>
+            {{-- Interactive Banner Position Adjuster & Live Preview --}}
+            @include('admin.partials.banner-adjuster', [
+                'idPrefix' => 'page_banner',
+                'currentImageUrl' => $banner->getImageUrl(),
+                'currentPosition' => old('banner_position', $banner->banner_position ?? 'center center'),
+                'fileInputName' => 'image',
+                'positionInputName' => 'banner_position',
+                'titleSimulation' => $banner->title ?? $banner->page_name,
+                'routeSimulation' => $banner->page_name,
+                'previewHeight' => '420px',
+            ])
 
             {{-- File Upload Field --}}
             <div style="margin-bottom: 1.5rem;">
@@ -82,7 +68,7 @@
                         Click here to select an image from your device
                     </div>
                     <div style="font-size: 0.75rem; color: var(--muted-foreground);">
-                        Recommended: <strong>1920 × 500 px</strong> (WebP, JPG, or PNG up to 5 MB)
+                        Recommended: <strong>1920 × 500 px</strong> (WebP, JPG, or PNG up to 5 MB) &bull; You can drag &amp; adjust image position above
                     </div>
                     <input type="file" name="image" id="image_input" accept="image/jpeg,image/png,image/webp,image/jpg,image/svg+xml" style="display: none;" onchange="previewSelectedImage(this)">
                 </div>
@@ -94,7 +80,7 @@
                     <label for="title" style="display: block; font-size: 0.85rem; font-weight: 600; color: var(--foreground); margin-bottom: 0.4rem;">
                         Heading Title (Shown inside banner)
                     </label>
-                    <input type="text" name="title" id="title" value="{{ old('title', $banner->title ?? $banner->page_name) }}" oninput="document.getElementById('liveTitleText').textContent = this.value || '{{ $banner->page_name }}'" style="width: 100%; padding: 0.65rem 0.85rem; border-radius: 8px; border: 1px solid var(--border); background: var(--input-bg); color: var(--foreground); font-size: 0.9rem;">
+                    <input type="text" name="title" id="title" value="{{ old('title', $banner->title ?? $banner->page_name) }}" oninput="if(document.getElementById('page_banner_title_sim')) document.getElementById('page_banner_title_sim').textContent = this.value || '{{ $banner->page_name }}'" style="width: 100%; padding: 0.65rem 0.85rem; border-radius: 8px; border: 1px solid var(--border); background: var(--input-bg); color: var(--foreground); font-size: 0.9rem;">
                 </div>
 
                 <div>
@@ -189,12 +175,18 @@
 <script>
 function previewSelectedImage(input) {
     if (input.files && input.files[0]) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            document.getElementById('bannerLivePreview').src = e.target.result;
-        };
-        reader.readAsDataURL(input.files[0]);
+        if (typeof window.page_banner_updateImage === 'function') {
+            window.page_banner_updateImage(input.files[0]);
+        }
     }
 }
 </script>
+
+<style>
+@media (max-width: 1080px) {
+    .banner-edit-grid {
+        grid-template-columns: 1fr !important;
+    }
+}
+</style>
 @endsection

@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('product_interest')->nullable();
             $table->string('quantity')->nullable();
             $table->text('message')->nullable();
-            $table->string('source')->default('chatbot');
+            $table->string('source')->default('website');
             $table->string('status')->default('new'); // new, contacted, closed
             $table->text('notes')->nullable();
             $table->string('ip_address', 45)->nullable();

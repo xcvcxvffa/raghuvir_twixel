@@ -161,7 +161,56 @@
                 </div>
             </div>
 
-            <!-- 2. Dynamic Product Specifications Table Card (Product Details) -->
+            <!-- 2. Header Breadcrumb Banner & Live Studio (Full Widescreen View) -->
+            <div class="card-syndron" style="margin-bottom: 0;">
+                <div class="card-syndron-header" style="padding: 1.25rem 1.5rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;">
+                    <div>
+                        <h3 class="card-syndron-title" style="font-size: 1.05rem;">
+                            <div class="card-icon-pill" style="background: rgba(2, 132, 199, 0.12); color: #0284c7;">
+                                <i class="fa-solid fa-panorama"></i>
+                            </div>
+                            <span>Breadcrumb Hero Banner &amp; Live Studio</span>
+                        </h3>
+                        <p class="card-syndron-desc">Configure the panoramic header image displayed at the top of this product's public detail page.</p>
+                    </div>
+                    <span style="font-size: 0.72rem; font-weight: 700; color: #0284c7; background: rgba(14, 165, 233, 0.12); padding: 4px 12px; border-radius: 9999px;">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i> Default Master Banner
+                    </span>
+                </div>
+
+                <div class="card-syndron-body" style="padding: 1.5rem;">
+                    @include('admin.partials.banner-adjuster', [
+                        'idPrefix' => 'prod_banner',
+                        'currentImageUrl' => \App\Models\PageBanner::getImage('product-details'),
+                        'currentPosition' => old('banner_position', 'center bottom'),
+                        'fileInputName' => 'banner_image',
+                        'positionInputName' => 'banner_position',
+                        'titleSimulation' => 'New Product',
+                        'routeSimulation' => 'Products / New Product',
+                        'previewHeight' => '360px',
+                    ])
+
+                    <div style="display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border);">
+                        <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+                            <label for="bannerImageInput" class="btn-syndron btn-syndron-secondary" style="cursor: pointer; display: inline-flex; align-items: center; gap: 8px;">
+                                <i class="fa-solid fa-cloud-arrow-up"></i>
+                                <span>Choose Custom Banner</span>
+                            </label>
+                            <span style="font-size: 0.75rem; color: var(--muted-foreground);">Recommended: <strong>1920 × 500 px</strong> (WebP / JPG / PNG up to 5MB)</span>
+                        </div>
+                    </div>
+                    <input
+                        type="file"
+                        name="banner_image"
+                        id="bannerImageInput"
+                        accept="image/png,image/jpeg,image/webp,image/jpg,image/svg+xml"
+                        onchange="previewProductBanner(this)"
+                        style="display: none;"
+                    >
+                </div>
+            </div>
+
+            <!-- 3. Dynamic Product Specifications Table Card (Product Details) -->
             <div class="card-syndron" style="margin-bottom: 0;">
                 <div class="card-syndron-header" style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;">
                     <div>
@@ -187,14 +236,14 @@
 
                 <div class="card-syndron-body">
                     <!-- Dynamic Specifications Table -->
-                    <div style="border: 1px solid var(--border); border-radius: 10px; overflow-x: auto; background: var(--card);">
+                    <div style="border: 1px solid var(--border); border-radius: 10px; overflow-x: auto; background: var(--card); box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
                         <table style="width: 100%; border-collapse: collapse; margin: 0; font-size: 0.85rem; min-width: 500px;">
                             <thead>
-                                <tr style="background: var(--secondary); border-bottom: 1.5px solid var(--border); color: var(--muted-foreground); font-weight: 700; text-transform: uppercase; font-size: 0.725rem; letter-spacing: 0.05em;">
-                                    <th style="width: 44px; padding: 10px 12px; text-align: center;">#</th>
-                                    <th style="width: 38%; padding: 10px 14px; text-align: left;">Parameter / Specification Label</th>
-                                    <th style="padding: 10px 14px; text-align: left;">Specification Value / Description</th>
-                                    <th style="width: 54px; padding: 10px 12px; text-align: center;">Action</th>
+                                <tr style="background-color: var(--secondary); border-bottom: 2px solid var(--border);">
+                                    <th style="width: 44px; padding: 12px 14px; text-align: center; color: var(--muted-foreground); font-weight: 700; text-transform: uppercase; font-size: 0.725rem; letter-spacing: 0.05em;">#</th>
+                                    <th style="width: 38%; padding: 12px 14px; text-align: left; color: var(--muted-foreground); font-weight: 700; text-transform: uppercase; font-size: 0.725rem; letter-spacing: 0.05em;">Parameter / Specification Label</th>
+                                    <th style="padding: 12px 14px; text-align: left; color: var(--muted-foreground); font-weight: 700; text-transform: uppercase; font-size: 0.725rem; letter-spacing: 0.05em;">Specification Value / Description</th>
+                                    <th style="width: 54px; padding: 12px 14px; text-align: center; color: var(--muted-foreground); font-weight: 700; text-transform: uppercase; font-size: 0.725rem; letter-spacing: 0.05em;">Action</th>
                                 </tr>
                             </thead>
                             <tbody id="specsTableBody">
@@ -238,7 +287,7 @@
                         </span>
                         <button type="button" class="btn-syndron btn-syndron-secondary" style="padding: 6px 14px; font-size: 0.8rem; border-color: var(--accent); color: var(--accent);" onclick="addSpecRow()">
                             <i class="fa-solid fa-plus"></i>
-                            <span>+ Add Another Row</span>
+                            <span>Add Another Row</span>
                         </button>
                     </div>
                 </div>
@@ -411,7 +460,95 @@
                 </div>
             </div>
 
-            <!-- 4. SEO Settings Card with Real-time Google SERP Preview -->
+            <!-- 4. Ideal For Dishes & Recipes Showcase Gallery -->
+            <div class="card-syndron" style="margin-bottom: 1.75rem;">
+                <div class="card-syndron-header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.75rem;">
+                    <div>
+                        <h3 class="card-syndron-title">
+                            <div class="card-icon-pill" style="background: rgba(239, 128, 28, 0.12); color: #EF801C;">
+                                <i class="fa-solid fa-utensils"></i>
+                            </div>
+                            <span>Ideal For Dishes & Recipes Showcase</span>
+                        </h3>
+                        <p class="card-syndron-desc">
+                            Visual dish cards displayed on the public product page (e.g., Dal Bati, Churma, Bafla, Traditional Breads) with custom photos and dish labels.
+                        </p>
+                    </div>
+                    <button type="button" class="btn-syndron btn-syndron-primary btn-syndron-sm" onclick="addIdealDishRow()" style="gap: 5px;">
+                        <i class="fa-solid fa-plus"></i>
+                        <span>Add Dish Card</span>
+                    </button>
+                </div>
+
+                <div class="card-syndron-body">
+                    <div id="idealDishesContainer" class="ideal-dishes-grid">
+                        @php
+                            $defaultDishes = [
+                                ['title' => 'Roti / Chapati', 'image' => 'images/ideal_roti.jpg'],
+                                ['title' => 'Paratha', 'image' => 'images/ideal_paratha.jpg'],
+                                ['title' => 'Puri', 'image' => 'images/ideal_puri.jpg'],
+                                ['title' => 'Thepla', 'image' => 'images/ideal_thepla.jpg'],
+                                ['title' => 'Everyday Cooking', 'image' => 'images/ideal_cooking.jpg'],
+                            ];
+                        @endphp
+                        @foreach($defaultDishes as $idx => $dish)
+                            <div class="ideal-dish-card" data-index="{{ $idx }}">
+                                <div class="dish-card-img-box">
+                                    <img src="{{ asset($dish['image']) }}" alt="{{ $dish['title'] }}" id="dishImgPreview_{{ $idx }}" class="dish-preview-img">
+                                    <label for="dishFileInput_{{ $idx }}" class="dish-upload-overlay" title="Upload custom dish photo">
+                                        <i class="fa-solid fa-camera"></i>
+                                        <span>Change</span>
+                                    </label>
+                                    <input type="file" name="ideal_for_items[{{ $idx }}][image_file]" id="dishFileInput_{{ $idx }}" accept="image/png,image/jpeg,image/webp,image/jpg" class="dish-file-hidden" onchange="handleDishFileChange(this, {{ $idx }})">
+                                </div>
+
+                                <div class="dish-card-content">
+                                    <div class="dish-field-group">
+                                        <label class="dish-field-label">Dish / Recipe Name <span style="color:#ef4444;">*</span></label>
+                                        <input type="text" name="ideal_for_items[{{ $idx }}][title]" value="{{ $dish['title'] }}" class="form-control-admin dish-title-input" placeholder="e.g. Dal Bati, Churma" required>
+                                    </div>
+
+                                    <div class="dish-field-group" style="margin-top: 6px;">
+                                        <label class="dish-field-label">Choose Preset Image</label>
+                                        <select name="ideal_for_items[{{ $idx }}][preset]" class="form-control-admin dish-preset-select" onchange="handlePresetChange(this, {{ $idx }})">
+                                            <option value="">-- Custom Uploaded Photo --</option>
+                                            <option value="images/ideal_dal_bati.jpg" {{ $dish['image'] === 'images/ideal_dal_bati.jpg' ? 'selected' : '' }}>Dal Bati (Authentic Golden Batis)</option>
+                                            <option value="images/ideal_churma.jpg" {{ $dish['image'] === 'images/ideal_churma.jpg' ? 'selected' : '' }}>Churma (Sweet Golden Crumble)</option>
+                                            <option value="images/ideal_bafla.jpg" {{ $dish['image'] === 'images/ideal_bafla.jpg' ? 'selected' : '' }}>Bafla (Boiled & Baked Bafla)</option>
+                                            <option value="images/ideal_baking.jpg" {{ $dish['image'] === 'images/ideal_baking.jpg' ? 'selected' : '' }}>Traditional Breads & Artisan Loaf</option>
+                                            <option value="images/ideal_roti.jpg" {{ $dish['image'] === 'images/ideal_roti.jpg' ? 'selected' : '' }}>Roti / Phulka (Soft Wheat Chapati)</option>
+                                            <option value="images/ideal_paratha.jpg" {{ $dish['image'] === 'images/ideal_paratha.jpg' ? 'selected' : '' }}>Paratha (Layered Crispy Flatbread)</option>
+                                            <option value="images/ideal_puri.jpg" {{ $dish['image'] === 'images/ideal_puri.jpg' ? 'selected' : '' }}>Puri (Golden Puffed Puri)</option>
+                                            <option value="images/ideal_thepla.jpg" {{ $dish['image'] === 'images/ideal_thepla.jpg' ? 'selected' : '' }}>Thepla (Gujarati Spiced Flatbread)</option>
+                                            <option value="images/ideal_cooking.jpg" {{ $dish['image'] === 'images/ideal_cooking.jpg' ? 'selected' : '' }}>Everyday Cooking & Curries</option>
+                                            <option value="images/ideal_commercial.jpg" {{ $dish['image'] === 'images/ideal_commercial.jpg' ? 'selected' : '' }}>Commercial Kitchens & Catering</option>
+                                        </select>
+                                    </div>
+
+                                    <input type="hidden" name="ideal_for_items[{{ $idx }}][existing_image]" value="{{ $dish['image'] }}" id="dishExistingImg_{{ $idx }}">
+                                </div>
+
+                                <button type="button" class="dish-remove-btn" onclick="removeDishCard(this)" title="Delete this dish card">
+                                    <i class="fa-solid fa-trash-can"></i>
+                                </button>
+                            </div>
+                        @endforeach
+                    </div>
+
+                    <div style="margin-top: 1rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.75rem; padding-top: 1rem; border-top: 1px dashed var(--border);">
+                        <div style="font-size: 0.775rem; color: var(--muted-foreground);">
+                            <i class="fa-solid fa-lightbulb" style="color: #f59e0b; margin-right: 4px;"></i>
+                            Tip: You can upload your own food photography or choose from authentic traditional presets.
+                        </div>
+                        <button type="button" class="btn-syndron btn-syndron-secondary btn-syndron-sm" onclick="addIdealDishRow()" style="gap: 5px;">
+                            <i class="fa-solid fa-plus"></i>
+                            <span>Add Another Dish Card</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5. SEO Settings Card with Real-time Google SERP Preview -->
             <div class="card-syndron" style="margin-bottom: 0;">
                 <div class="card-syndron-header">
                     <div>
@@ -525,12 +662,12 @@
 
                 <div class="card-syndron-body" style="padding: 1.25rem 1.5rem;">
                     <!-- Live Visibility Toggle -->
-                    <div style="display: flex; align-items: center; justify-content: space-between; padding: 0.85rem; background: #f8fafc; border: 1px solid var(--border); border-radius: 8px; margin-bottom: 1rem;">
+                    <div class="publish-switch-box">
                         <div>
                             <div style="font-weight: 700; font-size: 0.85rem; color: var(--foreground);">Live on Website</div>
                             <div style="font-size: 0.75rem; color: var(--muted-foreground);">Publish to online catalog</div>
                         </div>
-                        <label class="switch" style="position: relative; display: inline-block; width: 44px; height: 24px;">
+                        <label class="switch" style="position: relative; display: inline-block; width: 44px; height: 24px; margin: 0;">
                             <input type="checkbox" name="is_active" value="1" {{ old('is_active', '1') == '1' ? 'checked' : '' }} style="opacity: 0; width: 0; height: 0;">
                             <span class="slider round"></span>
                         </label>
@@ -629,7 +766,7 @@
 
                 <div class="card-syndron-body" style="padding: 1.25rem;">
                     <div class="product-pack-upload-container" style="display: flex; flex-direction: column; gap: 0.75rem;">
-                        <div style="width: 100%; height: 240px; border-radius: 12px; overflow: hidden; background: #ffffff; border: 2px dashed var(--border); display: flex; align-items: center; justify-content: center; position: relative; padding: 16px; box-shadow: inset 0 2px 6px rgba(0,0,0,0.03);">
+                        <div class="pack-preview-box">
                             <img
                                 id="productCoverPreview"
                                 src="{{ asset('images/product_atta_white.jpg') }}"
@@ -670,55 +807,12 @@
                 </div>
             </div>
 
-            <!-- 3b. Header Breadcrumb Banner (Optional) -->
-            <div class="card-syndron" style="margin-bottom: 0;">
-                <div class="card-syndron-header" style="padding: 1.15rem 1.25rem; display: flex; align-items: center; justify-content: space-between;">
-                    <h3 class="card-syndron-title" style="font-size: 0.95rem;">
-                        <i class="fa-solid fa-panorama" style="color: #0284c7;"></i>
-                        <span>Breadcrumb Hero Banner</span>
-                    </h3>
-                    <span style="font-size: 0.7rem; font-weight: 700; color: #0284c7; background: rgba(14, 165, 233, 0.12); padding: 2px 8px; border-radius: 9999px;">Optional</span>
-                </div>
-
-                <div class="card-syndron-body" style="padding: 1.25rem;">
-                    <div style="font-size: 0.78rem; color: var(--muted-foreground); margin-bottom: 0.75rem; line-height: 1.4;">
-                        Custom background banner for this product's header page. If not uploaded, it automatically displays the default master banner from <strong>Page Banners</strong>.
-                    </div>
-
-                    <div style="padding: 0.5rem 0.75rem; background: rgba(14, 165, 233, 0.06); border: 1px dashed rgba(14, 165, 233, 0.3); border-radius: 8px; margin-bottom: 0.75rem; font-size: 0.75rem; color: var(--foreground); display: flex; align-items: center; gap: 0.4rem;">
-                        <i class="fa-solid fa-ruler-combined" style="color: #0284c7;"></i>
-                        <span>Recommended: <strong>1920 × 500 px</strong> (Panoramic)</span>
-                    </div>
-
-                    <div style="position: relative; height: 110px; border-radius: 10px; overflow: hidden; background: #1a1a1a; border: 1px solid var(--border); margin-bottom: 0.75rem;">
-                        <img id="productBannerPreviewImg" src="{{ \App\Models\PageBanner::getImage('product-details') }}" alt="Breadcrumb Banner Preview" style="width: 100%; height: 100%; object-fit: cover;">
-                        <div style="position: absolute; inset: 0; background: rgba(239, 128, 28, 0.3); mix-blend-mode: multiply;"></div>
-                        <div style="position: absolute; bottom: 6px; right: 8px; background: rgba(0,0,0,0.6); color: #fff; font-size: 0.68rem; padding: 2px 6px; border-radius: 4px;">
-                            Hero Overlay Preview
-                        </div>
-                    </div>
-
-                    <label for="bannerImageInput" class="btn-syndron btn-syndron-secondary" style="width: 100%; justify-content: center; cursor: pointer;">
-                        <i class="fa-solid fa-cloud-arrow-up"></i>
-                        <span>Choose Custom Banner</span>
-                    </label>
-                    <input
-                        type="file"
-                        name="banner_image"
-                        id="bannerImageInput"
-                        accept="image/png,image/jpeg,image/webp,image/jpg,image/svg+xml"
-                        onchange="previewProductBanner(this)"
-                        style="display: none;"
-                    >
-                </div>
-            </div>
-
-            <!-- 4. Additional Gallery Images & Ideal For -->
+            <!-- 4. Additional Gallery Photos (Slider) -->
             <div class="card-syndron" style="margin-bottom: 0;">
                 <div class="card-syndron-header" style="padding: 1.25rem 1.5rem;">
                     <h3 class="card-syndron-title" style="font-size: 1rem;">
                         <i class="fa-solid fa-images" style="color: var(--accent);"></i>
-                        <span>Gallery & Ideal Dishes</span>
+                        <span>Additional Gallery Photos</span>
                     </h3>
                 </div>
 
@@ -735,20 +829,6 @@
                             class="form-control-admin"
                         >
                         <div class="form-hint">Upload extra photos for the thumbnail slider in Image 2.</div>
-                    </div>
-
-                    <!-- Ideal For Dishes -->
-                    <div class="form-group-admin" style="margin-bottom: 0;">
-                        <label for="ideal_for" class="form-label-admin">Ideal For Dishes (Comma separated)</label>
-                        <input
-                            type="text"
-                            name="ideal_for"
-                            id="ideal_for"
-                            class="form-control-admin"
-                            value="{{ old('ideal_for', 'Roti / Chapati, Paratha, Puri, Thepla, Everyday Cooking') }}"
-                            placeholder="Roti, Paratha, Puri, Thepla, Halwa"
-                        >
-                        <div class="form-hint">Shown in the 'Ideal For' cards section at bottom of product page.</div>
                     </div>
                 </div>
             </div>
@@ -770,8 +850,7 @@
         display: flex;
         flex-direction: column;
         gap: 1.5rem;
-        position: sticky;
-        top: 5.5rem;
+        position: static;
     }
     @media (max-width: 1080px) {
         .blog-editor-layout {
@@ -780,6 +859,176 @@
         .blog-editor-sidebar {
             position: static;
         }
+    }
+
+    /* Top Action Button Shortcut Key Contrast */
+    .btn-syndron-primary .shortcut-key,
+    #topSaveBtn .shortcut-key {
+        background: rgba(255, 255, 255, 0.22) !important;
+        border: 1px solid rgba(255, 255, 255, 0.35) !important;
+        color: #ffffff !important;
+        font-size: 0.65rem;
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-family: inherit;
+        font-weight: 600;
+        margin-left: 6px;
+        display: inline-block;
+        line-height: 1.2;
+    }
+
+    /* Publish Switch Box */
+    .publish-switch-box {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0.85rem 1rem;
+        background: var(--secondary);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-md, 8px);
+        margin-bottom: 1rem;
+        transition: all 0.2s ease;
+    }
+    html.dark .publish-switch-box,
+    body.dark .publish-switch-box {
+        background: rgba(255, 255, 255, 0.04);
+        border-color: var(--border);
+    }
+
+    .pack-preview-box {
+        width: 100%;
+        height: 240px;
+        border-radius: 12px;
+        overflow: hidden;
+        background: var(--card);
+        border: 2px dashed var(--border);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        padding: 16px;
+        box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.03);
+    }
+    html.dark .pack-preview-box,
+    body.dark .pack-preview-box {
+        background: rgba(255, 255, 255, 0.02);
+        border-color: var(--border);
+    }
+
+    /* Ideal For Dishes & Recipes Showcase Gallery */
+    .ideal-dishes-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+    @media (max-width: 860px) {
+        .ideal-dishes-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+    .ideal-dish-card {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 0.85rem 1rem;
+        background: #f8fafc;
+        border: 1.5px solid var(--border);
+        border-radius: 14px;
+        transition: all 0.2s ease;
+        position: relative;
+    }
+    .ideal-dish-card:hover {
+        border-color: #EF801C;
+        background: #ffffff;
+        box-shadow: 0 4px 14px rgba(0,0,0,0.04);
+    }
+    .dish-card-img-box {
+        width: 80px;
+        height: 80px;
+        border-radius: 12px;
+        position: relative;
+        overflow: hidden;
+        background: #ffffff;
+        border: 1.5px solid var(--border);
+        flex-shrink: 0;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+    }
+    .dish-preview-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+    .dish-upload-overlay {
+        position: absolute;
+        inset: 0;
+        background: rgba(15, 23, 42, 0.7);
+        color: #ffffff;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 3px;
+        font-size: 0.65rem;
+        font-weight: 700;
+        opacity: 0;
+        cursor: pointer;
+        transition: opacity 0.2s ease;
+    }
+    .dish-card-img-box:hover .dish-upload-overlay {
+        opacity: 1;
+    }
+    .dish-file-hidden {
+        display: none;
+    }
+    .dish-card-content {
+        flex: 1;
+        min-width: 0;
+    }
+    .dish-field-group {
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+    }
+    .dish-field-label {
+        font-size: 0.7rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        color: var(--muted-foreground);
+    }
+    .dish-remove-btn {
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+        background: #ffffff;
+        color: #94a3b8;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.8rem;
+        cursor: pointer;
+        transition: all 0.15s ease;
+        align-self: flex-start;
+    }
+    .dish-remove-btn:hover {
+        background: #fef2f2;
+        border-color: #fecaca;
+        color: #ef4444;
+    }
+    html.dark .ideal-dish-card {
+        background: #0f172a;
+        border-color: #334155;
+    }
+    html.dark .dish-card-img-box {
+        background: #1e293b;
+        border-color: #334155;
+    }
+    html.dark .dish-remove-btn {
+        background: #1e293b;
+        border-color: #334155;
+        color: #94a3b8;
     }
 
     /* Slug Input Group */
@@ -1161,13 +1410,110 @@
 
     function previewProductBanner(input) {
         if (input.files && input.files[0]) {
+            if (typeof window.prod_banner_updateImage === 'function') {
+                window.prod_banner_updateImage(input.files[0]);
+            }
+        }
+    }
+
+    /* ── Ideal For Dishes & Recipes Showcase Dynamic Builder ─────────────── */
+    const IDEAL_PRESETS = [
+        { title: 'Dal Bati', image: 'images/ideal_dal_bati.jpg', label: 'Dal Bati (Authentic Golden Batis)' },
+        { title: 'Churma', image: 'images/ideal_churma.jpg', label: 'Churma (Sweet Golden Crumble)' },
+        { title: 'Bafla', image: 'images/ideal_bafla.jpg', label: 'Bafla (Boiled & Baked Bafla)' },
+        { title: 'Traditional Breads', image: 'images/ideal_baking.jpg', label: 'Traditional Breads & Artisan Loaf' },
+        { title: 'Roti / Chapati', image: 'images/ideal_roti.jpg', label: 'Roti / Phulka (Soft Wheat Chapati)' },
+        { title: 'Paratha', image: 'images/ideal_paratha.jpg', label: 'Paratha (Layered Crispy Flatbread)' },
+        { title: 'Puri', image: 'images/ideal_puri.jpg', label: 'Puri (Golden Puffed Puri)' },
+        { title: 'Thepla', image: 'images/ideal_thepla.jpg', label: 'Thepla (Gujarati Spiced Flatbread)' },
+        { title: 'Everyday Cooking', image: 'images/ideal_cooking.jpg', label: 'Everyday Cooking & Curries' },
+        { title: 'Commercial Kitchens', image: 'images/ideal_commercial.jpg', label: 'Commercial Kitchens & Catering' }
+    ];
+
+    let idealDishCounter = document.querySelectorAll('.ideal-dish-card').length || 10;
+
+    function handlePresetChange(selectEl, idx) {
+        const val = selectEl.value;
+        const previewImg = document.getElementById(`dishImgPreview_${idx}`);
+        const existingInput = document.getElementById(`dishExistingImg_${idx}`);
+        const card = selectEl.closest('.ideal-dish-card');
+        const titleInput = card.querySelector('.dish-title-input');
+
+        if (val) {
+            previewImg.src = `{{ asset('') }}` + val;
+            existingInput.value = val;
+
+            const found = IDEAL_PRESETS.find(p => p.image === val);
+            if (found && (!titleInput.value || IDEAL_PRESETS.some(p => p.title.toLowerCase() === titleInput.value.toLowerCase()))) {
+                titleInput.value = found.title;
+            }
+        }
+    }
+
+    function handleDishFileChange(fileInput, idx) {
+        if (fileInput.files && fileInput.files[0]) {
             const reader = new FileReader();
             reader.onload = function(e) {
-                const img = document.getElementById('productBannerPreviewImg');
-                if (img) img.src = e.target.result;
+                const previewImg = document.getElementById(`dishImgPreview_${idx}`);
+                if (previewImg) previewImg.src = e.target.result;
             };
-            reader.readAsDataURL(input.files[0]);
+            reader.readAsDataURL(fileInput.files[0]);
+
+            const card = fileInput.closest('.ideal-dish-card');
+            const selectEl = card.querySelector('.dish-preset-select');
+            if (selectEl) selectEl.value = '';
         }
+    }
+
+    function removeDishCard(btn) {
+        const card = btn.closest('.ideal-dish-card');
+        card.style.transition = 'all 0.2s ease';
+        card.style.opacity = '0';
+        card.style.transform = 'scale(0.95)';
+        setTimeout(() => {
+            card.remove();
+        }, 200);
+    }
+
+    function addIdealDishRow() {
+        idealDishCounter++;
+        const container = document.getElementById('idealDishesContainer');
+        const newCard = document.createElement('div');
+        newCard.className = 'ideal-dish-card';
+        newCard.dataset.index = idealDishCounter;
+        newCard.innerHTML = `
+            <div class="dish-card-img-box">
+                <img src="{{ asset('images/ideal_roti.jpg') }}" alt="Dish Preview" id="dishImgPreview_${idealDishCounter}" class="dish-preview-img">
+                <label for="dishFileInput_${idealDishCounter}" class="dish-upload-overlay" title="Upload custom photo">
+                    <i class="fa-solid fa-camera"></i>
+                    <span>Change</span>
+                </label>
+                <input type="file" name="ideal_for_items[${idealDishCounter}][image_file]" id="dishFileInput_${idealDishCounter}" accept="image/png,image/jpeg,image/webp,image/jpg" class="dish-file-hidden" onchange="handleDishFileChange(this, ${idealDishCounter})">
+            </div>
+
+            <div class="dish-card-content">
+                <div class="dish-field-group">
+                    <label class="dish-field-label">Dish / Recipe Name <span style="color:#ef4444;">*</span></label>
+                    <input type="text" name="ideal_for_items[${idealDishCounter}][title]" value="" class="form-control-admin dish-title-input" placeholder="e.g. Dal Bati, Churma" required>
+                </div>
+
+                <div class="dish-field-group" style="margin-top: 6px;">
+                    <label class="dish-field-label">Choose Preset Image</label>
+                    <select name="ideal_for_items[${idealDishCounter}][preset]" class="form-control-admin dish-preset-select" onchange="handlePresetChange(this, ${idealDishCounter})">
+                        <option value="">-- Custom Uploaded Photo --</option>
+                        ${IDEAL_PRESETS.map(p => `<option value="${p.image}">${p.label}</option>`).join('')}
+                    </select>
+                </div>
+
+                <input type="hidden" name="ideal_for_items[${idealDishCounter}][existing_image]" value="images/ideal_roti.jpg" id="dishExistingImg_${idealDishCounter}">
+            </div>
+
+            <button type="button" class="dish-remove-btn" onclick="removeDishCard(this)" title="Delete this dish card">
+                <i class="fa-solid fa-trash-can"></i>
+            </button>
+        `;
+        container.appendChild(newCard);
+        newCard.querySelector('.dish-title-input').focus();
     }
 </script>
 @endpush

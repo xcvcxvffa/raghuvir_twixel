@@ -19,7 +19,7 @@ class ProfileController extends Controller
      */
     public function edit(): View
     {
-        $user = Auth::user();
+        $user = Auth::user() ?? \App\Models\User::first();
 
         return view('admin.profile.edit', compact('user'));
     }
@@ -58,16 +58,29 @@ class ProfileController extends Controller
     {
         $validated = $request->validate([
             'current_password' => ['required', 'current_password'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'password' => [
+                'required',
+                'string',
+                'confirmed',
+                Password::min(8)
+                    ->letters()
+                    ->numbers(),
+            ],
         ], [
             'current_password.current_password' => 'The provided current password does not match our records.',
             'password.confirmed' => 'The new password confirmation does not match.',
-            'password.min' => 'The new password must be at least 8 characters long.',
         ]);
 
         $user = Auth::user();
         $user->password = Hash::make($validated['password']);
         $user->save();
+
+        \Illuminate\Support\Facades\Log::info('Security: Admin password updated successfully', [
+            'user_id' => $user->id,
+            'email' => $user->email,
+            'ip' => $request->ip(),
+            'user_agent' => $request->userAgent(),
+        ]);
 
         return back()->with('success', 'Security password updated successfully.');
     }

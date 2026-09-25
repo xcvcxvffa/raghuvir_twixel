@@ -395,23 +395,48 @@
 
 	function submitForm() {
 		/* Ajax call to submit form */
+		var postUrl = $contactform.attr('action') && $contactform.attr('action') !== '#' 
+			? $contactform.attr('action') 
+			: '/contact/submit';
+
+		var $submitBtn = $contactform.find('button[type="submit"]');
+		var origBtnText = $submitBtn.html();
+		$submitBtn.prop('disabled', true).html('<span>Sending...</span>');
+
 		$.ajax({
 			type: "POST",
-			url: "form-process.php",
+			url: postUrl,
 			data: $contactform.serialize(),
-			success: function (text) {
-				if (text === "success") {
-					formSuccess();
+			dataType: 'json',
+			headers: {
+				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+				'Accept': 'application/json'
+			},
+			success: function (response) {
+				if (response && response.success) {
+					formSuccess(response.message || "Message Sent Successfully!");
 				} else {
-					submitMSG(false, text);
+					submitMSG(false, (response && response.message) ? response.message : "Something went wrong.");
 				}
+			},
+			error: function (xhr) {
+				var errMsg = "Failed to send message. Please try again.";
+				if (xhr.responseJSON && xhr.responseJSON.message) {
+					errMsg = xhr.responseJSON.message;
+				} else if (xhr.responseJSON && xhr.responseJSON.errors) {
+					errMsg = Object.values(xhr.responseJSON.errors).flat().join(" ");
+				}
+				submitMSG(false, errMsg);
+			},
+			complete: function () {
+				$submitBtn.prop('disabled', false).html(origBtnText);
 			}
 		});
 	}
 
-	function formSuccess() {
+	function formSuccess(msg) {
 		$contactform[0].reset();
-		submitMSG(true, "Message Sent Successfully!")
+		submitMSG(true, msg || "Message Sent Successfully!");
 	}
 
 	function submitMSG(valid, msg) {

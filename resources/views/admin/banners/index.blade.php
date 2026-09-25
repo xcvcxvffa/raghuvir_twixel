@@ -161,14 +161,14 @@
         <div class="banner-page-card" style="background: var(--card); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 4px 12px rgba(0,0,0,0.03);">
             {{-- Preview Image Header --}}
             <div style="position: relative; height: 160px; background: #1a1a1a; overflow: hidden;">
-                <img src="{{ $banner->getImageUrl() }}" alt="{{ $banner->page_name }}" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s;" id="preview-img-{{ $banner->id }}">
+                <img src="{{ $banner->getImageUrl() }}" alt="{{ $banner->page_name }}" style="width: 100%; height: 100%; object-fit: cover; object-position: {{ $banner->banner_position ?? 'center center' }}; transition: transform 0.3s;" id="preview-img-{{ $banner->id }}">
                 
                 {{-- Dark overlay simulating the website look --}}
                 <div style="position: absolute; inset: 0; background: rgba(239, 128, 28, 0.3); mix-blend-mode: multiply;"></div>
                 <div style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 60%);"></div>
 
                 {{-- Status Badge --}}
-                <div style="position: absolute; top: 12px; left: 12px; z-index: 2;">
+                <div style="position: absolute; top: 12px; left: 12px; z-index: 2; display: flex; gap: 6px; flex-wrap: wrap;">
                     @if($banner->hasCustomImage())
                         <span class="badge-tag" style="background: rgba(16, 185, 129, 0.9); color: #fff; font-weight: 700; backdrop-filter: blur(4px); padding: 4px 10px; border-radius: 6px; font-size: 0.72rem;">
                             <i class="fa-solid fa-circle-check"></i> Custom Image Active
@@ -176,6 +176,12 @@
                     @else
                         <span class="badge-tag" style="background: rgba(245, 158, 11, 0.9); color: #fff; font-weight: 700; backdrop-filter: blur(4px); padding: 4px 10px; border-radius: 6px; font-size: 0.72rem;">
                             <i class="fa-solid fa-image"></i> Default Theme Image
+                        </span>
+                    @endif
+
+                    @if(!empty($banner->banner_position) && $banner->banner_position !== 'center center')
+                        <span class="badge-tag" style="background: rgba(14, 165, 233, 0.9); color: #fff; font-weight: 700; backdrop-filter: blur(4px); padding: 4px 8px; border-radius: 6px; font-size: 0.7rem;">
+                            <i class="fa-solid fa-arrows-up-down"></i> {{ $banner->banner_position }}
                         </span>
                     @endif
                 </div>
@@ -246,7 +252,7 @@
                 <div style="padding-top: 0.85rem; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; flex-wrap: wrap;">
                     <div style="display: flex; gap: 0.4rem; align-items: center;">
                         {{-- Quick Upload Trigger Button --}}
-                        <button type="button" class="btn-syndron btn-syndron-primary" style="padding: 0.45rem 0.8rem; font-size: 0.8rem;" onclick="openQuickUploadModal({{ $banner->id }}, '{{ addslashes($banner->page_name) }}', '{{ $banner->getImageUrl() }}')">
+                        <button type="button" class="btn-syndron btn-syndron-primary" style="padding: 0.45rem 0.8rem; font-size: 0.8rem;" onclick="openQuickUploadModal({{ $banner->id }}, '{{ addslashes($banner->page_name) }}', '{{ $banner->getImageUrl() }}', '{{ $banner->banner_position ?? 'center center' }}')">
                             <i class="fa-solid fa-cloud-arrow-up"></i><span>Change Image</span>
                         </button>
 
@@ -302,7 +308,7 @@
 
 {{-- ===== QUICK UPLOAD MODAL ===== --}}
 <div id="quickUploadModal" style="display: none; position: fixed; inset: 0; z-index: 9999; background: rgba(0, 0, 0, 0.65); backdrop-filter: blur(4px); align-items: center; justify-content: center; padding: 1.5rem;">
-    <div style="background: var(--card); border: 1px solid var(--border); border-radius: 18px; width: 100%; max-width: 580px; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35); animation: modalIn 0.2s ease-out;">
+    <div style="background: var(--card); border: 1px solid var(--border); border-radius: 18px; width: min(880px, calc(100vw - 2rem)); max-width: 880px; max-height: 92vh; overflow-y: auto; overflow-x: hidden; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35); animation: modalIn 0.2s ease-out; box-sizing: border-box;">
         {{-- Modal Header --}}
         <div style="padding: 1.25rem 1.5rem; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; background: var(--input-bg);">
             <div style="display: flex; align-items: center; gap: 0.75rem;">
@@ -310,7 +316,7 @@
                     <i class="fa-solid fa-cloud-arrow-up"></i>
                 </div>
                 <div>
-                    <h3 style="margin: 0; font-size: 1rem; font-weight: 700; color: var(--foreground);">Upload Banner Image</h3>
+                    <h3 style="margin: 0; font-size: 1rem; font-weight: 700; color: var(--foreground);">Change Banner Image &amp; Alignment</h3>
                     <span id="modalPageTitle" style="font-size: 0.8rem; color: #EF801C; font-weight: 600;"></span>
                 </div>
             </div>
@@ -318,41 +324,30 @@
         </div>
 
         {{-- Modal Form --}}
-        <form action="{{ route('admin.banners.quick-upload') }}" method="POST" enctype="multipart/form-data" style="padding: 1.5rem;">
+        <form action="{{ route('admin.banners.quick-upload') }}" method="POST" enctype="multipart/form-data" style="padding: 1.5rem; box-sizing: border-box;">
             @csrf
             <input type="hidden" name="banner_id" id="modalBannerId">
 
-            {{-- Dimensions info box --}}
-            <div style="margin-bottom: 1.25rem; padding: 0.75rem 1rem; background: rgba(14, 165, 233, 0.08); border: 1px solid rgba(14, 165, 233, 0.2); border-radius: 10px; font-size: 0.8rem; color: var(--foreground);">
-                <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.25rem; font-weight: 700; color: #0284c7;">
-                    <i class="fa-solid fa-circle-info"></i> Required Image Dimensions:
-                </div>
-                <div style="font-weight: 700; font-size: 0.95rem; margin-bottom: 2px;">
-                    📐 1920 × 500 px &bull; Format: WebP / JPG / PNG &bull; Max: 5 MB
-                </div>
-                <span style="font-size: 0.75rem; color: var(--muted-foreground);">
-                    For best look on mobile &amp; desktop, upload a wide landscape image.
-                </span>
-            </div>
-
-            {{-- Live Preview Box --}}
-            <div style="margin-bottom: 1.25rem;">
-                <label style="display: block; font-size: 0.8rem; font-weight: 600; color: var(--muted-foreground); margin-bottom: 0.5rem;">Image Preview:</label>
-                <div style="position: relative; height: 140px; border-radius: 12px; overflow: hidden; background: #111; border: 1px solid var(--border);">
-                    <img id="modalPreviewImg" src="" alt="Banner Preview" style="width: 100%; height: 100%; object-fit: cover;">
-                    <div style="position: absolute; inset: 0; background: rgba(239, 128, 28, 0.3); mix-blend-mode: multiply;"></div>
-                    <div style="position: absolute; bottom: 8px; right: 12px; background: rgba(0,0,0,0.6); color: #fff; font-size: 0.7rem; padding: 2px 8px; border-radius: 4px;">
-                        Website Overlay Simulation
-                    </div>
-                </div>
-            </div>
+            {{-- Interactive Position Adjuster & Live Preview --}}
+            @include('admin.partials.banner-adjuster', [
+                'idPrefix' => 'quick_banner',
+                'currentImageUrl' => '',
+                'currentPosition' => 'center center',
+                'fileInputName' => 'banner_image',
+                'positionInputName' => 'banner_position',
+                'titleSimulation' => 'Page Hero Banner',
+                'previewHeight' => '320px',
+            ])
 
             {{-- File Input --}}
             <div style="margin-bottom: 1.5rem;">
                 <label for="banner_image_input" style="display: block; font-size: 0.82rem; font-weight: 600; color: var(--foreground); margin-bottom: 0.5rem;">
-                    Select Image File <span style="color: #ef4444;">*</span>
+                    Select New Image File <span style="color: #ef4444;">*</span>
                 </label>
                 <input type="file" name="banner_image" id="banner_image_input" accept="image/jpeg,image/png,image/webp,image/jpg,image/svg+xml" required onchange="handleModalFileSelect(this)" style="width: 100%; padding: 0.55rem; border: 1.5px dashed var(--border); border-radius: 10px; background: var(--input-bg); color: var(--foreground); font-size: 0.85rem; cursor: pointer;">
+                <div style="font-size: 0.72rem; color: var(--muted-foreground); margin-top: 4px;">
+                    Recommended: <strong>1920 × 500 px</strong> (WebP, JPG, or PNG up to 5 MB)
+                </div>
             </div>
 
             {{-- Actions --}}
@@ -369,10 +364,30 @@
 </div>
 
 <script>
-function openQuickUploadModal(bannerId, pageName, currentImgUrl) {
+function openQuickUploadModal(bannerId, pageName, currentImgUrl, currentPosition) {
     document.getElementById('modalBannerId').value = bannerId;
     document.getElementById('modalPageTitle').textContent = 'Page: ' + pageName;
-    document.getElementById('modalPreviewImg').src = currentImgUrl;
+    
+    const titleSim = document.getElementById('quick_banner_title_sim');
+    if (titleSim) titleSim.textContent = pageName;
+    
+    const previewBox = document.getElementById('quick_banner_preview_box');
+    if (previewBox) {
+        previewBox.style.backgroundImage = "url('" + currentImgUrl + "')";
+    }
+    
+    const pos = currentPosition || 'center center';
+    let percent = 50;
+    if (pos.includes('bottom')) percent = 100;
+    else if (pos.includes('top')) percent = 0;
+    else {
+        const m = pos.match(/(\d+)%/);
+        if (m) percent = parseInt(m[1], 10);
+    }
+    if (typeof window.quick_banner_applyPreset === 'function') {
+        window.quick_banner_applyPreset(pos, percent);
+    }
+    
     document.getElementById('banner_image_input').value = '';
     const modal = document.getElementById('quickUploadModal');
     modal.style.display = 'flex';
@@ -385,11 +400,9 @@ function closeQuickUploadModal() {
 
 function handleModalFileSelect(input) {
     if (input.files && input.files[0]) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            document.getElementById('modalPreviewImg').src = e.target.result;
-        };
-        reader.readAsDataURL(input.files[0]);
+        if (typeof window.quick_banner_updateImage === 'function') {
+            window.quick_banner_updateImage(input.files[0]);
+        }
     }
 }
 

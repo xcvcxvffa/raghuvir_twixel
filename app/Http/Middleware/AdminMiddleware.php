@@ -22,6 +22,15 @@ class AdminMiddleware
         }
 
         if (!$request->user()->isAdmin()) {
+            \Illuminate\Support\Facades\Log::warning('Security: Unauthorized admin panel access attempt intercepted', [
+                'user_id' => $request->user()?->id,
+                'email' => $request->user()?->email,
+                'role' => $request->user()?->role,
+                'ip' => $request->ip(),
+                'url' => $request->fullUrl(),
+                'user_agent' => $request->userAgent(),
+            ]);
+
             Auth::logout();
             $request->session()->invalidate();
             $request->session()->regenerateToken();

@@ -99,6 +99,7 @@ class ProductController extends Controller
             'sizes' => 'nullable|string',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,webp,svg|max:5120',
             'banner_image' => 'nullable|image|mimes:jpeg,png,jpg,webp,svg|max:5120',
+            'banner_position' => 'nullable|string|max:50',
             'image_alt' => 'nullable|string|max:255',
             'gallery_images.*' => 'nullable|image|mimes:jpeg,png,jpg,webp,svg|max:5120',
             'main_ingredient' => 'nullable|string|max:255',
@@ -115,7 +116,12 @@ class ProductController extends Controller
             'fat_g' => 'nullable|string|max:50',
             'nutrition_details' => 'nullable|array',
             'nutrition_details.*' => 'nullable|string|max:100',
-            'ideal_for' => 'nullable|string',
+            'ideal_for' => 'nullable',
+            'ideal_for_items' => 'nullable|array',
+            'ideal_for_items.*.title' => 'nullable|string|max:120',
+            'ideal_for_items.*.preset' => 'nullable|string|max:255',
+            'ideal_for_items.*.existing_image' => 'nullable|string|max:255',
+            'ideal_for_items.*.image_file' => 'nullable|image|mimes:jpeg,png,jpg,webp,svg|max:5120',
             'is_active' => 'nullable|boolean',
             'is_featured' => 'nullable|boolean',
             'sort_order' => 'nullable|integer',
@@ -152,12 +158,8 @@ class ProductController extends Controller
             $validated['sizes'] = ['5kg', '30kg'];
         }
 
-        // Process Ideal For string to clean array
-        if (!empty($validated['ideal_for'])) {
-            $validated['ideal_for'] = array_values(array_filter(array_map('trim', explode(',', $validated['ideal_for']))));
-        } else {
-            $validated['ideal_for'] = ['Roti / Chapati', 'Paratha', 'Puri', 'Thepla', 'Everyday Cooking'];
-        }
+        // Process Ideal For Dishes Showcase Gallery
+        $validated['ideal_for'] = $this->processIdealForItems($request);
 
         // Primary Image upload with WebP conversion
         if ($request->hasFile('image')) {
@@ -218,6 +220,7 @@ class ProductController extends Controller
             'sizes' => 'nullable|string',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,webp,svg|max:5120',
             'banner_image' => 'nullable|image|mimes:jpeg,png,jpg,webp,svg|max:5120',
+            'banner_position' => 'nullable|string|max:50',
             'image_alt' => 'nullable|string|max:255',
             'remove_image' => 'nullable|boolean',
             'remove_banner_image' => 'nullable|boolean',
@@ -235,8 +238,12 @@ class ProductController extends Controller
             'carbs_g' => 'nullable|string|max:50',
             'fat_g' => 'nullable|string|max:50',
             'nutrition_details' => 'nullable|array',
-            'nutrition_details.*' => 'nullable|string|max:100',
-            'ideal_for' => 'nullable|string',
+            'ideal_for' => 'nullable',
+            'ideal_for_items' => 'nullable|array',
+            'ideal_for_items.*.title' => 'nullable|string|max:120',
+            'ideal_for_items.*.preset' => 'nullable|string|max:255',
+            'ideal_for_items.*.existing_image' => 'nullable|string|max:255',
+            'ideal_for_items.*.image_file' => 'nullable|image|mimes:jpeg,png,jpg,webp,svg|max:5120',
             'is_active' => 'nullable|boolean',
             'is_featured' => 'nullable|boolean',
             'sort_order' => 'nullable|integer',
@@ -284,6 +291,7 @@ class ProductController extends Controller
                 Storage::disk('public')->delete($product->banner_image);
             }
             $validated['banner_image'] = null;
+            $validated['banner_position'] = null;
         }
 
         // Handle New Breadcrumb Banner Image Upload
@@ -308,9 +316,9 @@ class ProductController extends Controller
             $validated['sizes'] = array_values(array_filter(array_map('trim', explode(',', $validated['sizes']))));
         }
 
-        // Process Ideal For string to clean array
-        if (isset($validated['ideal_for'])) {
-            $validated['ideal_for'] = array_values(array_filter(array_map('trim', explode(',', $validated['ideal_for']))));
+        // Process Ideal For Dishes Showcase Gallery
+        if ($request->has('ideal_for_items') || $request->has('ideal_for')) {
+            $validated['ideal_for'] = $this->processIdealForItems($request);
         }
 
         $validated['is_active'] = $request->boolean('is_active');
@@ -451,5 +459,56 @@ class ProductController extends Controller
         }
 
         return !empty($clean) ? $clean : null;
+    }
+
+    /**
+     * Clean and process Ideal For dishes gallery items.
+     */
+    protected function processIdealForItems(Request $request): ?array
+    {
+        $items = [];
+
+        if ($request->has('ideal_for_items') && is_array($request->input('ideal_for_items'))) {
+            foreach ($request->input('ideal_for_items') as $idx => $row) {
+                $title = trim($row['title'] ?? '');
+                if (empty($title)) {
+                    continue;
+                }
+
+                $imagePath = trim($row['existing_image'] ?? '');
+
+                // If user selected a preset image
+                if (!empty($row['preset'])) {
+                    $imagePath = trim($row['preset']);
+                }
+
+                // If user uploaded a new custom image for this dish
+                if ($request->hasFile("ideal_for_items.{$idx}.image_file")) {
+                    $file = $request->file("ideal_for_items.{$idx}.image_file");
+                    if ($file && $file->isValid()) {
+                        $imagePath = $this->processAndStoreImage($file);
+                    }
+                }
+
+                $items[] = [
+                    'title' => $title,
+                    'image' => $imagePath,
+                ];
+            }
+        } elseif ($request->filled('ideal_for')) {
+            $raw = $request->input('ideal_for');
+            if (is_string($raw)) {
+                $titles = array_values(array_filter(array_map('trim', explode(',', $raw))));
+                foreach ($titles as $t) {
+                    $items[] = ['title' => $t, 'image' => ''];
+                }
+            } elseif (is_array($raw)) {
+                foreach ($raw as $t) {
+                    $items[] = is_array($t) ? $t : ['title' => trim($t), 'image' => ''];
+                }
+            }
+        }
+
+        return !empty($items) ? $items : null;
     }
 }

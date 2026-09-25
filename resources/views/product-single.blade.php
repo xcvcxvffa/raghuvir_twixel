@@ -373,7 +373,7 @@
 }
 .ideal-for-grid {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
     gap: 20px;
 }
 .ideal-for-card {
@@ -413,15 +413,97 @@
     background: #FAF7F2;
     border-top: 1px solid #ECE3D4;
 }
-.btn-whatsapp {
-    background-color: #25D366 !important;
-    border-color: #25D366 !important;
+/* Product Detail Action Buttons - 2-Column Grid */
+.product-single-content .inquiry-buttons,
+.product-action-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 14px !important;
+    width: 100% !important;
+    max-width: 520px !important;
+    margin-top: 25px !important;
+    align-items: stretch !important;
+    box-sizing: border-box !important;
+}
+
+.product-single-content .inquiry-buttons .btn-default,
+.product-action-grid .btn-default {
+    width: 100% !important;
+    min-width: 0 !important;
+    height: 50px !important;
+    margin: 0 !important;
+    padding: 0 16px !important;
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    border-radius: 30px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+    gap: 8px !important;
+    box-sizing: border-box !important;
+    white-space: nowrap !important;
+    text-decoration: none !important;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08) !important;
+    transition: all 0.3s ease !important;
+    cursor: pointer !important;
+}
+
+.product-action-grid .btn-inquiry,
+.product-single-content .inquiry-buttons .btn-inquiry {
+    background-color: var(--accent-color, #C85A32) !important;
+    border: 2px solid var(--accent-color, #C85A32) !important;
     color: #FFFFFF !important;
 }
+
+.product-action-grid .btn-inquiry:hover,
+.product-single-content .inquiry-buttons .btn-inquiry:hover {
+    background-color: #B54B25 !important;
+    border-color: #B54B25 !important;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(200, 90, 50, 0.3) !important;
+}
+
+.product-action-grid .btn-whatsapp,
+.product-single-content .inquiry-buttons .btn-whatsapp,
+.btn-whatsapp {
+    background-color: #25D366 !important;
+    border: 2px solid #25D366 !important;
+    color: #FFFFFF !important;
+}
+
+.product-action-grid .btn-whatsapp:hover,
+.product-single-content .inquiry-buttons .btn-whatsapp:hover,
 .btn-whatsapp:hover {
     background-color: #1EBE5D !important;
     border-color: #1EBE5D !important;
     color: #FFFFFF !important;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(37, 211, 102, 0.3) !important;
+}
+
+.product-action-grid .btn-inquiry i,
+.product-single-content .inquiry-buttons .btn-inquiry i {
+    font-size: 14px !important;
+    margin-left: 0 !important;
+    transition: transform 0.2s ease;
+}
+
+.product-action-grid .btn-inquiry:hover i,
+.product-single-content .inquiry-buttons .btn-inquiry:hover i {
+    transform: translateX(3px) translateY(-1px);
+}
+
+.product-action-grid .btn-whatsapp i,
+.product-single-content .inquiry-buttons .btn-whatsapp i {
+    font-size: 19px !important;
+    margin-left: 0 !important;
+    transition: transform 0.2s ease;
+}
+
+.product-action-grid .btn-whatsapp:hover i,
+.product-single-content .inquiry-buttons .btn-whatsapp:hover i {
+    transform: scale(1.15);
 }
 
 /* Tablet & Mobile Responsive */
@@ -514,21 +596,30 @@
         line-height: 1.6;
         margin-bottom: 18px;
     }
-    .inquiry-buttons {
-        flex-direction: column !important;
+    .product-single-content .inquiry-buttons,
+    .product-action-grid {
+        display: grid !important;
+        grid-template-columns: repeat(2, 1fr) !important;
         width: 100% !important;
+        max-width: 100% !important;
         gap: 10px !important;
-        margin-top: 20px !important;
+        margin-top: 18px !important;
     }
-    .inquiry-buttons .btn-default {
+    .product-single-content .inquiry-buttons .btn-default,
+    .product-action-grid .btn-default {
         width: 100% !important;
-        text-align: center !important;
-        justify-content: center !important;
-        display: flex !important;
-        align-items: center !important;
-        padding: 13px 20px !important;
-        font-size: 15px !important;
-        box-sizing: border-box !important;
+        height: 46px !important;
+        padding: 0 8px !important;
+        font-size: 13.5px !important;
+        gap: 6px !important;
+    }
+    .product-action-grid .btn-whatsapp i,
+    .product-single-content .inquiry-buttons .btn-whatsapp i {
+        font-size: 16px !important;
+    }
+    .product-action-grid .btn-inquiry i,
+    .product-single-content .inquiry-buttons .btn-inquiry i {
+        font-size: 12px !important;
     }
     .product-features-container {
         padding: 28px 16px 24px !important;
@@ -589,6 +680,31 @@
         grid-template-columns: repeat(2, 1fr);
         gap: 8px;
     }
+    .product-single-content .inquiry-buttons,
+    .product-action-grid {
+        gap: 8px !important;
+    }
+    .product-single-content .inquiry-buttons .btn-default,
+    .product-action-grid .btn-default {
+        height: 44px !important;
+        padding: 0 6px !important;
+        font-size: 12.5px !important;
+        gap: 5px !important;
+        letter-spacing: -0.2px;
+    }
+}
+@media (max-width: 360px) {
+    .product-single-content .inquiry-buttons .btn-default,
+    .product-action-grid .btn-default {
+        height: 42px !important;
+        padding: 0 4px !important;
+        font-size: 11px !important;
+        gap: 4px !important;
+    }
+    .product-action-grid .btn-whatsapp i,
+    .product-single-content .inquiry-buttons .btn-whatsapp i {
+        font-size: 14px !important;
+    }
 }
 </style>
 @endpush
@@ -601,9 +717,12 @@
             ? $product
             : ((isset($productModel) && $productModel instanceof \App\Models\Product) ? $productModel : null);
         $productBannerUrl = $currentProduct ? $currentProduct->banner_image_url : \App\Models\PageBanner::getImage('product-details');
+        $productBannerPos = ($currentProduct && !empty($currentProduct->banner_position))
+            ? $currentProduct->banner_position
+            : \App\Models\PageBanner::getPosition('product-details', 'center bottom');
     @endphp
     <!-- Page Header Section Start -->
-    <div class="page-header bg-section dark-section product-single-hero" style="background-image: url('{{ $productBannerUrl }}') !important;">
+    <div class="page-header bg-section dark-section product-single-hero" style="background-image: url('{{ $productBannerUrl }}') !important; background-position: {{ $productBannerPos }} !important;">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
@@ -699,18 +818,19 @@
                                     $waNumberClean = '919725427727';
                                 }
                             @endphp
-                            <div class="inquiry-buttons" style="display: flex; gap: 15px; align-items: center; flex-wrap: wrap; margin-top: 25px;">
+                            <div class="inquiry-buttons product-action-grid">
                                 <!-- Request Inquiry Button -->
                                 <button type="button" id="inquiry-btn" class="btn-default btn-inquiry"
                                     onclick="openInquiryModal(this)"
                                     data-product="{{ $title }}"
-                                    data-size="{{ $default_size }}">
-                                    Request Inquiry <i class="fa-solid fa-paper-plane" style="margin-left: 8px;"></i>
+                                    data-size="{{ $default_size }}"
+                                    data-sizes="{{ $sizes }}">
+                                    Request Inquiry <i class="fa-solid fa-paper-plane"></i>
                                 </button>
                                 
                                 <!-- WhatsApp Button -->
                                 <a id="whatsapp-btn" href="https://wa.me/{{ $waNumberClean }}?text={{ rawurlencode("Hello Raghuvir Atta, I am interested in inquiring about {$title} ({$default_size}).") }}" target="_blank" class="btn-default btn-whatsapp">
-                                    Chat On WhatsApp <i class="fa-brands fa-whatsapp" style="margin-left: 8px; font-size: 20px;"></i>
+                                    Chat On WhatsApp <i class="fa-brands fa-whatsapp"></i>
                                 </a>
                             </div>
                             
@@ -1141,52 +1261,14 @@
                         <h2 class="section-title-custom" style="margin-bottom: 25px;">Ideal <span>For</span></h2>
                         <div class="ideal-for-grid">
                             @php
-                                $dishImages = [
-                                    'Roti / Chapati' => 'images/ideal_roti.jpg',
-                                    'Paratha' => 'images/ideal_paratha.jpg',
-                                    'Puri' => 'images/ideal_puri.jpg',
-                                    'Thepla' => 'images/ideal_thepla.jpg',
-                                    'Everyday Cooking' => 'images/ideal_cooking.jpg',
-                                    'Dal Bati' => 'images/ideal_dal_bati.jpg',
-                                    'Churma' => 'images/ideal_churma.jpg',
-                                    'Bafla' => 'images/ideal_bafla.jpg',
-                                    'Traditional Breads' => 'images/ideal_baking.jpg',
-                                    'Commercial Kitchens' => 'images/ideal_commercial.jpg',
-                                    'Bulk Catering' => 'images/ideal_commercial.jpg',
-                                    'High-Fiber Baking' => 'images/ideal_baking.jpg',
-                                ];
-                                $dishesList = (!empty($ideal_for) && is_array($ideal_for) && count($ideal_for) > 0)
-                                    ? $ideal_for
-                                    : ['Roti / Chapati', 'Paratha', 'Puri', 'Thepla', 'Everyday Cooking'];
-                                $defaultFallbackImages = [
-                                    'images/ideal_roti.jpg',
-                                    'images/ideal_paratha.jpg',
-                                    'images/ideal_puri.jpg',
-                                    'images/ideal_thepla.jpg',
-                                    'images/ideal_cooking.jpg',
-                                ];
+                                $galleryItems = !empty($productModel->ideal_for_gallery) ? $productModel->ideal_for_gallery : [];
                             @endphp
-                            @foreach($dishesList as $idx => $dish)
-                            @php
-                                $dishImg = $dishImages[$dish] ?? null;
-                                if (!$dishImg) {
-                                    $dishLower = strtolower($dish);
-                                    if (str_contains($dishLower, 'bati')) $dishImg = 'images/ideal_dal_bati.jpg';
-                                    elseif (str_contains($dishLower, 'churma')) $dishImg = 'images/ideal_churma.jpg';
-                                    elseif (str_contains($dishLower, 'bafla')) $dishImg = 'images/ideal_bafla.jpg';
-                                    elseif (str_contains($dishLower, 'paratha')) $dishImg = 'images/ideal_paratha.jpg';
-                                    elseif (str_contains($dishLower, 'puri')) $dishImg = 'images/ideal_puri.jpg';
-                                    elseif (str_contains($dishLower, 'thepla')) $dishImg = 'images/ideal_thepla.jpg';
-                                    elseif (str_contains($dishLower, 'baking') || str_contains($dishLower, 'bread')) $dishImg = 'images/ideal_baking.jpg';
-                                    elseif (str_contains($dishLower, 'commercial') || str_contains($dishLower, 'catering')) $dishImg = 'images/ideal_commercial.jpg';
-                                    else $dishImg = $defaultFallbackImages[$idx % count($defaultFallbackImages)];
-                                }
-                            @endphp
+                            @foreach($galleryItems as $item)
                             <div class="ideal-for-card">
                                 <div class="ideal-for-img-wrap">
-                                    <img src="{{ asset($dishImg) }}" alt="{{ $dish }}">
+                                    <img src="{{ $item['image_url'] }}" alt="{{ $item['title'] }}" loading="lazy">
                                 </div>
-                                <h4 class="ideal-for-title">{{ $dish }}</h4>
+                                <h4 class="ideal-for-title">{{ $item['title'] }}</h4>
                             </div>
                             @endforeach
                         </div>

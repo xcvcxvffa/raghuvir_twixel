@@ -52,6 +52,20 @@
 	<meta name="author" content="{{ setting('site_title', 'Raghuvir Atta') }}">
 	<link rel="canonical" href="{{ $seoCanonical }}">
 
+	<!-- Search Engine & Webmaster Verifications -->
+	@if(setting('google_search_console_code'))
+		<meta name="google-site-verification" content="{{ setting('google_search_console_code') }}">
+	@endif
+	@if(setting('bing_webmaster_code'))
+		<meta name="msvalidate.01" content="{{ setting('bing_webmaster_code') }}">
+	@endif
+	@if(setting('pinterest_verify_code'))
+		<meta name="p:domain_verify" content="{{ setting('pinterest_verify_code') }}">
+	@endif
+	@if(setting('yandex_verify_code'))
+		<meta name="yandex-verification" content="{{ setting('yandex_verify_code') }}">
+	@endif
+
 	<!-- Open Graph / Facebook / WhatsApp -->
 	<meta property="og:type" content="{{ $ogType ?? 'website' }}">
 	<meta property="og:site_name" content="{{ setting('site_title', 'Raghuvir Atta') }}">
@@ -99,12 +113,62 @@
 	<!-- Main Custom Css -->
 	<link href="{{ asset('css/custom.css') }}?v={{ file_exists(public_path('css/custom.css')) ? filemtime(public_path('css/custom.css')) : time() }}" rel="stylesheet" media="screen">
 	@stack('styles')
+
+	<!-- Google Analytics 4 (GA4) -->
+	@if(setting('ga4_measurement_id') && setting('ga4_enabled', true))
+		<!-- Google tag (gtag.js) -->
+		<script async src="https://www.googletagmanager.com/gtag/js?id={{ setting('ga4_measurement_id') }}"></script>
+		<script>
+		  window.dataLayer = window.dataLayer || [];
+		  function gtag(){dataLayer.push(arguments);}
+		  gtag('js', new Date());
+		  gtag('config', '{{ setting('ga4_measurement_id') }}'{{ setting('ga4_anonymize_ip') ? ", { 'anonymize_ip': true }" : "" }});
+		</script>
+	@endif
+
+	<!-- Google Tag Manager (GTM) -->
+	@if(setting('gtm_container_id') && setting('gtm_enabled', true))
+		<!-- Google Tag Manager -->
+		<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+		new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+		j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+		'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+		})(window,document,'script','dataLayer','{{ setting('gtm_container_id') }}');</script>
+		<!-- End Google Tag Manager -->
+	@endif
+
+	<!-- Meta / Facebook Pixel Code -->
+	@if(setting('meta_pixel_id') && setting('meta_pixel_enabled', true))
+		<script>
+		!function(f,b,e,v,n,t,s)
+		{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+		n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+		if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+		n.queue=[];t=b.createElement(e);t.async=!0;
+		t.src=v;s=b.getElementsByTagName(e)[0];
+		s.parentNode.insertBefore(t,s)}(window, document,'script',
+		'https://connect.facebook.net/en_US/fbevents.js');
+		fbq('init', '{{ setting('meta_pixel_id') }}');
+		fbq('track', 'PageView');
+		</script>
+		<noscript><img height="1" width="1" style="display:none"
+		src="https://www.facebook.com/tr?id={{ setting('meta_pixel_id') }}&ev=PageView&noscript=1"
+		/></noscript>
+		<!-- End Meta Pixel Code -->
+	@endif
+
 	@if(setting('custom_header_scripts'))
 		{!! setting('custom_header_scripts') !!}
 	@endif
 </head>
 
 <body>
+	@if(setting('gtm_container_id') && setting('gtm_enabled', true))
+		<!-- Google Tag Manager (noscript) -->
+		<noscript><iframe src="https://www.googletagmanager.com/ns.html?id={{ setting('gtm_container_id') }}"
+		height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+		<!-- End Google Tag Manager (noscript) -->
+	@endif
 
 	<div class="preloader">
 		<div class="logo-container" id="logoWrapper">
@@ -239,9 +303,19 @@
             </div>
         </div>
 
+        {{-- Pack Size Selector --}}
+        <div class="inq-pack-size-section" id="inq-pack-size-section" style="display:none;">
+            <label class="inq-label" style="margin-bottom: 6px;">Select Pack Size:</label>
+            <div class="inq-size-pills" id="inq-size-pills"></div>
+        </div>
+
         {{-- Form --}}
         <form id="inquiryForm" class="inq-form" onsubmit="submitInquiryForm(event)">
             @csrf
+            {{-- Anti-Spam Bot Honeypot --}}
+            <div style="display:none !important; visibility:hidden !important; opacity:0 !important; position:absolute !important; left:-9999px !important;" aria-hidden="true">
+                <input type="text" name="website" tabindex="-1" autocomplete="off" value="">
+            </div>
             <input type="hidden" name="product_interest" id="inq-product">
             <input type="hidden" name="quantity"         id="inq-size">
 
@@ -401,6 +475,39 @@
 }
 .inq-textarea { resize: vertical; min-height: 80px; }
 
+/* Pack Size Picker */
+.inq-pack-size-section {
+    margin-bottom: 8px;
+}
+.inq-size-pills {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+.inq-size-pill {
+    padding: 7px 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    border: 2px solid #e2e8f0;
+    background: #ffffff;
+    color: #334155;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: inherit;
+    line-height: 1.3;
+}
+.inq-size-pill:hover {
+    border-color: #EF801C;
+    color: #EF801C;
+}
+.inq-size-pill.active {
+    background: #EF801C;
+    border-color: #EF801C;
+    color: #ffffff;
+    box-shadow: 0 2px 8px rgba(239,128,28,0.3);
+}
+
 /* Error */
 .inq-error-box {
     background: #fef2f2;
@@ -483,15 +590,54 @@
 <script>
 (function () {
     /* Open / close helpers */
+    /* Helper: update subtitle & message when pack size changes */
+    function updateInqSizeContext(product, size) {
+        document.getElementById('inq-size').value = size;
+        document.getElementById('inq-product-label').textContent =
+            product ? (product + (size ? ' \u2014 ' + size : '')) : 'Fill in the details and we\u2019ll get back to you shortly.';
+        var msgEl = document.getElementById('inq-message');
+        if (msgEl && product) {
+            msgEl.value = 'Hello Raghuvir Atta, I am interested in inquiring about ' + product + (size ? ' (' + size + ')' : '') + '. Please provide more details.';
+        }
+    }
+
+    /* Build pack-size pills inside the modal */
+    function buildSizePills(sizesStr, activeSize, product) {
+        var section = document.getElementById('inq-pack-size-section');
+        var container = document.getElementById('inq-size-pills');
+        container.innerHTML = '';
+        if (!sizesStr) { section.style.display = 'none'; return; }
+        var sizes = sizesStr.split(',').map(function(s) { return s.trim(); }).filter(Boolean);
+        if (sizes.length === 0) { section.style.display = 'none'; return; }
+        section.style.display = 'block';
+        sizes.forEach(function(sz) {
+            var pill = document.createElement('button');
+            pill.type = 'button';
+            pill.className = 'inq-size-pill' + (sz === activeSize ? ' active' : '');
+            pill.textContent = sz;
+            pill.addEventListener('click', function() {
+                container.querySelectorAll('.inq-size-pill').forEach(function(p) { p.classList.remove('active'); });
+                pill.classList.add('active');
+                updateInqSizeContext(product, sz);
+            });
+            container.appendChild(pill);
+        });
+    }
+
     window.openInquiryModal = function (btn) {
-        const product = btn ? (btn.getAttribute('data-product') || '') : '';
-        const size    = btn ? (btn.getAttribute('data-size')    || '') : '';
+        var product   = btn ? (btn.getAttribute('data-product') || '') : '';
+        var size      = btn ? (btn.getAttribute('data-size')    || '') : '';
+        var sizesAttr = btn ? (btn.getAttribute('data-sizes')   || '') : '';
         document.getElementById('inq-product').value = product;
         document.getElementById('inq-size').value    = size;
         document.getElementById('inq-product-label').textContent =
             product ? (product + (size ? ' \u2014 ' + size : '')) : 'Fill in the details and we\u2019ll get back to you shortly.';
+
+        // Build pack-size pills
+        buildSizePills(sizesAttr, size, product);
+
         // Reset form state
-        const modal = document.getElementById('inquiryModal');
+        var modal = document.getElementById('inquiryModal');
         document.getElementById('inquiryForm').style.display  = 'flex';
         document.getElementById('inq-success').style.display  = 'none';
         document.getElementById('inq-error-box').style.display = 'none';
@@ -500,9 +646,9 @@
         document.getElementById('inq-product').value = product;
         document.getElementById('inq-size').value    = size;
         // Auto-fill message with product + size (or leave blank if requested)
-        const msgEl = document.getElementById('inq-message');
+        var msgEl = document.getElementById('inq-message');
         if (msgEl) {
-            const isBlank = btn && (btn.getAttribute('data-blank-message') === 'true' || btn.getAttribute('data-message') === '');
+            var isBlank = btn && (btn.getAttribute('data-blank-message') === 'true' || btn.getAttribute('data-message') === '');
             if (isBlank) {
                 msgEl.value = '';
             } else if (btn && btn.getAttribute('data-message')) {
@@ -580,4 +726,8 @@
 }());
 </script>
 
+	@if(setting('custom_footer_scripts'))
+		{!! setting('custom_footer_scripts') !!}
+	@endif
+</body>
 </html>
