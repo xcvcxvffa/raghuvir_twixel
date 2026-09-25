@@ -490,12 +490,17 @@ html.dark .logo-color-mode { display: none !important; }
     border: 1px solid var(--border);
     border-radius: var(--radius-md);
     padding: 6px 12px;
-    width: 280px;
+    width: 320px;
     cursor: pointer;
-    transition: border-color 0.15s ease;
+    transition: width 0.25s ease, border-color 0.15s ease, box-shadow 0.15s ease;
 }
 .topbar-search-box:hover {
     border-color: var(--border-strong);
+}
+.topbar-search-box:focus-within {
+    width: 380px;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(239, 128, 28, 0.12);
 }
 .topbar-search-box .search-icon-left {
     color: var(--foreground-subtle);
@@ -508,7 +513,7 @@ html.dark .logo-color-mode { display: none !important; }
     color: var(--foreground);
     outline: none;
     width: 100%;
-    cursor: pointer;
+    cursor: text;
 }
 .topbar-search-input::placeholder {
     color: var(--foreground-subtle);
@@ -3490,6 +3495,21 @@ html.dark .modal-callout-warning {
 /* --------------------------------------------------------------------------
    17. Responsive Media Queries
    -------------------------------------------------------------------------- */
+@media (min-width: 992px) {
+    .syndron-sidebar {
+        transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .syndron-main {
+        transition: margin-left 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    body.sidebar-collapsed .syndron-sidebar {
+        transform: translateX(-100%);
+    }
+    body.sidebar-collapsed .syndron-main {
+        margin-left: 0 !important;
+    }
+}
+
 @media (max-width: 1200px) {
     .metrics-row {
         grid-template-columns: repeat(2, 1fr);

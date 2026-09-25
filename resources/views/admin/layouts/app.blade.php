@@ -126,6 +126,171 @@
             object-fit: cover !important;
             border-radius: 50% !important;
         }
+
+        /* Desktop Sidebar Collapse (Smooth slide in / slide out) */
+        @media (min-width: 992px) {
+            .syndron-sidebar {
+                transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1) !important;
+            }
+            .syndron-main {
+                transition: margin-left 0.28s cubic-bezier(0.4, 0, 0.2, 1) !important;
+            }
+            body.sidebar-collapsed .syndron-sidebar {
+                transform: translateX(-100%) !important;
+            }
+            body.sidebar-collapsed .syndron-main {
+                margin-left: 0 !important;
+            }
+            body.sidebar-collapsed .toggle-sidebar-btn {
+                background-color: var(--accent-subtle, rgba(239, 128, 28, 0.1)) !important;
+                color: var(--accent, #EF801C) !important;
+            }
+        }
+
+        /* Topbar Search Box & Interactive Dropdown */
+        .topbar-search-box {
+            position: relative !important;
+            width: 320px !important;
+            cursor: pointer;
+            transition: width 0.25s ease, border-color 0.2s ease, box-shadow 0.2s ease !important;
+        }
+        .topbar-search-box:focus-within {
+            width: 380px !important;
+            border-color: var(--accent, #EF801C) !important;
+            box-shadow: 0 0 0 3px rgba(239, 128, 28, 0.12) !important;
+        }
+        .topbar-search-input {
+            cursor: text !important;
+        }
+        .topbar-search-dropdown {
+            position: absolute;
+            top: calc(100% + 8px);
+            left: 0;
+            width: 440px;
+            max-width: 90vw;
+            background-color: var(--card, #ffffff);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg, 12px);
+            box-shadow: 0 14px 40px rgba(0, 0, 0, 0.14);
+            z-index: 1050;
+            overflow: hidden;
+            display: none;
+            animation: searchDropdownSlide 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .topbar-search-dropdown.show {
+            display: block;
+        }
+        @keyframes searchDropdownSlide {
+            from { opacity: 0; transform: translateY(-6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .topbar-search-dropdown-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 9px 14px;
+            background-color: var(--secondary, #f8fafc);
+            border-bottom: 1px solid var(--border);
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--muted-foreground);
+        }
+        .topbar-search-dropdown-list {
+            max-height: 380px;
+            overflow-y: auto;
+            padding: 6px;
+        }
+        .topbar-search-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 9px 12px;
+            border-radius: var(--radius-md, 8px);
+            text-decoration: none;
+            color: var(--foreground);
+            transition: background-color 0.15s ease;
+            cursor: pointer;
+        }
+        .topbar-search-item:hover,
+        .topbar-search-item.selected {
+            background-color: rgba(239, 128, 28, 0.08);
+        }
+        .topbar-search-item.selected .topbar-search-item-title {
+            color: var(--accent, #EF801C);
+        }
+        .topbar-search-item-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: var(--radius-sm, 6px);
+            background-color: var(--secondary, #f1f5f9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            color: var(--foreground-muted);
+            flex-shrink: 0;
+            transition: all 0.15s ease;
+        }
+        .topbar-search-item:hover .topbar-search-item-icon,
+        .topbar-search-item.selected .topbar-search-item-icon {
+            background-color: var(--accent, #EF801C);
+            color: #ffffff;
+        }
+        .topbar-search-item-content {
+            flex: 1;
+            min-width: 0;
+        }
+        .topbar-search-item-title {
+            font-size: 0.84rem;
+            font-weight: 600;
+            color: var(--foreground);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .topbar-search-item-subtitle {
+            font-size: 0.72rem;
+            color: var(--muted-foreground);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .topbar-search-item-badge {
+            font-size: 0.68rem;
+            padding: 2px 7px;
+            border-radius: 12px;
+            background-color: var(--secondary, #f1f5f9);
+            color: var(--muted-foreground);
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+        .topbar-search-empty {
+            padding: 24px 16px;
+            text-align: center;
+            color: var(--muted-foreground);
+            font-size: 0.825rem;
+        }
+        .topbar-search-dropdown-footer {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 12px;
+            padding: 7px 14px;
+            background-color: var(--secondary, #f8fafc);
+            border-top: 1px solid var(--border);
+            font-size: 0.7rem;
+            color: var(--muted-foreground);
+        }
+        .topbar-search-dropdown-footer kbd {
+            background: var(--card, #ffffff);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 1px 4px;
+            font-size: 0.65rem;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.06);
+        }
     </style>
 </head>
 <body>
@@ -265,11 +430,27 @@
                         <i class="fa-solid fa-bars-staggered"></i>
                     </button>
 
-                    <!-- Search Input with Keyboard Shortcut hint -->
-                    <div class="topbar-search-box">
+                    <!-- Search Input with Live Dropdown & Shortcut -->
+                    <div class="topbar-search-box" id="topbarSearchBox">
                         <i class="fa-solid fa-magnifying-glass search-icon-left"></i>
-                        <input type="text" class="topbar-search-input" placeholder="Search analytics, products...">
-                        <span class="kbd-shortcut">⌘K</span>
+                        <input type="text" class="topbar-search-input" id="topbarSearchInput" placeholder="Search analytics, products..." autocomplete="off">
+                        <span class="kbd-shortcut" title="Press Ctrl+K or ⌘K">⌘K</span>
+
+                        <!-- Instant Live Search Dropdown -->
+                        <div class="topbar-search-dropdown" id="topbarSearchDropdown">
+                            <div class="topbar-search-dropdown-header">
+                                <span id="topbarSearchDropdownTitle">Quick Navigation</span>
+                                <span class="topbar-search-count" id="topbarSearchCount"></span>
+                            </div>
+                            <div class="topbar-search-dropdown-list" id="topbarSearchDropdownList">
+                                <!-- Populated dynamically by JS -->
+                            </div>
+                            <div class="topbar-search-dropdown-footer">
+                                <span><kbd>↑</kbd><kbd>↓</kbd> Navigate</span>
+                                <span><kbd>↵</kbd> Select</span>
+                                <span><kbd>ESC</kbd> Close</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -818,6 +999,271 @@
                     });
                 }
             } catch(e) {}
+        })();
+
+        // =========================================================================
+        // SIDEBAR TOGGLE CONTROLLER (Works on Desktop & Mobile)
+        // =========================================================================
+        (function() {
+            const toggleBtn = document.getElementById('toggleSidebarBtn');
+            const sidebar = document.getElementById('syndronSidebar');
+            const backdrop = document.getElementById('syndronBackdrop');
+            const closeBtn = document.getElementById('sidebarCloseBtn');
+
+            // Restore desktop state from localStorage on load
+            try {
+                if (window.innerWidth > 991 && localStorage.getItem('syndron_sidebar_collapsed') === 'true') {
+                    document.body.classList.add('sidebar-collapsed');
+                }
+            } catch(e) {}
+
+            function toggleSidebarHandler(e) {
+                if (e) e.stopPropagation();
+                if (!sidebar) return;
+
+                if (window.innerWidth <= 991) {
+                    // Mobile Drawer Toggle
+                    const willOpen = !sidebar.classList.contains('open');
+                    sidebar.classList.toggle('open', willOpen);
+                    if (backdrop) backdrop.classList.toggle('active', willOpen);
+                    document.body.classList.toggle('sidebar-drawer-open', willOpen);
+                } else {
+                    // Desktop Collapse / Expand Toggle
+                    const isCollapsed = document.body.classList.toggle('sidebar-collapsed');
+                    try {
+                        localStorage.setItem('syndron_sidebar_collapsed', isCollapsed ? 'true' : 'false');
+                    } catch(err) {}
+                }
+            }
+
+            if (toggleBtn) {
+                toggleBtn.addEventListener('click', toggleSidebarHandler);
+            }
+
+            if (closeBtn) {
+                closeBtn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    if (sidebar) sidebar.classList.remove('open');
+                    if (backdrop) backdrop.classList.remove('active');
+                    document.body.classList.remove('sidebar-drawer-open');
+                });
+            }
+
+            if (backdrop) {
+                backdrop.addEventListener('click', function() {
+                    if (sidebar) sidebar.classList.remove('open');
+                    backdrop.classList.remove('active');
+                    document.body.classList.remove('sidebar-drawer-open');
+                });
+            }
+
+            // Close mobile sidebar on Escape
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && sidebar && sidebar.classList.contains('open')) {
+                    sidebar.classList.remove('open');
+                    if (backdrop) backdrop.classList.remove('active');
+                    document.body.classList.remove('sidebar-drawer-open');
+                }
+            });
+        })();
+
+        // =========================================================================
+        // TOPBAR LIVE SEARCH CONTROLLER
+        // =========================================================================
+        @php
+            $adminSearchItems = [
+                ['title' => 'Analytics Dashboard', 'subtitle' => 'Live store performance & metrics', 'url' => route('admin.dashboard'), 'icon' => 'fa-solid fa-chart-line', 'category' => 'Dashboards', 'keywords' => 'analytics stats overview traffic home'],
+                ['title' => 'Our Products Catalog', 'subtitle' => 'Manage flours, pack sizes & inventory', 'url' => route('admin.products.index'), 'icon' => 'fa-solid fa-boxes-stacked', 'category' => 'Products', 'keywords' => 'products atta flour bati bran items'],
+                ['title' => 'Add New Product', 'subtitle' => 'Create new flour product variety', 'url' => route('admin.products.create'), 'icon' => 'fa-solid fa-circle-plus', 'category' => 'Products', 'keywords' => 'new add product create'],
+                ['title' => 'Inquiries & Leads', 'subtitle' => 'Customer contact forms & bulk requests', 'url' => route('admin.leads.index'), 'icon' => 'fa-solid fa-envelope-open-text', 'category' => 'Leads', 'keywords' => 'leads inquiries contact messages customers wholesale'],
+                ['title' => 'Blog Articles', 'subtitle' => 'Publish milling stories & recipe articles', 'url' => route('admin.blogs.index'), 'icon' => 'fa-solid fa-newspaper', 'category' => 'Content', 'keywords' => 'blog articles recipes news posts content'],
+                ['title' => 'Add New Article', 'subtitle' => 'Write and publish new blog article', 'url' => route('admin.blogs.create'), 'icon' => 'fa-solid fa-pen-to-square', 'category' => 'Content', 'keywords' => 'new write add blog article post'],
+                ['title' => 'Media Gallery Hub', 'subtitle' => 'Manage factory & milling photos/videos', 'url' => route('admin.galleries.index'), 'icon' => 'fa-solid fa-photo-film', 'category' => 'Media', 'keywords' => 'gallery media photos images videos'],
+                ['title' => 'Page Banners', 'subtitle' => 'Header banners & page hero visual setups', 'url' => route('admin.banners.index'), 'icon' => 'fa-solid fa-panorama', 'category' => 'Media', 'keywords' => 'banners hero page visual images'],
+                ['title' => 'Page SEO Settings', 'subtitle' => 'Meta titles, descriptions & OpenGraph tags', 'url' => route('admin.seo.index'), 'icon' => 'fa-solid fa-magnifying-glass-chart', 'category' => 'SEO', 'keywords' => 'seo meta tags keywords google indexing'],
+                ['title' => 'Webmaster & Analytics', 'subtitle' => 'Search Console, Google Analytics & tracking tags', 'url' => route('admin.webmaster.index'), 'icon' => 'fa-solid fa-chart-pie', 'category' => 'SEO', 'keywords' => 'webmaster analytics google tag manager gtm pixel search console'],
+                ['title' => 'Profile & Account Settings', 'subtitle' => 'Update administrator name, avatar & credentials', 'url' => route('admin.profile.edit'), 'icon' => 'fa-solid fa-user-gear', 'category' => 'Settings', 'keywords' => 'profile admin account password avatar email user settings'],
+                ['title' => 'General Site Settings', 'subtitle' => 'Company contacts, phone, address & social links', 'url' => route('admin.settings.index'), 'icon' => 'fa-solid fa-sliders', 'category' => 'Settings', 'keywords' => 'site settings configuration contact phone address social'],
+                ['title' => 'Email SMTP Configuration', 'subtitle' => 'Configure mail server & contact notification alerts', 'url' => route('admin.settings.email'), 'icon' => 'fa-solid fa-envelope-circle-check', 'category' => 'Settings', 'keywords' => 'email mail smtp host notifications alert'],
+                ['title' => 'Preview Live Website', 'subtitle' => 'Open public Raghuvir Atta storefront', 'url' => url('/'), 'icon' => 'fa-solid fa-globe', 'category' => 'Storefront', 'keywords' => 'preview live site store frontend web'],
+            ];
+
+            $dbProducts = rescue(fn() => \App\Models\Product::select('id', 'name', 'slug')->get(), collect(), false);
+            foreach ($dbProducts as $p) {
+                $adminSearchItems[] = [
+                    'title' => $p->name,
+                    'subtitle' => 'Product: edit details, pricing & packs',
+                    'url' => route('admin.products.edit', $p->id),
+                    'icon' => 'fa-solid fa-box',
+                    'category' => 'Products',
+                    'keywords' => 'product ' . strtolower($p->name) . ' ' . $p->slug,
+                ];
+            }
+
+            $dbBlogs = rescue(fn() => \App\Models\Blog::select('id', 'title', 'slug')->get(), collect(), false);
+            foreach ($dbBlogs as $b) {
+                $adminSearchItems[] = [
+                    'title' => $b->title,
+                    'subtitle' => 'Blog: edit article & recipe details',
+                    'url' => route('admin.blogs.edit', $b->id),
+                    'icon' => 'fa-solid fa-file-lines',
+                    'category' => 'Articles',
+                    'keywords' => 'blog article ' . strtolower($b->title) . ' ' . $b->slug,
+                ];
+            }
+        @endphp
+
+        (function() {
+            const searchIndex = {!! json_encode($adminSearchItems) !!};
+            const searchBox = document.getElementById('topbarSearchBox');
+            const searchInput = document.getElementById('topbarSearchInput');
+            const dropdown = document.getElementById('topbarSearchDropdown');
+            const list = document.getElementById('topbarSearchDropdownList');
+            const titleEl = document.getElementById('topbarSearchDropdownTitle');
+            const countEl = document.getElementById('topbarSearchCount');
+
+            if (!searchInput || !dropdown || !list) return;
+
+            let selectedIndex = -1;
+
+            function highlightMatch(text, query) {
+                if (!query) return text;
+                const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+                return text.replace(regex, '<strong style="color: var(--accent); font-weight: 700;">$1</strong>');
+            }
+
+            function renderResults(query) {
+                const q = (query || '').toLowerCase().trim();
+                let matches = [];
+
+                if (!q) {
+                    // Show Quick Navigation links (top 6)
+                    matches = searchIndex.slice(0, 6);
+                    if (titleEl) titleEl.textContent = 'Quick Navigation';
+                    if (countEl) countEl.textContent = '';
+                } else {
+                    matches = searchIndex.filter(item => {
+                        return item.title.toLowerCase().includes(q) ||
+                               item.subtitle.toLowerCase().includes(q) ||
+                               (item.keywords && item.keywords.toLowerCase().includes(q)) ||
+                               item.category.toLowerCase().includes(q);
+                    });
+                    if (titleEl) titleEl.textContent = 'Search Results';
+                    if (countEl) countEl.textContent = `${matches.length} found`;
+                }
+
+                if (matches.length === 0) {
+                    list.innerHTML = `
+                        <div class="topbar-search-empty">
+                            <i class="fa-solid fa-magnifying-glass" style="font-size: 1.5rem; margin-bottom: 0.5rem; opacity: 0.35; display: block;"></i>
+                            <div>No results found for "<strong>${query}</strong>"</div>
+                            <div style="font-size: 0.725rem; color: var(--muted-foreground); margin-top: 4px;">Try searching for "atta", "product", "lead", "blog", or "profile"</div>
+                        </div>
+                    `;
+                    selectedIndex = -1;
+                    return;
+                }
+
+                let html = '';
+                matches.forEach((item, idx) => {
+                    const isSelected = idx === 0 ? 'selected' : '';
+                    html += `
+                        <a href="${item.url}" class="topbar-search-item ${isSelected}" data-index="${idx}">
+                            <div class="topbar-search-item-icon">
+                                <i class="${item.icon}"></i>
+                            </div>
+                            <div class="topbar-search-item-content">
+                                <div class="topbar-search-item-title">${highlightMatch(item.title, q)}</div>
+                                <div class="topbar-search-item-subtitle">${item.subtitle}</div>
+                            </div>
+                            <span class="topbar-search-item-badge">${item.category}</span>
+                        </a>
+                    `;
+                });
+
+                list.innerHTML = html;
+                selectedIndex = 0;
+            }
+
+            function openDropdown() {
+                renderResults(searchInput.value);
+                dropdown.classList.add('show');
+            }
+
+            function closeDropdown() {
+                dropdown.classList.remove('show');
+                selectedIndex = -1;
+            }
+
+            // Input Event Listeners
+            searchInput.addEventListener('focus', function() {
+                openDropdown();
+            });
+
+            searchInput.addEventListener('input', function() {
+                openDropdown();
+            });
+
+            // Keyboard Navigation (Arrow Up, Arrow Down, Enter, Esc)
+            searchInput.addEventListener('keydown', function(e) {
+                const items = list.querySelectorAll('.topbar-search-item');
+                if (items.length === 0) return;
+
+                if (e.key === 'ArrowDown') {
+                    e.preventDefault();
+                    if (selectedIndex < items.length - 1) {
+                        selectedIndex++;
+                    } else {
+                        selectedIndex = 0;
+                    }
+                    updateSelection(items);
+                } else if (e.key === 'ArrowUp') {
+                    e.preventDefault();
+                    if (selectedIndex > 0) {
+                        selectedIndex--;
+                    } else {
+                        selectedIndex = items.length - 1;
+                    }
+                    updateSelection(items);
+                } else if (e.key === 'Enter') {
+                    e.preventDefault();
+                    if (selectedIndex >= 0 && items[selectedIndex]) {
+                        window.location.href = items[selectedIndex].getAttribute('href');
+                    }
+                } else if (e.key === 'Escape') {
+                    e.preventDefault();
+                    closeDropdown();
+                    searchInput.blur();
+                }
+            });
+
+            function updateSelection(items) {
+                items.forEach((item, idx) => {
+                    if (idx === selectedIndex) {
+                        item.classList.add('selected');
+                        item.scrollIntoView({ block: 'nearest' });
+                    } else {
+                        item.classList.remove('selected');
+                    }
+                });
+            }
+
+            // Click Outside Handler
+            document.addEventListener('click', function(e) {
+                if (searchBox && !searchBox.contains(e.target)) {
+                    closeDropdown();
+                }
+            });
+
+            // Global Keyboard Shortcut: Ctrl + K or ⌘K
+            document.addEventListener('keydown', function(e) {
+                if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+                    e.preventDefault();
+                    searchInput.focus();
+                    searchInput.select();
+                    openDropdown();
+                }
+            });
         })();
     </script>
     @stack('scripts')
