@@ -253,6 +253,7 @@ html.dark .logo-color-mode { display: none !important; }
 .sidebar-nav-scroll {
     flex: 1;
     overflow-y: auto;
+    overflow-x: hidden !important;
     padding: 14px 0;
     scrollbar-width: thin;
     scrollbar-color: var(--border) transparent;
@@ -463,23 +464,32 @@ html.dark .logo-color-mode { display: none !important; }
 }
 
 .toggle-sidebar-btn {
-    width: 36px;
-    height: 36px;
+    width: 38px;
+    height: 38px;
     border-radius: var(--radius-md);
-    background: transparent;
-    border: 1px solid var(--border);
+    background: var(--card, #ffffff);
+    border: 1.5px solid var(--border);
     color: var(--foreground-muted);
     display: inline-flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     font-size: 0.95rem;
-    transition: all 0.15s ease;
+    outline: none;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    transition: all 0.2s ease;
 }
 .toggle-sidebar-btn:hover {
     color: var(--accent);
-    border-color: var(--border-strong);
-    background-color: var(--secondary);
+    border-color: rgba(239, 128, 28, 0.4);
+    background-color: rgba(239, 128, 28, 0.06);
+}
+.toggle-sidebar-btn:focus,
+.toggle-sidebar-btn:focus-visible,
+.toggle-sidebar-btn:active {
+    outline: none !important;
+    border-color: rgba(239, 128, 28, 0.5) !important;
+    box-shadow: 0 0 0 3px rgba(239, 128, 28, 0.15) !important;
 }
 
 .topbar-search-box {
@@ -3522,61 +3532,112 @@ html.dark .modal-callout-warning {
         min-width: 70px !important;
         max-width: 70px !important;
         transform: translateX(0) !important;
-        overflow: visible !important;
+        overflow-x: hidden !important;
+        display: flex !important;
+        flex-direction: column !important;
     }
     body.sidebar-collapsed .syndron-main {
         margin-left: 70px !important;
     }
 
-    /* Mini Sidebar Header: square brand icon centered */
+    /* Mini Sidebar Header: Square app-style brand icon centered */
     body.sidebar-collapsed .sidebar-header {
+        height: var(--topbar-height, 68px) !important;
         padding: 0 !important;
+        display: flex !important;
+        align-items: center !important;
         justify-content: center !important;
+        border-bottom: 1px solid var(--sidebar-border, #e2e8f0) !important;
+        flex-shrink: 0 !important;
     }
     body.sidebar-collapsed .sidebar-logo {
+        display: flex !important;
+        align-items: center !important;
         justify-content: center !important;
-        width: 100% !important;
+        width: 44px !important;
+        height: 44px !important;
+        border-radius: 12px !important;
+        background: var(--card, #ffffff) !important;
+        border: 1px solid var(--border, #e2e8f0) !important;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05) !important;
+        padding: 6px !important;
+        transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease !important;
+        text-decoration: none !important;
+    }
+    body.sidebar-collapsed .sidebar-logo:hover {
+        transform: translateY(-1px) !important;
+        border-color: rgba(239, 128, 28, 0.4) !important;
+        box-shadow: 0 4px 12px rgba(239, 128, 28, 0.16) !important;
     }
     body.sidebar-collapsed .admin-brand-logo {
         display: none !important;
     }
     body.sidebar-collapsed .admin-brand-logo-mini {
         display: block !important;
-        width: 38px !important;
-        height: 38px !important;
+        width: 30px !important;
+        height: 30px !important;
         object-fit: contain !important;
-        margin: auto !important;
-        border-radius: 8px !important;
+        margin: 0 !important;
     }
     body.sidebar-collapsed .sidebar-close-btn {
         display: none !important;
     }
 
-    /* Hide Section Titles in Mini Sidebar */
-    body.sidebar-collapsed .sidebar-section-title {
+    /* Scroll Area: completely hide scrollbars & prevent horizontal scroll */
+    body.sidebar-collapsed .sidebar-nav-scroll {
+        overflow-x: hidden !important;
+        overflow-y: auto !important;
+        scrollbar-width: none !important;
+        -ms-overflow-style: none !important;
+        padding: 12px 0 !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        gap: 8px !important;
+    }
+    body.sidebar-collapsed .sidebar-nav-scroll::-webkit-scrollbar {
         display: none !important;
+        width: 0 !important;
+        height: 0 !important;
     }
 
-    /* Hide Text Labels & Badges in Mini Sidebar */
+    /* Completely hide Section Titles to eliminate uneven gaps */
+    body.sidebar-collapsed .sidebar-section-title {
+        display: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        height: 0 !important;
+        border: none !important;
+    }
+
+    /* Hide Text Labels & Badges */
     body.sidebar-collapsed .sidebar-link > span,
     body.sidebar-collapsed .sidebar-link .badge-tag {
         display: none !important;
     }
 
-    /* Icon-Only Buttons in Mini Sidebar */
+    /* Uniform Clean Navigation Lists */
     body.sidebar-collapsed .sidebar-nav {
-        padding: 0 8px !important;
+        width: 100% !important;
+        padding: 0 !important;
+        margin: 0 !important;
         display: flex !important;
         flex-direction: column !important;
         align-items: center !important;
-        gap: 6px !important;
+        gap: 8px !important;
+    }
+    body.sidebar-collapsed .sidebar-nav + .sidebar-nav {
+        margin-top: 8px !important;
     }
     body.sidebar-collapsed .sidebar-item {
         width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
         display: flex !important;
         justify-content: center !important;
-        margin-bottom: 4px !important;
     }
+
+    /* Modern Icon App Tiles (Matching Image 2) */
     body.sidebar-collapsed .sidebar-link {
         width: 44px !important;
         height: 44px !important;
@@ -3586,71 +3647,75 @@ html.dark .modal-callout-warning {
         align-items: center !important;
         justify-content: center !important;
         border-radius: 12px !important;
+        color: #64748b !important;
+        background: transparent !important;
+        border: 1.5px solid transparent !important;
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
         position: relative !important;
-        transition: all 0.2s ease !important;
     }
     body.sidebar-collapsed .sidebar-link .link-icon {
-        font-size: 1.15rem !important;
+        font-size: 1.18rem !important;
         margin: 0 !important;
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
+        transition: transform 0.2s ease, color 0.2s ease !important;
     }
 
-    /* Active & Hover Item in Mini Sidebar */
-    body.sidebar-collapsed .sidebar-item.active .sidebar-link {
-        background-color: rgba(239, 128, 28, 0.12) !important;
-        color: #EF801C !important;
-        box-shadow: 0 2px 8px rgba(239, 128, 28, 0.18) !important;
-    }
+    /* Inactive Hover State */
     body.sidebar-collapsed .sidebar-link:hover {
         background-color: var(--secondary, #f8fafc) !important;
         color: #EF801C !important;
+        border-color: rgba(239, 128, 28, 0.2) !important;
+        transform: translateY(-1px) !important;
+    }
+    body.sidebar-collapsed .sidebar-link:hover .link-icon {
+        transform: scale(1.08) !important;
     }
 
-    /* Tooltip on Hover in Mini Sidebar */
-    body.sidebar-collapsed .sidebar-link::after {
-        content: attr(data-title);
-        position: absolute;
-        left: calc(100% + 12px);
-        top: 50%;
-        transform: translateY(-50%);
-        background: #0f172a;
-        color: #ffffff;
-        padding: 6px 11px;
-        border-radius: 6px;
-        font-size: 0.76rem;
-        font-weight: 600;
-        white-space: nowrap;
-        pointer-events: none;
-        opacity: 0;
-        visibility: hidden;
-        transition: opacity 0.15s ease, transform 0.15s ease;
-        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
-        z-index: 99999;
-    }
-    body.sidebar-collapsed .sidebar-link:hover::after {
-        opacity: 1;
-        visibility: visible;
-        transform: translateY(-50%) translateX(2px);
+    /* Active State: Elevated Card Tile matching Image 2 store icon */
+    body.sidebar-collapsed .sidebar-item.active .sidebar-link {
+        background: var(--card, #ffffff) !important;
+        color: #EF801C !important;
+        border: 1.5px solid rgba(239, 128, 28, 0.35) !important;
+        box-shadow: 0 4px 14px rgba(239, 128, 28, 0.12), 0 2px 4px rgba(0, 0, 0, 0.04) !important;
     }
 
-    /* Footer Profile in Mini Sidebar */
+    /* Footer Profile in Mini Sidebar with top divider line */
     body.sidebar-collapsed .sidebar-footer-profile {
-        padding: 12px 0 !important;
+        height: 66px !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        display: flex !important;
+        align-items: center !important;
         justify-content: center !important;
+        border-top: 1px solid var(--sidebar-border, #e2e8f0) !important;
+        background: transparent !important;
+        flex-shrink: 0 !important;
     }
     body.sidebar-collapsed .profile-details-mini {
         display: none !important;
     }
     body.sidebar-collapsed .profile-avatar-sm {
-        margin: 0 auto !important;
+        width: 40px !important;
+        height: 40px !important;
+        min-width: 40px !important;
+        min-height: 40px !important;
+        margin: 0 !important;
+        border-radius: 50% !important;
+        border: 2px solid rgba(239, 128, 28, 0.35) !important;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08) !important;
+        transition: transform 0.2s ease, border-color 0.2s ease !important;
+    }
+    body.sidebar-collapsed .sidebar-footer-profile:hover .profile-avatar-sm {
+        transform: scale(1.08) !important;
+        border-color: #EF801C !important;
     }
 
     /* Toggle Button Active State */
     body.sidebar-collapsed .toggle-sidebar-btn {
-        background-color: var(--accent-subtle, rgba(239, 128, 28, 0.1)) !important;
-        color: var(--accent, #EF801C) !important;
+        background-color: rgba(239, 128, 28, 0.08) !important;
+        color: #EF801C !important;
         border-color: rgba(239, 128, 28, 0.3) !important;
     }
 }
