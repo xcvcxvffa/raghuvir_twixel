@@ -91,25 +91,30 @@ class ProfileController extends Controller
     public function updateAvatar(Request $request): RedirectResponse
     {
         $request->validate([
-            'avatar' => ['required', 'image', 'mimes:jpeg,png,jpg,webp', 'max:2048'],
+            'avatar' => ['required', 'image', 'mimes:jpeg,png,jpg,webp', 'max:10240'],
         ], [
             'avatar.required' => 'Please choose an image file to upload.',
             'avatar.image' => 'The uploaded file must be a valid image.',
             'avatar.mimes' => 'Avatar must be a file of type: jpeg, png, jpg, webp.',
-            'avatar.max' => 'Avatar size should not exceed 2MB.',
+            'avatar.max' => 'Avatar size should not exceed 10MB.',
         ]);
 
         $user = Auth::user();
 
         if ($request->hasFile('avatar')) {
             // Delete old avatar if exists
-            if ($user->avatar && Storage::disk('public')->exists($user->avatar)) {
-                Storage::disk('public')->delete($user->avatar);
+            if (!empty($user->avatar)) {
+                $cleanOld = str_replace('\\', '/', $user->avatar);
+                $cleanOld = preg_replace('#^/?storage/#', '', $cleanOld);
+                $cleanOld = ltrim($cleanOld, '/');
+                if (Storage::disk('public')->exists($cleanOld)) {
+                    Storage::disk('public')->delete($cleanOld);
+                }
             }
 
             // Store new avatar in public/avatars
             $path = $request->file('avatar')->store('avatars', 'public');
-            $user->avatar = $path;
+            $user->avatar = str_replace('\\', '/', $path);
             $user->save();
         }
 
@@ -123,8 +128,13 @@ class ProfileController extends Controller
     {
         $user = Auth::user();
 
-        if ($user->avatar && Storage::disk('public')->exists($user->avatar)) {
-            Storage::disk('public')->delete($user->avatar);
+        if (!empty($user->avatar)) {
+            $cleanOld = str_replace('\\', '/', $user->avatar);
+            $cleanOld = preg_replace('#^/?storage/#', '', $cleanOld);
+            $cleanOld = ltrim($cleanOld, '/');
+            if (Storage::disk('public')->exists($cleanOld)) {
+                Storage::disk('public')->delete($cleanOld);
+            }
         }
 
         $user->avatar = null;

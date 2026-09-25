@@ -68,11 +68,16 @@
                 <!-- Avatar Display with Camera Trigger -->
                 <div class="profile-avatar-container">
                     <div class="profile-avatar-frame {{ $user->getAvatarUrl() ? 'has-image' : '' }}" id="avatarPreviewFrame">
-                        @if($user->getAvatarUrl())
-                            <img src="{{ $user->getAvatarUrl() }}" alt="{{ $user->name }}" id="avatarImgPreview" style="max-width: 58%; max-height: 58%; width: auto; height: auto; object-fit: contain; display: block; margin: auto;">
-                        @else
-                            <span id="avatarInitialPreview">{{ strtoupper(substr($user->name, 0, 1)) }}</span>
-                        @endif
+                        <img 
+                            src="{{ $user->getAvatarUrl() ?? '' }}" 
+                            alt="{{ $user->name }}" 
+                            id="avatarImgPreview" 
+                            style="{{ $user->getAvatarUrl() ? 'display: block;' : 'display: none;' }}"
+                            onerror="this.onerror=null; this.style.display='none'; var fb = document.getElementById('avatarInitialPreview'); if(fb) fb.style.display='flex'; var pf = document.getElementById('avatarPreviewFrame'); if(pf) pf.classList.remove('has-image');"
+                        >
+                        <span id="avatarInitialPreview" style="{{ $user->getAvatarUrl() ? 'display: none;' : 'display: flex;' }}">
+                            {{ strtoupper(substr($user->name, 0, 1)) }}
+                        </span>
                     </div>
 
                     <!-- Camera Upload Overlay Trigger -->
@@ -453,19 +458,44 @@
     function handleAvatarUpload(input) {
         if (input.files && input.files[0]) {
             const file = input.files[0];
-            const reader = new FileReader();
 
+            // 1. Client-side Size Validation (10MB)
+            const maxSize = 10 * 1024 * 1024;
+            if (file.size > maxSize) {
+                alert('File size exceeds 10MB limit. Please choose an image smaller than 10MB.');
+                input.value = '';
+                return;
+            }
+
+            // 2. Client-side File Format Validation
+            const validTypes = ['image/jpeg', 'image/png', 'image/jpg', 'image/webp'];
+            if (!validTypes.includes(file.type.toLowerCase())) {
+                alert('Invalid file format. Please upload a JPG, PNG, or WEBP image.');
+                input.value = '';
+                return;
+            }
+
+            // 3. Instant local preview
+            const reader = new FileReader();
             reader.onload = function (e) {
                 const previewFrame = document.getElementById('avatarPreviewFrame');
+                const imgPreview = document.getElementById('avatarImgPreview');
+                const initialPreview = document.getElementById('avatarInitialPreview');
+
+                if (imgPreview) {
+                    imgPreview.src = e.target.result;
+                    imgPreview.style.display = 'block';
+                }
+                if (initialPreview) {
+                    initialPreview.style.display = 'none';
+                }
                 if (previewFrame) {
                     previewFrame.classList.add('has-image');
-                    previewFrame.style.backgroundColor = '#ffffff';
-                    previewFrame.innerHTML = '<img src="' + e.target.result + '" alt="Avatar Preview" style="max-width: 58%; max-height: 58%; width: auto; height: auto; object-fit: contain; display: block; margin: auto;">';
                 }
             };
             reader.readAsDataURL(file);
 
-            // Auto-submit the upload form
+            // 4. Auto-submit form
             document.getElementById('avatarUploadForm').submit();
         }
     }
@@ -571,6 +601,7 @@
         width: 120px !important;
         height: 120px !important;
         margin: 0 auto 16px !important;
+        position: relative !important;
     }
     .profile-avatar-frame {
         width: 100% !important;
@@ -583,22 +614,33 @@
         justify-content: center !important;
         overflow: hidden !important;
         box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08) !important;
+        position: relative !important;
     }
-    .profile-avatar-frame.has-image,
-    .profile-avatar-frame:has(img) {
+    .profile-avatar-frame.has-image {
         background-color: #ffffff !important;
         border-color: var(--border-strong, var(--border)) !important;
     }
     .profile-avatar-frame img {
-        max-width: 58% !important;
-        max-height: 58% !important;
-        width: auto !important;
-        height: auto !important;
-        object-fit: contain !important;
+        width: 100% !important;
+        height: 100% !important;
+        max-width: 100% !important;
+        max-height: 100% !important;
+        object-fit: cover !important;
         display: block !important;
-        margin: auto !important;
-        border-radius: 0 !important;
-        background-color: transparent !important;
+        margin: 0 !important;
+        border-radius: 50% !important;
+    }
+    .profile-avatar-frame #avatarInitialPreview {
+        width: 100% !important;
+        height: 100% !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        font-size: 2.75rem !important;
+        font-weight: 700 !important;
+        color: var(--accent-foreground, #EF801C) !important;
+        background: linear-gradient(135deg, rgba(239, 128, 28, 0.12), rgba(239, 128, 28, 0.28)) !important;
+        user-select: none !important;
     }
     .profile-camera-trigger {
         bottom: 2px !important;

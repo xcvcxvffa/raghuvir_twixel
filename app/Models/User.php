@@ -44,9 +44,22 @@ class User extends Authenticatable
      */
     public function getAvatarUrl(): ?string
     {
-        if ($this->avatar && file_exists(public_path('storage/' . $this->avatar))) {
-            return asset('storage/' . $this->avatar);
+        if (empty($this->avatar)) {
+            return null;
         }
+
+        // Normalize slashes (prevent backslash issues on Windows)
+        $cleanPath = str_replace('\\', '/', $this->avatar);
+
+        // Strip leading storage/ or /storage/ if present
+        $cleanPath = preg_replace('#^/?storage/#', '', $cleanPath);
+        $cleanPath = ltrim($cleanPath, '/');
+
+        // Check file on public disk or public/storage
+        if (\Illuminate\Support\Facades\Storage::disk('public')->exists($cleanPath) || file_exists(public_path('storage/' . $cleanPath))) {
+            return asset('storage/' . $cleanPath);
+        }
+
         return null;
     }
 }

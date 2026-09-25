@@ -128,11 +128,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('/notifications/{notification}/read', [AdminNotificationController::class, 'markAsRead'])->name('notifications.read');
         Route::delete('/notifications/clear', [AdminNotificationController::class, 'clearAll'])->name('notifications.clear');
 
-        // Database Migrations & Optimization Runner (Protected)
+        // Database Migrations & Optimization Runner (Protected by auth and admin middleware)
         Route::match(['get', 'post'], '/migrate', function (\Illuminate\Http\Request $request) {
-            if (!app()->isLocal() && !$request->isMethod('post')) {
-                abort(403, 'Direct GET execution of database migrations is disabled for security. Please run migrations via Artisan CLI or authenticated POST.');
-            }
 
             try {
                 \Illuminate\Support\Facades\Artisan::call('migrate', ['--force' => true]);

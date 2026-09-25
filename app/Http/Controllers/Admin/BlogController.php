@@ -137,6 +137,10 @@ class BlogController extends Controller
             $validated['published_at'] = now();
         }
 
+        if (!\Illuminate\Support\Facades\Schema::hasColumn('blogs', 'banner_position')) {
+            unset($validated['banner_position']);
+        }
+
         Blog::create($validated);
 
         return redirect()->route('admin.blogs.index')
@@ -231,6 +235,9 @@ class BlogController extends Controller
         }
 
         unset($validated['remove_image'], $validated['remove_banner_image']);
+        if (!\Illuminate\Support\Facades\Schema::hasColumn('blogs', 'banner_position')) {
+            unset($validated['banner_position']);
+        }
         $blog->update($validated);
 
         return redirect()->route('admin.blogs.index')

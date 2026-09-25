@@ -117,7 +117,7 @@ class PageBannerController extends Controller
             $banner->banner_image = $path;
         }
 
-        if ($request->filled('banner_position')) {
+        if ($request->filled('banner_position') && \Illuminate\Support\Facades\Schema::hasColumn('page_banners', 'banner_position')) {
             $banner->banner_position = $request->input('banner_position');
         }
 
@@ -150,7 +150,7 @@ class PageBannerController extends Controller
         $path = $request->file('banner_image')->store('banners', 'public');
         $banner->banner_image = $path;
 
-        if ($request->filled('banner_position')) {
+        if ($request->filled('banner_position') && \Illuminate\Support\Facades\Schema::hasColumn('page_banners', 'banner_position')) {
             $banner->banner_position = $request->input('banner_position');
         }
 

@@ -189,6 +189,10 @@ class ProductController extends Controller
         $validated['is_featured'] = $request->boolean('is_featured', false);
         $validated['sort_order'] = (int) ($validated['sort_order'] ?? 0);
 
+        if (!\Illuminate\Support\Facades\Schema::hasColumn('products', 'banner_position')) {
+            unset($validated['banner_position']);
+        }
+
         Product::create($validated);
 
         return redirect()->route('admin.products.index')
@@ -326,6 +330,9 @@ class ProductController extends Controller
         $validated['sort_order'] = (int) ($validated['sort_order'] ?? 0);
 
         unset($validated['remove_image']);
+        if (!\Illuminate\Support\Facades\Schema::hasColumn('products', 'banner_position')) {
+            unset($validated['banner_position']);
+        }
         $product->update($validated);
 
         return redirect()->route('admin.products.index')
