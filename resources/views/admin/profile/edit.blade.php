@@ -40,6 +40,20 @@
     </div>
 </div>
 
+@if(session('success'))
+    <div class="syndron-alert syndron-alert-success" style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); color: #10b981; padding: 12px 18px; border-radius: var(--radius-md, 8px); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 12px; font-weight: 500;">
+        <i class="fa-solid fa-circle-check" style="font-size: 1.25rem;"></i>
+        <div>{{ session('success') }}</div>
+    </div>
+@endif
+
+@if(session('info'))
+    <div class="syndron-alert syndron-alert-info" style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); color: #3b82f6; padding: 12px 18px; border-radius: var(--radius-md, 8px); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 12px; font-weight: 500;">
+        <i class="fa-solid fa-circle-info" style="font-size: 1.25rem;"></i>
+        <div>{{ session('info') }}</div>
+    </div>
+@endif
+
 @if($errors->any())
     <div class="syndron-alert syndron-alert-danger">
         <i class="fa-solid fa-triangle-exclamation" style="font-size: 1.1rem;"></i>
@@ -611,60 +625,77 @@
 @push('styles')
 <style>
     .profile-avatar-container {
-        width: 120px !important;
-        height: 120px !important;
-        margin: 0 auto 16px !important;
+        width: 130px !important;
+        height: 130px !important;
+        margin: 0 auto 18px !important;
         position: relative !important;
     }
     .profile-avatar-frame {
         width: 100% !important;
         height: 100% !important;
         border-radius: 50% !important;
-        border: 3px solid var(--border) !important;
-        background-color: var(--accent);
+        border: 4px solid var(--card, #ffffff) !important;
+        outline: 2.5px solid var(--accent, #EF801C) !important;
+        background-color: #ffffff !important;
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
         overflow: hidden !important;
-        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08) !important;
+        box-shadow: 0 8px 24px rgba(239, 128, 28, 0.18) !important;
         position: relative !important;
+        transition: transform 0.25s ease, box-shadow 0.25s ease !important;
+    }
+    .profile-avatar-frame:hover {
+        transform: scale(1.02);
+        box-shadow: 0 10px 28px rgba(239, 128, 28, 0.28) !important;
     }
     .profile-avatar-frame.has-image {
         background-color: #ffffff !important;
-        border-color: var(--border-strong, var(--border)) !important;
     }
     .profile-avatar-frame img {
         width: 100% !important;
         height: 100% !important;
         max-width: 100% !important;
         max-height: 100% !important;
-        object-fit: contain !important;
+        object-fit: cover !important;
         object-position: center !important;
         display: block !important;
-        margin: auto !important;
-        padding: 10px !important;
+        margin: 0 !important;
+        padding: 0 !important;
         border-radius: 50% !important;
         background-color: #ffffff !important;
-        box-sizing: border-box !important;
     }
     .profile-avatar-frame #avatarInitialPreview {
         width: 100% !important;
         height: 100% !important;
         align-items: center;
         justify-content: center;
-        font-size: 2.75rem !important;
+        font-size: 3rem !important;
         font-weight: 700 !important;
         color: var(--accent-foreground, #EF801C) !important;
         background: linear-gradient(135deg, rgba(239, 128, 28, 0.12), rgba(239, 128, 28, 0.28)) !important;
         user-select: none !important;
     }
     .profile-camera-trigger {
-        bottom: 2px !important;
-        right: 2px !important;
-        width: 34px !important;
-        height: 34px !important;
-        border: 2.5px solid var(--card, #ffffff) !important;
-        z-index: 5 !important;
+        bottom: 3px !important;
+        right: 3px !important;
+        width: 38px !important;
+        height: 38px !important;
+        border: 3px solid #ffffff !important;
+        background: #EF801C !important;
+        color: #ffffff !important;
+        border-radius: 50% !important;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2) !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        cursor: pointer !important;
+        z-index: 10 !important;
+        transition: transform 0.2s ease, background-color 0.2s ease !important;
+    }
+    .profile-camera-trigger:hover {
+        transform: scale(1.12) !important;
+        background-color: #e07212 !important;
     }
 </style>
 @endpush
