@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // 2. Sidebar Mobile Toggle & Off-Canvas Controller
+    // 2. Sidebar Toggle Controller (Desktop Mini-Rail & Mobile Off-Canvas)
     const toggleSidebarBtn = document.getElementById('toggleSidebarBtn');
     const sidebarCloseBtn = document.getElementById('sidebarCloseBtn');
     const syndronSidebar = document.getElementById('syndronSidebar');
@@ -56,19 +56,38 @@ document.addEventListener('DOMContentLoaded', function () {
         document.body.appendChild(sidebarBackdrop);
     }
 
+    // Restore desktop collapsed state on load
+    try {
+        if (window.innerWidth > 991 && localStorage.getItem('syndron_sidebar_collapsed') === 'true') {
+            document.body.classList.add('sidebar-collapsed');
+        }
+    } catch(e) {}
+
     function toggleSidebar() {
-        if (syndronSidebar) {
+        if (!syndronSidebar) return;
+        const isMobile = window.innerWidth <= 991;
+
+        if (isMobile) {
+            // Mobile: off-canvas drawer with backdrop
             const willOpen = !syndronSidebar.classList.contains('open');
             syndronSidebar.classList.toggle('open', willOpen);
             sidebarBackdrop.classList.toggle('active', willOpen);
             document.body.classList.toggle('sidebar-drawer-open', willOpen);
+        } else {
+            // Desktop: toggle mini slim sidebar (NEVER show backdrop!)
+            const isCollapsed = document.body.classList.toggle('sidebar-collapsed');
+            sidebarBackdrop.classList.remove('active');
+            document.body.classList.remove('sidebar-drawer-open');
+            try {
+                localStorage.setItem('syndron_sidebar_collapsed', isCollapsed ? 'true' : 'false');
+            } catch(e) {}
         }
     }
 
     function closeSidebar() {
         if (syndronSidebar) {
             syndronSidebar.classList.remove('open');
-            sidebarBackdrop.classList.remove('active');
+            if (sidebarBackdrop) sidebarBackdrop.classList.remove('active');
             document.body.classList.remove('sidebar-drawer-open');
         }
     }

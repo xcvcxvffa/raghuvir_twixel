@@ -127,23 +127,164 @@
             border-radius: 50% !important;
         }
 
-        /* Desktop Sidebar Collapse (Smooth slide in / slide out) */
+        /* Desktop Mini Slim Rail Sidebar (Image 2) */
         @media (min-width: 992px) {
+            /* Never show dark overlay/backdrop on desktop */
+            .syndron-backdrop,
+            .syndron-backdrop.active,
+            body.sidebar-drawer-open .syndron-backdrop {
+                display: none !important;
+                pointer-events: none !important;
+                visibility: hidden !important;
+                opacity: 0 !important;
+            }
+            body.sidebar-drawer-open {
+                overflow: auto !important;
+            }
+
             .syndron-sidebar {
-                transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1) !important;
+                transition: width 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
             }
             .syndron-main {
-                transition: margin-left 0.28s cubic-bezier(0.4, 0, 0.2, 1) !important;
+                transition: margin-left 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
             }
+
+            /* COLLAPSED STATE: Slim Mini Sidebar (70px) matching Image 2 */
             body.sidebar-collapsed .syndron-sidebar {
-                transform: translateX(-100%) !important;
+                width: 70px !important;
+                min-width: 70px !important;
+                max-width: 70px !important;
+                transform: translateX(0) !important;
+                overflow: visible !important;
             }
             body.sidebar-collapsed .syndron-main {
-                margin-left: 0 !important;
+                margin-left: 70px !important;
             }
+
+            /* Mini Sidebar Header: square brand icon centered */
+            body.sidebar-collapsed .sidebar-header {
+                padding: 0 !important;
+                justify-content: center !important;
+            }
+            body.sidebar-collapsed .sidebar-logo {
+                justify-content: center !important;
+                width: 100% !important;
+            }
+            body.sidebar-collapsed .admin-brand-logo {
+                display: none !important;
+            }
+            body.sidebar-collapsed .admin-brand-logo-mini {
+                display: block !important;
+                width: 38px !important;
+                height: 38px !important;
+                object-fit: contain !important;
+                margin: auto !important;
+                border-radius: 8px !important;
+            }
+            body.sidebar-collapsed .sidebar-close-btn {
+                display: none !important;
+            }
+
+            /* Hide Section Titles in Mini Sidebar */
+            body.sidebar-collapsed .sidebar-section-title {
+                display: none !important;
+            }
+
+            /* Hide Text Labels & Badges in Mini Sidebar */
+            body.sidebar-collapsed .sidebar-link > span,
+            body.sidebar-collapsed .sidebar-link .badge-tag {
+                display: none !important;
+            }
+
+            /* Icon-Only Buttons in Mini Sidebar */
+            body.sidebar-collapsed .sidebar-nav {
+                padding: 0 8px !important;
+                display: flex !important;
+                flex-direction: column !important;
+                align-items: center !important;
+                gap: 6px !important;
+            }
+            body.sidebar-collapsed .sidebar-item {
+                width: 100% !important;
+                display: flex !important;
+                justify-content: center !important;
+                margin-bottom: 4px !important;
+            }
+            body.sidebar-collapsed .sidebar-link {
+                width: 44px !important;
+                height: 44px !important;
+                padding: 0 !important;
+                margin: 0 auto !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                border-radius: 12px !important;
+                position: relative !important;
+                transition: all 0.2s ease !important;
+            }
+            body.sidebar-collapsed .sidebar-link .link-icon {
+                font-size: 1.15rem !important;
+                margin: 0 !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+            }
+
+            /* Active & Hover Item in Mini Sidebar */
+            body.sidebar-collapsed .sidebar-item.active .sidebar-link {
+                background-color: rgba(239, 128, 28, 0.12) !important;
+                color: #EF801C !important;
+                box-shadow: 0 2px 8px rgba(239, 128, 28, 0.18) !important;
+            }
+            body.sidebar-collapsed .sidebar-link:hover {
+                background-color: var(--secondary, #f8fafc) !important;
+                color: #EF801C !important;
+            }
+
+            /* Tooltip on Hover in Mini Sidebar */
+            body.sidebar-collapsed .sidebar-link::after {
+                content: attr(data-title);
+                position: absolute;
+                left: calc(100% + 12px);
+                top: 50%;
+                transform: translateY(-50%);
+                background: #0f172a;
+                color: #ffffff;
+                padding: 6px 11px;
+                border-radius: 6px;
+                font-size: 0.76rem;
+                font-weight: 600;
+                white-space: nowrap;
+                pointer-events: none;
+                opacity: 0;
+                visibility: hidden;
+                transition: opacity 0.15s ease, transform 0.15s ease;
+                box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+                z-index: 99999;
+            }
+            body.sidebar-collapsed .sidebar-link:hover::after {
+                opacity: 1;
+                visibility: visible;
+                transform: translateY(-50%) translateX(2px);
+            }
+
+            /* Footer Profile in Mini Sidebar */
+            body.sidebar-collapsed .sidebar-footer-profile {
+                padding: 12px 0 !important;
+                justify-content: center !important;
+            }
+            body.sidebar-collapsed .profile-details-mini {
+                display: none !important;
+            }
+            body.sidebar-collapsed .profile-avatar-sm {
+                margin: 0 auto !important;
+            }
+
+            /* Toggle Button Active State */
             body.sidebar-collapsed .toggle-sidebar-btn {
                 background-color: var(--accent-subtle, rgba(239, 128, 28, 0.1)) !important;
                 color: var(--accent, #EF801C) !important;
+                border-color: rgba(239, 128, 28, 0.3) !important;
             }
         }
 
@@ -302,6 +443,7 @@
                 <a href="{{ route('admin.dashboard') }}" class="sidebar-logo">
                     <img src="{{ asset('images/Raghuvir Logo.png') }}" alt="Raghuvir Atta" class="admin-brand-logo logo-color-mode">
                     <img src="{{ asset('images/Raghuvir Logo White.png') }}" alt="Raghuvir Atta" class="admin-brand-logo logo-white-mode">
+                    <img src="{{ asset('images/Raghuvir Favicon.png') }}" alt="Raghuvir Atta" class="admin-brand-logo-mini" style="display: none;">
                 </a>
                 <button type="button" class="sidebar-close-btn" id="sidebarCloseBtn" aria-label="Close Sidebar" title="Close Menu">
                     <i class="fa-solid fa-xmark"></i>
@@ -313,7 +455,7 @@
                 <div class="sidebar-section-title">Dashboards</div>
                 <ul class="sidebar-nav">
                     <li class="sidebar-item {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
-                        <a href="{{ route('admin.dashboard') }}" class="sidebar-link">
+                        <a href="{{ route('admin.dashboard') }}" class="sidebar-link" data-title="Analytics">
                             <i class="fa-solid fa-chart-line link-icon"></i>
                             <span>Analytics</span>
                             <span class="badge-tag">Live</span>
@@ -324,14 +466,14 @@
                 <div class="sidebar-section-title">Applications</div>
                 <ul class="sidebar-nav">
                     <li class="sidebar-item {{ request()->routeIs('admin.products.*') ? 'active' : '' }}">
-                        <a href="{{ route('admin.products.index') }}" class="sidebar-link">
+                        <a href="{{ route('admin.products.index') }}" class="sidebar-link" data-title="Our Products">
                             <i class="fa-solid fa-boxes-stacked link-icon"></i>
                             <span>Our Products</span>
                             <span class="badge-tag" style="background: rgba(239, 128, 28, 0.15); color: #EF801C; font-weight: 700;">{{ rescue(fn () => \App\Models\Product::count(), 0, false) }}</span>
                         </a>
                     </li>
                     <li class="sidebar-item {{ request()->routeIs('admin.leads.*') ? 'active' : '' }}">
-                        <a href="{{ route('admin.leads.index') }}" class="sidebar-link">
+                        <a href="{{ route('admin.leads.index') }}" class="sidebar-link" data-title="Inquiries &amp; Leads">
                             <i class="fa-solid fa-envelope-open-text link-icon"></i>
                             <span>Inquiries &amp; Leads</span>
                             @php
@@ -346,34 +488,34 @@
                         </a>
                     </li>
                     <li class="sidebar-item {{ request()->routeIs('admin.blogs.*') ? 'active' : '' }}">
-                        <a href="{{ route('admin.blogs.index') }}" class="sidebar-link">
+                        <a href="{{ route('admin.blogs.index') }}" class="sidebar-link" data-title="Blog Articles">
                             <i class="fa-solid fa-newspaper link-icon"></i>
                             <span>Blog Articles</span>
                         </a>
                     </li>
                     <li class="sidebar-item {{ request()->routeIs('admin.galleries.*') ? 'active' : '' }}">
-                        <a href="{{ route('admin.galleries.index') }}" class="sidebar-link">
+                        <a href="{{ route('admin.galleries.index') }}" class="sidebar-link" data-title="Media Gallery">
                             <i class="fa-solid fa-photo-film link-icon"></i>
                             <span>Media Gallery</span>
                             <span class="badge-tag" style="background: rgba(139, 92, 246, 0.15); color: #8b5cf6; font-weight: 700;">{{ rescue(fn () => \App\Models\Gallery::count(), 0, false) }}</span>
                         </a>
                     </li>
                     <li class="sidebar-item {{ request()->routeIs('admin.banners.*') ? 'active' : '' }}">
-                        <a href="{{ route('admin.banners.index') }}" class="sidebar-link">
+                        <a href="{{ route('admin.banners.index') }}" class="sidebar-link" data-title="Page Banners">
                             <i class="fa-solid fa-panorama link-icon"></i>
                             <span>Page Banners</span>
                             <span class="badge-tag" style="background: rgba(14, 165, 233, 0.15); color: #0284c7; font-weight: 700;">{{ rescue(fn () => \App\Models\PageBanner::count(), 0, false) }}</span>
                         </a>
                     </li>
                     <li class="sidebar-item {{ request()->routeIs('admin.seo.*') ? 'active' : '' }}">
-                        <a href="{{ route('admin.seo.index') }}" class="sidebar-link">
+                        <a href="{{ route('admin.seo.index') }}" class="sidebar-link" data-title="Page SEO">
                             <i class="fa-solid fa-magnifying-glass-chart link-icon"></i>
                             <span>Page SEO</span>
                             <span class="badge-tag" style="background: rgba(16, 185, 129, 0.15); color: #059669; font-weight: 700;">{{ rescue(fn () => \App\Models\PageSeo::count(), 0, false) }}</span>
                         </a>
                     </li>
                     <li class="sidebar-item {{ request()->routeIs('admin.webmaster.*') ? 'active' : '' }}">
-                        <a href="{{ route('admin.webmaster.index') }}" class="sidebar-link">
+                        <a href="{{ route('admin.webmaster.index') }}" class="sidebar-link" data-title="Webmaster &amp; Analytics">
                             <i class="fa-solid fa-chart-line link-icon"></i>
                             <span>Webmaster &amp; Analytics</span>
                             <span class="badge-tag" style="background: rgba(99, 102, 241, 0.15); color: #6366f1; font-weight: 700;">Live</span>
@@ -384,19 +526,19 @@
                 <div class="sidebar-section-title">System & Settings</div>
                 <ul class="sidebar-nav">
                     <li class="sidebar-item {{ request()->routeIs('admin.profile.*') ? 'active' : '' }}">
-                        <a href="{{ route('admin.profile.edit') }}" class="sidebar-link">
+                        <a href="{{ route('admin.profile.edit') }}" class="sidebar-link" data-title="Profile Settings">
                             <i class="fa-solid fa-user-gear link-icon"></i>
                             <span>Profile Settings</span>
                         </a>
                     </li>
                     <li class="sidebar-item {{ request()->routeIs('admin.settings.index') ? 'active' : '' }}">
-                        <a href="{{ route('admin.settings.index') }}" class="sidebar-link">
+                        <a href="{{ route('admin.settings.index') }}" class="sidebar-link" data-title="Site Settings">
                             <i class="fa-solid fa-gear link-icon"></i>
                             <span>Site Settings</span>
                         </a>
                     </li>
                     <li class="sidebar-item {{ request()->routeIs('admin.settings.email*') ? 'active' : '' }}">
-                        <a href="{{ route('admin.settings.email') }}" class="sidebar-link">
+                        <a href="{{ route('admin.settings.email') }}" class="sidebar-link" data-title="Email Configuration">
                             <i class="fa-solid fa-envelope-circle-check link-icon"></i>
                             <span>Email Configuration</span>
                         </a>
@@ -1001,71 +1143,7 @@
             } catch(e) {}
         })();
 
-        // =========================================================================
-        // SIDEBAR TOGGLE CONTROLLER (Works on Desktop & Mobile)
-        // =========================================================================
-        (function() {
-            const toggleBtn = document.getElementById('toggleSidebarBtn');
-            const sidebar = document.getElementById('syndronSidebar');
-            const backdrop = document.getElementById('syndronBackdrop');
-            const closeBtn = document.getElementById('sidebarCloseBtn');
 
-            // Restore desktop state from localStorage on load
-            try {
-                if (window.innerWidth > 991 && localStorage.getItem('syndron_sidebar_collapsed') === 'true') {
-                    document.body.classList.add('sidebar-collapsed');
-                }
-            } catch(e) {}
-
-            function toggleSidebarHandler(e) {
-                if (e) e.stopPropagation();
-                if (!sidebar) return;
-
-                if (window.innerWidth <= 991) {
-                    // Mobile Drawer Toggle
-                    const willOpen = !sidebar.classList.contains('open');
-                    sidebar.classList.toggle('open', willOpen);
-                    if (backdrop) backdrop.classList.toggle('active', willOpen);
-                    document.body.classList.toggle('sidebar-drawer-open', willOpen);
-                } else {
-                    // Desktop Collapse / Expand Toggle
-                    const isCollapsed = document.body.classList.toggle('sidebar-collapsed');
-                    try {
-                        localStorage.setItem('syndron_sidebar_collapsed', isCollapsed ? 'true' : 'false');
-                    } catch(err) {}
-                }
-            }
-
-            if (toggleBtn) {
-                toggleBtn.addEventListener('click', toggleSidebarHandler);
-            }
-
-            if (closeBtn) {
-                closeBtn.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    if (sidebar) sidebar.classList.remove('open');
-                    if (backdrop) backdrop.classList.remove('active');
-                    document.body.classList.remove('sidebar-drawer-open');
-                });
-            }
-
-            if (backdrop) {
-                backdrop.addEventListener('click', function() {
-                    if (sidebar) sidebar.classList.remove('open');
-                    backdrop.classList.remove('active');
-                    document.body.classList.remove('sidebar-drawer-open');
-                });
-            }
-
-            // Close mobile sidebar on Escape
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape' && sidebar && sidebar.classList.contains('open')) {
-                    sidebar.classList.remove('open');
-                    if (backdrop) backdrop.classList.remove('active');
-                    document.body.classList.remove('sidebar-drawer-open');
-                }
-            });
-        })();
 
         // =========================================================================
         // TOPBAR LIVE SEARCH CONTROLLER
