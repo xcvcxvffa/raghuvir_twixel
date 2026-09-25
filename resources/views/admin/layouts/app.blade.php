@@ -181,7 +181,7 @@
             <a href="{{ route('admin.profile.edit') }}" class="sidebar-footer-profile" style="text-decoration: none;">
                 <div class="profile-avatar-sm {{ auth()->user() && auth()->user()->getAvatarUrl() ? 'has-image' : '' }}" style="overflow: hidden; display: flex; align-items: center; justify-content: center; position: relative;">
                     @if(auth()->user() && auth()->user()->getAvatarUrl())
-                        <img src="{{ auth()->user()->getAvatarUrl() }}" alt="{{ auth()->user()->name }}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%; display: block;" onerror="this.onerror=null; this.style.display='none'; this.parentElement.classList.remove('has-image'); this.parentElement.innerText='{{ strtoupper(substr(auth()->user()->name ?? 'A', 0, 1)) }}';">
+                        <img src="{{ auth()->user()->getAvatarUrl() }}" alt="{{ auth()->user()->name }}" style="width: 100%; height: 100%; object-fit: contain; padding: 2px; border-radius: 50%; display: block; box-sizing: border-box; background-color: #ffffff;" onerror="this.onerror=null; this.style.display='none'; this.parentElement.classList.remove('has-image'); this.parentElement.innerText='{{ strtoupper(substr(auth()->user()->name ?? 'A', 0, 1)) }}';">
                     @else
                         {{ strtoupper(substr(auth()->user()->name ?? 'A', 0, 1)) }}
                     @endif
@@ -301,7 +301,7 @@
                         <button type="button" class="user-trigger" id="userTrigger">
                             <div class="user-avatar-circle {{ auth()->user() && auth()->user()->getAvatarUrl() ? 'has-image' : '' }}" style="overflow: hidden; display: flex; align-items: center; justify-content: center; position: relative;">
                                 @if(auth()->user() && auth()->user()->getAvatarUrl())
-                                    <img src="{{ auth()->user()->getAvatarUrl() }}" alt="{{ auth()->user()->name }}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%; display: block;" onerror="this.onerror=null; this.style.display='none'; this.parentElement.classList.remove('has-image'); this.parentElement.innerText='{{ strtoupper(substr(auth()->user()->name ?? 'A', 0, 1)) }}';">
+                                    <img src="{{ auth()->user()->getAvatarUrl() }}" alt="{{ auth()->user()->name }}" style="width: 100%; height: 100%; object-fit: contain; padding: 2px; border-radius: 50%; display: block; box-sizing: border-box; background-color: #ffffff;" onerror="this.onerror=null; this.style.display='none'; this.parentElement.classList.remove('has-image'); this.parentElement.innerText='{{ strtoupper(substr(auth()->user()->name ?? 'A', 0, 1)) }}';">
                                 @else
                                     {{ strtoupper(substr(auth()->user()->name ?? 'A', 0, 1)) }}
                                 @endif

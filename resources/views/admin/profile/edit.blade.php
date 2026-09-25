@@ -68,16 +68,29 @@
                 <!-- Avatar Display with Camera Trigger -->
                 <div class="profile-avatar-container">
                     <div class="profile-avatar-frame {{ $user->getAvatarUrl() ? 'has-image' : '' }}" id="avatarPreviewFrame">
-                        <img 
-                            src="{{ $user->getAvatarUrl() ?? '' }}" 
-                            alt="{{ $user->name }}" 
-                            id="avatarImgPreview" 
-                            style="{{ $user->getAvatarUrl() ? 'display: block;' : 'display: none;' }}"
-                            onerror="this.onerror=null; this.style.display='none'; var fb = document.getElementById('avatarInitialPreview'); if(fb) fb.style.display='flex'; var pf = document.getElementById('avatarPreviewFrame'); if(pf) pf.classList.remove('has-image');"
-                        >
-                        <span id="avatarInitialPreview" style="{{ $user->getAvatarUrl() ? 'display: none;' : 'display: flex;' }}">
-                            {{ strtoupper(substr($user->name, 0, 1)) }}
-                        </span>
+                        @if($user->getAvatarUrl())
+                            <img 
+                                src="{{ $user->getAvatarUrl() }}" 
+                                alt="{{ $user->name }}" 
+                                id="avatarImgPreview" 
+                                style="display: block;"
+                                onerror="this.onerror=null; this.style.display='none'; var fb = document.getElementById('avatarInitialPreview'); if(fb) fb.style.display='flex'; var pf = document.getElementById('avatarPreviewFrame'); if(pf) pf.classList.remove('has-image');"
+                            >
+                            <span id="avatarInitialPreview" style="display: none;">
+                                {{ strtoupper(substr($user->name, 0, 1)) }}
+                            </span>
+                        @else
+                            <img 
+                                src="" 
+                                alt="{{ $user->name }}" 
+                                id="avatarImgPreview" 
+                                style="display: none;"
+                                onerror="this.onerror=null; this.style.display='none'; var fb = document.getElementById('avatarInitialPreview'); if(fb) fb.style.display='flex'; var pf = document.getElementById('avatarPreviewFrame'); if(pf) pf.classList.remove('has-image');"
+                            >
+                            <span id="avatarInitialPreview" style="display: flex;">
+                                {{ strtoupper(substr($user->name, 0, 1)) }}
+                            </span>
+                        @endif
                     </div>
 
                     <!-- Camera Upload Overlay Trigger -->
@@ -625,17 +638,20 @@
         height: 100% !important;
         max-width: 100% !important;
         max-height: 100% !important;
-        object-fit: cover !important;
+        object-fit: contain !important;
+        object-position: center !important;
         display: block !important;
-        margin: 0 !important;
+        margin: auto !important;
+        padding: 10px !important;
         border-radius: 50% !important;
+        background-color: #ffffff !important;
+        box-sizing: border-box !important;
     }
     .profile-avatar-frame #avatarInitialPreview {
         width: 100% !important;
         height: 100% !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
+        align-items: center;
+        justify-content: center;
         font-size: 2.75rem !important;
         font-weight: 700 !important;
         color: var(--accent-foreground, #EF801C) !important;
