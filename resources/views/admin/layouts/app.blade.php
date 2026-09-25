@@ -64,6 +64,68 @@
         .notification-item:hover {
             background-color: var(--secondary);
         }
+
+        /* Global Admin Avatar (Top Navbar & Left Sidebar Footer) */
+        .user-avatar-circle,
+        .profile-avatar-sm {
+            width: 38px !important;
+            height: 38px !important;
+            min-width: 38px !important;
+            min-height: 38px !important;
+            border-radius: 50% !important;
+            background-color: var(--accent, #EF801C) !important;
+            color: #ffffff !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            font-size: 0.85rem !important;
+            font-weight: 700 !important;
+            flex-shrink: 0 !important;
+            overflow: hidden !important;
+            position: relative !important;
+            border: 1.5px solid rgba(0, 0, 0, 0.08) !important;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08) !important;
+            transition: all 0.2s ease !important;
+        }
+        .user-avatar-circle.has-image,
+        .profile-avatar-sm.has-image {
+            background-color: #ffffff !important;
+            border: 1.5px solid rgba(239, 128, 28, 0.35) !important;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06), 0 0 0 1px rgba(239, 128, 28, 0.12) !important;
+        }
+        .user-avatar-circle:hover,
+        .profile-avatar-sm:hover,
+        .user-trigger:hover .user-avatar-circle,
+        .sidebar-footer-profile:hover .profile-avatar-sm {
+            border-color: #EF801C !important;
+            box-shadow: 0 2px 8px rgba(239, 128, 28, 0.25) !important;
+            transform: scale(1.04) !important;
+        }
+        .user-avatar-circle img,
+        .profile-avatar-sm img,
+        .global-admin-avatar-img {
+            width: 82% !important;
+            height: 82% !important;
+            max-width: 82% !important;
+            max-height: 82% !important;
+            object-fit: contain !important;
+            object-position: center !important;
+            display: block !important;
+            margin: auto !important;
+            padding: 0 !important;
+            border-radius: 0 !important;
+            background-color: transparent !important;
+            transition: transform 0.2s ease !important;
+        }
+        .user-avatar-circle.mode-fill img,
+        .profile-avatar-sm.mode-fill img {
+            width: 100% !important;
+            height: 100% !important;
+            max-width: 100% !important;
+            max-height: 100% !important;
+            object-fit: cover !important;
+            border-radius: 50% !important;
+        }
     </style>
 </head>
 <body>
@@ -178,10 +240,10 @@
             </div>
 
             <!-- Sidebar User Profile Footer -->
-            <a href="{{ route('admin.profile.edit') }}" class="sidebar-footer-profile" style="text-decoration: none;">
-                <div class="profile-avatar-sm {{ auth()->user() && auth()->user()->getAvatarUrl() ? 'has-image' : '' }}" style="overflow: hidden; display: flex; align-items: center; justify-content: center; position: relative;">
+            <a href="{{ route('admin.profile.edit') }}" class="sidebar-footer-profile" style="text-decoration: none;" title="Admin Profile & Settings">
+                <div class="profile-avatar-sm {{ auth()->user() && auth()->user()->getAvatarUrl() ? 'has-image' : '' }}">
                     @if(auth()->user() && auth()->user()->getAvatarUrl())
-                        <img src="{{ auth()->user()->getAvatarUrl() }}" alt="{{ auth()->user()->name }}" style="width: 100%; height: 100%; object-fit: contain; padding: 2px; border-radius: 50%; display: block; box-sizing: border-box; background-color: #ffffff;" onerror="this.onerror=null; this.style.display='none'; this.parentElement.classList.remove('has-image'); this.parentElement.innerText='{{ strtoupper(substr(auth()->user()->name ?? 'A', 0, 1)) }}';">
+                        <img src="{{ auth()->user()->getAvatarUrl() }}" alt="{{ auth()->user()->name }}" class="global-admin-avatar-img" onerror="this.onerror=null; this.style.display='none'; this.parentElement.classList.remove('has-image'); this.parentElement.innerText='{{ strtoupper(substr(auth()->user()->name ?? 'A', 0, 1)) }}';">
                     @else
                         {{ strtoupper(substr(auth()->user()->name ?? 'A', 0, 1)) }}
                     @endif
@@ -298,10 +360,10 @@
 
                     <!-- User Dropdown Menu -->
                     <div class="syndron-user-menu">
-                        <button type="button" class="user-trigger" id="userTrigger">
-                            <div class="user-avatar-circle {{ auth()->user() && auth()->user()->getAvatarUrl() ? 'has-image' : '' }}" style="overflow: hidden; display: flex; align-items: center; justify-content: center; position: relative;">
+                        <button type="button" class="user-trigger" id="userTrigger" title="Account Menu">
+                            <div class="user-avatar-circle {{ auth()->user() && auth()->user()->getAvatarUrl() ? 'has-image' : '' }}">
                                 @if(auth()->user() && auth()->user()->getAvatarUrl())
-                                    <img src="{{ auth()->user()->getAvatarUrl() }}" alt="{{ auth()->user()->name }}" style="width: 100%; height: 100%; object-fit: contain; padding: 2px; border-radius: 50%; display: block; box-sizing: border-box; background-color: #ffffff;" onerror="this.onerror=null; this.style.display='none'; this.parentElement.classList.remove('has-image'); this.parentElement.innerText='{{ strtoupper(substr(auth()->user()->name ?? 'A', 0, 1)) }}';">
+                                    <img src="{{ auth()->user()->getAvatarUrl() }}" alt="{{ auth()->user()->name }}" class="global-admin-avatar-img" onerror="this.onerror=null; this.style.display='none'; this.parentElement.classList.remove('has-image'); this.parentElement.innerText='{{ strtoupper(substr(auth()->user()->name ?? 'A', 0, 1)) }}';">
                                 @else
                                     {{ strtoupper(substr(auth()->user()->name ?? 'A', 0, 1)) }}
                                 @endif
@@ -745,6 +807,18 @@
             })
             .catch(() => {});
         }, 30000);
+
+        // Sync avatar fit/fill mode across navbar and sidebar
+        (function() {
+            try {
+                var mode = localStorage.getItem('admin_avatar_mode');
+                if (mode === 'fill') {
+                    document.querySelectorAll('.user-avatar-circle, .profile-avatar-sm').forEach(function(el) {
+                        el.classList.add('mode-fill');
+                    });
+                }
+            } catch(e) {}
+        })();
     </script>
     @stack('scripts')
 </body>

@@ -350,8 +350,10 @@ html.dark .logo-color-mode { display: none !important; }
 }
 
 .profile-avatar-sm {
-    width: 36px;
-    height: 36px;
+    width: 38px;
+    height: 38px;
+    min-width: 38px;
+    min-height: 38px;
     border-radius: var(--radius-full);
     background-color: var(--accent);
     color: #ffffff;
@@ -362,21 +364,36 @@ html.dark .logo-color-mode { display: none !important; }
     font-weight: 700;
     flex-shrink: 0;
     overflow: hidden;
+    position: relative;
+    border: 1.5px solid rgba(0, 0, 0, 0.08);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    transition: all 0.2s ease;
 }
 .profile-avatar-sm.has-image,
 .profile-avatar-sm:has(img) {
     background-color: #ffffff !important;
-    border: 1px solid var(--border);
+    border: 1.5px solid rgba(239, 128, 28, 0.35);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06), 0 0 0 1px rgba(239, 128, 28, 0.12);
 }
 .profile-avatar-sm img {
-    max-width: 60%;
-    max-height: 60%;
-    width: auto;
-    height: auto;
+    width: 82% !important;
+    height: 82% !important;
+    max-width: 82% !important;
+    max-height: 82% !important;
     object-fit: contain;
+    object-position: center;
     display: block;
     margin: auto;
+    padding: 0;
     background-color: transparent;
+}
+.profile-avatar-sm.mode-fill img {
+    width: 100% !important;
+    height: 100% !important;
+    max-width: 100% !important;
+    max-height: 100% !important;
+    object-fit: cover !important;
+    border-radius: 50% !important;
 }
 
 .profile-details-mini {
@@ -580,8 +597,10 @@ html.dark .logo-color-mode { display: none !important; }
 }
 
 .user-avatar-circle {
-    width: 36px;
-    height: 36px;
+    width: 38px;
+    height: 38px;
+    min-width: 38px;
+    min-height: 38px;
     border-radius: var(--radius-full);
     background-color: var(--accent);
     color: #ffffff;
@@ -590,22 +609,38 @@ html.dark .logo-color-mode { display: none !important; }
     justify-content: center;
     font-size: 0.85rem;
     font-weight: 700;
+    flex-shrink: 0;
     overflow: hidden;
+    position: relative;
+    border: 1.5px solid rgba(0, 0, 0, 0.08);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    transition: all 0.2s ease;
 }
 .user-avatar-circle.has-image,
 .user-avatar-circle:has(img) {
     background-color: #ffffff !important;
-    border: 1px solid var(--border);
+    border: 1.5px solid rgba(239, 128, 28, 0.35);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06), 0 0 0 1px rgba(239, 128, 28, 0.12);
 }
 .user-avatar-circle img {
-    max-width: 60%;
-    max-height: 60%;
-    width: auto;
-    height: auto;
+    width: 82% !important;
+    height: 82% !important;
+    max-width: 82% !important;
+    max-height: 82% !important;
     object-fit: contain;
+    object-position: center;
     display: block;
     margin: auto;
+    padding: 0;
     background-color: transparent;
+}
+.user-avatar-circle.mode-fill img {
+    width: 100% !important;
+    height: 100% !important;
+    max-width: 100% !important;
+    max-height: 100% !important;
+    object-fit: cover !important;
+    border-radius: 50% !important;
 }
 
 .user-meta-top {
